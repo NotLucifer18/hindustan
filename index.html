@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Twin — Cybersecurity Risk Predictor | Morningstar</title>
+  <meta name="description" content="A real-time cybersecurity risk prediction engine with digital twin telemetry, animated spider chart, and live What-If remediation simulator. Built by Morningstar (Rushil S & Nikitha H S).">
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            cyber: {
+              950: '#060911',
+              900: '#090d18',
+              850: '#0f172a',
+              800: '#151f38',
+              700: '#1e2d4f',
+              cyan: '#06b6d4',
+              neon: '#22d3ee',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              rose: '#f43f5e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom cyber dashboard aesthetics */
+    body {
+      background-color: #060911;
+      color: #e2e8f0;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 85% 80%, rgba(139, 92, 246, 0.08), transparent);
+      min-height: 100vh;
+    }
+
+    /* Glassmorphism cards */
+    .cyber-card {
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    .cyber-card:hover {
+      border-color: rgba(6, 182, 212, 0.25);
+    }
+
+    .cyber-card-active {
+      border-color: rgba(6, 182, 212, 0.45);
+      box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.2);
+    }
+
+    /* Subtle grid line overlay */
+    .bg-cyber-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    /* Glow utilities */
+    .glow-cyan {
+      box-shadow: 0 0 20px -3px rgba(6, 182, 212, 0.4);
+    }
+    .glow-rose {
+      box-shadow: 0 0 20px -3px rgba(244, 63, 94, 0.4);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.4);
+    }
+    .glow-amber {
+      box-shadow: 0 0 20px -3px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Custom Toggle Switch styling */
+    .toggle-checkbox:checked {
+      right: 0;
+      border-color: #06b6d4;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #06b6d4;
+    }
+
+    /* SVG Radar transitions */
+    .radar-polygon {
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .radar-point {
+      transition: cx 0.45s cubic-bezier(0.16, 1, 0.3, 1), cy 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d18;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Pulse animation */
+    @keyframes subtle-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    .animate-subtle-pulse {
+      animation: subtle-pulse 2.5s infinite ease-in-out;
+    }
+
+    /* Accordion transitions */
+    .accordion-content {
+      transition: max-height 0.35s ease-out, opacity 0.25s ease-out;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-cyber-grid text-slate-200 antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+
+  <!-- TOP HEADER & BRANDING -->
+  <header class="border-b border-slate-800/80 bg-cyber-900/90 backdrop-blur-xl sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand & Authors -->
+      <div class="flex items-center space-x-4">
+        <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-cyan-500 via-indigo-600 to-cyan-400 p-[1px] shadow-lg shadow-cyan-500/20">
+          <div class="h-full w-full bg-cyber-950 rounded-[11px] flex items-center justify-center">
+            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-mono text-xs tracking-widest uppercase font-bold text-cyan-400 px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/50">Morningstar</span>
+            <span class="text-xs text-slate-400 font-medium">Cybersecurity Lab</span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            Digital Twin <span class="text-xs font-normal px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">Risk Predictor</span>
+          </h1>
+          <p class="text-[11px] text-slate-400">Created by <span class="text-slate-200 font-medium">Rushil S & Nikitha H S</span></p>
+        </div>
+      </div>
+
+      <!-- Quick Persona Presets -->
+      <div class="hidden md:flex items-center space-x-2">
+        <span class="text-xs text-slate-400 font-mono uppercase mr-1">Persona Presets:</span>
+        <button onclick="loadPersona('high_risk')" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-800/50 transition flex items-center gap-1.5" title="Loads a persona with multiple critical vulnerabilities">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+          High Risk Target
+        </button>
+        <button onclick="loadPersona('typical')" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-amber-950/40 hover:bg-amber-900/60 text-amber-300 border border-amber-800/50 transition flex items-center gap-1.5" title="Loads an average user with common risks">
+          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+          Typical User
+        </button>
+        <button onclick="loadPersona('fortress')" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-800/50 transition flex items-center gap-1.5" title="Loads a hardened cybersecurity persona">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          Cyber Fortress
+        </button>
+        <button onclick="resetProfile()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition" title="Reset all answers">
+          Reset
+        </button>
+      </div>
+
+      <!-- Live Engine Status Badge -->
+      <div class="flex items-center space-x-3">
+        <div class="hidden sm:flex items-center space-x-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-800/60 px-2.5 py-1 rounded-full">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>CLIENT-SIDE ENGINE LIVE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Preset Bar -->
+    <div class="md:hidden flex items-center justify-between px-4 py-2 border-t border-slate-800/60 bg-slate-900/60 overflow-x-auto text-xs space-x-2">
+      <span class="text-slate-400 whitespace-nowrap">Presets:</span>
+      <button onclick="loadPersona('high_risk')" class="px-2 py-1 rounded bg-rose-950/50 text-rose-300 border border-rose-800/50 whitespace-nowrap">High Risk</button>
+      <button onclick="loadPersona('typical')" class="px-2 py-1 rounded bg-amber-950/50 text-amber-300 border border-amber-800/50 whitespace-nowrap">Typical</button>
+      <button onclick="loadPersona('fortress')" class="px-2 py-1 rounded bg-emerald-950/50 text-emerald-300 border border-emerald-800/50 whitespace-nowrap">Fortress</button>
+      <button onclick="resetProfile()" class="px-2 py-1 rounded bg-slate-800 text-slate-300 whitespace-nowrap">Reset</button>
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+    <!-- HERO / STATUS BANNER -->
+    <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-slate-900/60 to-purple-950/30 border border-cyan-800/30 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            Digital Twin Cyber Telemetry
+          </span>
+          <span class="text-xs text-slate-400">Zero backend • 100% private in-browser analysis</span>
+        </div>
+        <p class="text-sm text-slate-300 mt-1">
+          Configure your cyber posture below. Use the <strong class="text-cyan-300">"What-If" Simulator</strong> to project immediate risk reduction before executing remediations.
+        </p>
+      </div>
+
+      <!-- Active What-If Banner Indicator -->
+      <div id="whatif-status-badge" class="hidden flex items-center gap-3 bg-emerald-950/70 border border-emerald-600/50 px-4 py-2 rounded-xl text-emerald-300 text-xs font-mono">
+        <span class="text-base animate-spin">⚡</span>
+        <div>
+          <div class="font-bold uppercase tracking-wider text-emerald-200">What-If Simulation Active</div>
+          <div id="whatif-delta-text" class="text-[11px] text-emerald-400">Projected -0 points risk reduction</div>
+        </div>
+        <button onclick="resetWhatIfSimulation()" class="ml-2 text-xs text-emerald-200 underline hover:text-white">Exit</button>
+      </div>
+    </div>
+
+    <!-- MAIN TWO COLUMN GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT COLUMN: RISK PROFILE FORM (4 Categories, Collapsible) -->
+      <div class="lg:col-span-6 space-y-4">
+        <div class="flex items-center justify-between pb-1">
+          <div>
+            <h2 class="text-base font-bold text-white tracking-wide uppercase font-mono flex items-center gap-2">
+              <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+              Risk Profile Telemetry
+            </h2>
+            <p class="text-xs text-slate-400">14 Key Security Vectors across 4 Defensive Surfaces</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="toggleAllAccordions(true)" class="text-xs text-slate-400 hover:text-cyan-400 transition">Expand All</button>
+            <span class="text-slate-600 text-xs">•</span>
+            <button onclick="toggleAllAccordions(false)" class="text-xs text-slate-400 hover:text-cyan-400 transition">Collapse</button>
+          </div>
+        </div>
+
+        <!-- FORM CATEGORIES CONTAINER -->
+        <div id="categories-container" class="space-y-3">
+          <!-- Dynamically populated categories -->
+        </div>
+
+        <!-- THREAT VECTOR EXPOSURE SUMMARY -->
+        <div class="cyber-card rounded-2xl p-5 border border-slate-800/80">
+          <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold mb-3 flex items-center justify-between">
+            <span>Threat Vector Exposure Matrix</span>
+            <span class="text-[10px] text-cyan-400 font-normal">Real-Time Synthesis</span>
+          </h3>
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div id="vector-credential" class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 transition">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-400">Credential Stuffing</span>
+                <span id="vector-credential-badge" class="font-mono font-bold text-[10px] px-1.5 py-0.5 rounded bg-slate-800">Low</span>
+              </div>
+              <p class="text-[11px] text-slate-400 leading-tight" id="vector-credential-desc">Evaluates 2FA and breached password reuse across sites.</p>
+            </div>
+            <div id="vector-ransomware" class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 transition">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-400">Malware & Ransomware</span>
+                <span id="vector-ransomware-badge" class="font-mono font-bold text-[10px] px-1.5 py-0.5 rounded bg-slate-800">Low</span>
+              </div>
+              <p class="text-[11px] text-slate-400 leading-tight" id="vector-ransomware-desc">Evaluates OS patching, antivirus, and untrusted app installs.</p>
+            </div>
+            <div id="vector-mitm" class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 transition">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-400">Man-In-The-Middle</span>
+                <span id="vector-mitm-badge" class="font-mono font-bold text-[10px] px-1.5 py-0.5 rounded bg-slate-800">Low</span>
+              </div>
+              <p class="text-[11px] text-slate-400 leading-tight" id="vector-mitm-desc">Evaluates public Wi-Fi habits, VPN usage, and router hygiene.</p>
+            </div>
+            <div id="vector-datatheft" class="p-3 rounded-xl bg-slate-900/70 border border-slate-800 transition">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-400">Device Physical Theft</span>
+                <span id="vector-datatheft-badge" class="font-mono font-bold text-[10px] px-1.5 py-0.5 rounded bg-slate-800">Low</span>
+              </div>
+              <p class="text-[11px] text-slate-400 leading-tight" id="vector-datatheft-desc">Evaluates screen locking and full-disk BitLocker/FileVault encryption.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: VISUALIZATIONS, SCORE & WHAT-IF SIMULATOR -->
+      <div class="lg:col-span-6 space-y-6">
+
+        <!-- OVERALL RISK SCORE CARD + CATEGORY MINI BARS -->
+        <div class="cyber-card rounded-2xl p-5 border border-slate-800/90 relative overflow-hidden">
+          <!-- Background glow circle -->
+          <div id="score-glow" class="absolute -right-12 -top-12 w-48 h-48 rounded-full blur-3xl opacity-20 pointer-events-none transition-all duration-700 bg-cyan-500"></div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+            
+            <!-- Overall Score Big Display -->
+            <div class="flex flex-col items-center sm:items-start text-center sm:text-left">
+              <span class="text-xs font-mono uppercase tracking-widest text-slate-400 font-semibold mb-1">Overall Risk Score</span>
+              <div class="flex items-baseline gap-2">
+                <span id="overall-score-display" class="font-mono text-5xl sm:text-6xl font-extrabold tracking-tight text-white transition-colors duration-500">
+                  0
+                </span>
+                <span class="text-slate-500 font-mono text-xl font-medium">/100</span>
+              </div>
+
+              <!-- Risk Badge -->
+              <div class="mt-2 flex items-center gap-2">
+                <span id="risk-level-badge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider font-mono border transition-all duration-300">
+                  Low Risk
+                </span>
+                <span id="score-delta-indicator" class="hidden text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-700/50">
+                  ▼ 0 pts
+                </span>
+              </div>
+
+              <!-- Score Bands Guide -->
+              <div class="flex items-center gap-3 text-[10px] font-mono text-slate-400 mt-3">
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> 0-30 Low</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> 31-60 Med</span>
+                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> 61-100 High</span>
+              </div>
+            </div>
+
+            <!-- Mini 4 Category Bar Meters -->
+            <div class="w-full sm:w-60 space-y-2.5 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80 text-xs">
+              <div>
+                <div class="flex justify-between text-slate-400 mb-1">
+                  <span class="font-medium">Accounts</span>
+                  <span id="cat-score-accounts" class="font-mono font-bold text-slate-200">0%</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                  <div id="cat-bar-accounts" class="h-full bg-cyan-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-slate-400 mb-1">
+                  <span class="font-medium">Devices</span>
+                  <span id="cat-score-devices" class="font-mono font-bold text-slate-200">0%</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                  <div id="cat-bar-devices" class="h-full bg-indigo-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-slate-400 mb-1">
+                  <span class="font-medium">Networks</span>
+                  <span id="cat-score-networks" class="font-mono font-bold text-slate-200">0%</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                  <div id="cat-bar-networks" class="h-full bg-amber-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-slate-400 mb-1">
+                  <span class="font-medium">Apps</span>
+                  <span id="cat-score-apps" class="font-mono font-bold text-slate-200">0%</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                  <div id="cat-bar-apps" class="h-full bg-purple-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RADAR / SPIDER CHART VISUALIZATION (SVG High-Performance) -->
+        <div class="cyber-card rounded-2xl p-5 border border-slate-800/90 relative">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h3 class="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-2">
+                <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" stroke-width="2"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18M3 12h18"/>
+                </svg>
+                Multidimensional Cyber Attack Surface (Radar)
+              </h3>
+              <p class="text-[11px] text-slate-400">Compares category vulnerability vectors simultaneously</p>
+            </div>
+            
+            <!-- Radar Legend -->
+            <div class="flex items-center gap-3 text-[11px] font-mono">
+              <span class="flex items-center gap-1 text-slate-300">
+                <span class="w-2.5 h-2.5 rounded-sm bg-cyan-400"></span> Active
+              </span>
+              <span id="radar-sim-legend" class="hidden flex items-center gap-1 text-emerald-400">
+                <span class="w-2.5 h-2.5 rounded-sm bg-emerald-400"></span> Simulated Fix
+              </span>
+            </div>
+          </div>
+
+          <!-- SVG Radar Chart Container -->
+          <div class="w-full flex justify-center items-center py-2">
+            <svg id="radar-chart-svg" viewBox="0 0 400 360" class="w-full max-w-[380px] h-auto overflow-visible select-none">
+              <defs>
+                <!-- Glowing gradient for simulated risk -->
+                <radialGradient id="simGlowGradient" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.45" />
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0.08" />
+                </radialGradient>
+                
+                <!-- Glowing gradient for current risk -->
+                <radialGradient id="riskGlowGradient" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4" />
+                  <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.06" />
+                </radialGradient>
+
+                <!-- High risk alert gradient -->
+                <radialGradient id="dangerGlowGradient" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.45" />
+                  <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.08" />
+                </radialGradient>
+              </defs>
+
+              <!-- Concentric Radar Grid Rings (Rendered dynamically) -->
+              <g id="radar-grid-group"></g>
+
+              <!-- Axis Lines & Spokes -->
+              <g id="radar-axes-group"></g>
+
+              <!-- Ghost Baseline Polygon (Visible during What-If simulation) -->
+              <polygon id="radar-ghost-polygon" class="radar-polygon hidden" fill="none" stroke="#f43f5e" stroke-dasharray="4 3" stroke-width="1.8" stroke-opacity="0.75" />
+
+              <!-- Active Radar Polygon -->
+              <polygon id="radar-active-polygon" class="radar-polygon" fill="url(#riskGlowGradient)" stroke="#06b6d4" stroke-width="2.2" />
+
+              <!-- Data Point Vertices -->
+              <g id="radar-points-group"></g>
+
+              <!-- Labels Group -->
+              <g id="radar-labels-group"></g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- TOP VULNERABILITIES & "WHAT-IF" SIMULATOR (CORE DEMO MOMENT) -->
+        <div class="cyber-card rounded-2xl p-5 border border-cyan-800/50 bg-gradient-to-b from-slate-900/90 to-cyber-900/90 shadow-xl relative">
+          
+          <!-- Section Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-cyan-950 text-cyan-400 border border-cyan-800">
+                  Core Demo Moment
+                </span>
+                <h3 class="text-sm font-bold text-white tracking-wide uppercase font-mono flex items-center gap-1.5">
+                  <span>⚡ "What-If" Remediation Simulator</span>
+                </h3>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Toggle fixes below to watch the live risk score and radar spider chart contract instantaneously.
+              </p>
+            </div>
+
+            <!-- Global Action Buttons -->
+            <div class="flex items-center gap-2">
+              <button id="btn-toggle-all-fixes" onclick="toggleAllWhatIfFixes()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-emerald-950/60 hover:bg-emerald-900/70 text-emerald-300 border border-emerald-700/50 transition flex items-center gap-1">
+                <span class="text-emerald-400">⚡</span>
+                <span id="btn-toggle-all-text">Simulate All Fixes</span>
+              </button>
+              <button id="btn-commit-fixes" onclick="commitSimulatedFixes()" class="hidden px-2.5 py-1.5 rounded-lg text-xs font-medium bg-cyan-600 hover:bg-cyan-500 text-white font-semibold transition shadow-md shadow-cyan-600/30">
+                Apply Fixes
+              </button>
+            </div>
+          </div>
+
+          <!-- Top Vulnerabilities List Container -->
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-xs text-slate-400 font-mono mb-2">
+              <span class="font-semibold text-slate-300">TOP PRIORITY VULNERABILITIES IDENTIFIED</span>
+              <span id="vuln-count-tag" class="text-[11px] text-cyan-400">3 Active Risks</span>
+            </div>
+
+            <!-- List items dynamically injected -->
+            <div id="top-vulnerabilities-list" class="space-y-3">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- All Clear State (when score is 0 or low) -->
+            <div id="no-vulnerabilities-banner" class="hidden p-6 text-center rounded-xl bg-emerald-950/20 border border-emerald-800/40">
+              <div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-emerald-900/50 text-emerald-400 mb-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h4 class="text-sm font-bold text-emerald-300">Zero Critical Vulnerabilities Detected</h4>
+              <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">Your digital twin profile reflects optimal cyber hygiene across all evaluated vectors.</p>
+            </div>
+          </div>
+
+          <!-- Live Impact Assessment Banner -->
+          <div id="sim-impact-banner" class="hidden mt-4 p-3 rounded-xl bg-gradient-to-r from-emerald-950/70 to-slate-900/90 border border-emerald-600/50 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-emerald-900/60 flex items-center justify-center text-emerald-300 font-bold">
+                ✓
+              </div>
+              <div>
+                <div class="text-xs font-bold text-emerald-300 font-mono" id="sim-impact-title">Remediation Impact Active</div>
+                <div class="text-[11px] text-slate-300" id="sim-impact-desc">Reduces total attack surface significantly.</div>
+              </div>
+            </div>
+            <button onclick="commitSimulatedFixes()" class="text-xs font-bold text-emerald-300 hover:text-white px-3 py-1 rounded bg-emerald-800/60 hover:bg-emerald-700 transition">
+              Save To Profile
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- FOOTER & AUDIT EXPORT -->
+    <footer class="mt-12 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+      <div class="flex items-center space-x-2">
+        <span class="font-mono text-cyan-400 font-bold">MORNINGSTAR CYBERSECURITY</span>
+        <span>•</span>
+        <span>Lead Researchers: Rushil S & Nikitha H S</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <button onclick="copyAssessmentReport()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center gap-1.5 font-mono">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          <span id="copy-report-text">Copy Risk Report</span>
+        </button>
+        <button onclick="exportJsonData()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center gap-1.5 font-mono">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Export JSON
+        </button>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- JAVASCRIPT CYBER ENGINE & REACTIVE STORE -->
+  <script>
+    /**
+     * MORNINGSTAR CYBERSECURITY DIGITAL TWIN ENGINE
+     * Authors: Rushil S & Nikitha H S
+     * Client-side risk telemetry, weighted scoring engine, What-If simulator, and SVG radar morpher.
+     */
+
+    // 1. KNOWLEDGE MATRIX & SECURITY CONTROLS SPECIFICATION
+    const SECURITY_CONTROLS = {
+      accounts: {
+        id: 'accounts',
+        title: 'Account & Identity Protection',
+        icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+        items: [
+          {
+            id: 'password_reuse',
+            title: 'Password Reuse Across Accounts',
+            question: 'Do you reuse the same or similar passwords across multiple online services?',
+            riskyAnswer: true, // Yes is risky
+            weight: 8,
+            recommendation: 'Use a reputable password manager (e.g. Bitwarden, 1Password) to generate unique passwords for every service, neutralizing credential stuffing.',
+            mitigationScore: 8,
+            threat: 'Credential Stuffing'
+          },
+          {
+            id: 'two_factor',
+            title: 'Two-Factor Authentication (2FA)',
+            question: 'Do you have Two-Factor Authentication (2FA / MFA) enabled on your primary email and banking accounts?',
+            riskyAnswer: false, // No is risky
+            weight: 9,
+            recommendation: 'Enable 2FA (preferably Authenticator App or FIDO2 hardware key) on your main email and critical logins to block ~99.9% of automated account takeovers.',
+            mitigationScore: 9,
+            threat: 'Account Takeover'
+          },
+          {
+            id: 'breached_password',
+            title: 'Known Breached Password in Use',
+            question: 'Do you currently use any password that has previously appeared in a known public data breach?',
+            riskyAnswer: true, // Yes is risky
+            weight: 10,
+            recommendation: 'Immediately change all passwords flagged in data breaches (check HaveIBeenPwned); breach dumps are actively cycled in brute-force dictionary bots.',
+            mitigationScore: 10,
+            threat: 'Instant Account Breach'
+          },
+          {
+            id: 'email_reused',
+            title: 'Single Email Handle Across All Sites',
+            question: 'Do you use the exact same primary email address for financial services, social media, and newsletter signups?',
+            riskyAnswer: true, // Yes is risky
+            weight: 5,
+            recommendation: 'Use email aliases (e.g. iCloud Hide My Email, SimpleLogin) to segregate high-value financial accounts from public mailing lists.',
+            mitigationScore: 5,
+            threat: 'Identity Correlation'
+          }
+        ]
+      },
+      devices: {
+        id: 'devices',
+        title: 'Endpoint & Device Integrity',
+        icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+        items: [
+          {
+            id: 'os_updates',
+            title: 'Operating System Updates Current',
+            question: 'Is your operating system (Windows/macOS/iOS/Android) configured for automatic security updates and currently up to date?',
+            riskyAnswer: false, // No is risky
+            weight: 8,
+            recommendation: 'Turn on automatic OS updates to patch zero-day kernel vulnerabilities and active exploit chains within hours of release.',
+            mitigationScore: 8,
+            threat: 'OS Zero-Day Exploitation'
+          },
+          {
+            id: 'antivirus',
+            title: 'Antivirus & Threat Protection Active',
+            question: 'Do you have active, updated antivirus or endpoint detection (e.g. Windows Defender, Malwarebytes) enabled?',
+            riskyAnswer: false, // No is risky
+            weight: 6,
+            recommendation: 'Ensure real-time threat protection is active with cloud-delivered intelligence to detect emerging spyware and infostealers.',
+            mitigationScore: 6,
+            threat: 'Malware & Infostealers'
+          },
+          {
+            id: 'disk_encryption',
+            title: 'Full-Disk Storage Encryption On',
+            question: 'Is full-disk encryption (BitLocker, FileVault, or mobile hardware encryption) turned on?',
+            riskyAnswer: false, // No is risky
+            weight: 7,
+            recommendation: 'Enable BitLocker or FileVault to ensure stored confidential files cannot be retrieved if the device is lost, stolen, or extracted offline.',
+            mitigationScore: 7,
+            threat: 'Physical Data Extraction'
+          },
+          {
+            id: 'screen_lock',
+            title: 'Device Lock & Biometrics Configured',
+            question: 'Does your device automatically lock within 5 minutes and require a PIN, passcode, or biometric scan to unlock?',
+            riskyAnswer: false, // No is risky
+            weight: 7,
+            recommendation: 'Configure an automatic screen timeout under 3 minutes with biometric or strong PIN verification to prevent unauthorized local access.',
+            mitigationScore: 7,
+            threat: 'Unauthorized Physical Access'
+          }
+        ]
+      },
+      networks: {
+        id: 'networks',
+        title: 'Network & Connectivity Surface',
+        icon: 'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0',
+        items: [
+          {
+            id: 'public_wifi',
+            title: 'Frequent Unsecured Public Wi-Fi Use',
+            question: 'Do you regularly connect to public Wi-Fi networks (airports, cafes, hotels, open hotspots)?',
+            riskyAnswer: true, // Yes is risky
+            weight: 6,
+            recommendation: 'Avoid conducting sensitive banking transactions on untrusted public Wi-Fi networks where ARP spoofing and DNS hijacking occur.',
+            mitigationScore: 6,
+            threat: 'Eavesdropping & MITM'
+          },
+          {
+            id: 'vpn_on_public',
+            title: 'VPN Active on Public Wi-Fi',
+            question: 'Do you always activate an encrypted Virtual Private Network (VPN) when connecting to untrusted networks?',
+            riskyAnswer: false, // No is risky
+            weight: 8,
+            recommendation: 'Always route your public internet traffic through a trusted encrypted WireGuard or OpenVPN tunnel to thwart local packet sniffing.',
+            mitigationScore: 8,
+            threat: 'Packet Sniffing & Hijacking'
+          },
+          {
+            id: 'router_default_pw',
+            title: 'Home Router Default Password Changed',
+            question: 'Have you changed your home Wi-Fi router’s default administrative credentials and network WPA2/WPA3 password?',
+            riskyAnswer: false, // No is risky
+            weight: 9,
+            recommendation: 'Change factory router admin passwords from default ("admin/admin") to prevent remote attackers from re-routing your DNS queries.',
+            mitigationScore: 9,
+            threat: 'Router Compromise & DNS Poisoning'
+          }
+        ]
+      },
+      apps: {
+        id: 'apps',
+        title: 'Application & Software Hygiene',
+        icon: 'M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 4h16',
+        items: [
+          {
+            id: 'apps_updated',
+            title: 'Applications Regularly Updated',
+            question: 'Are your browsers, browser extensions, and installed desktop/mobile apps updated at least monthly?',
+            riskyAnswer: false, // No is risky
+            weight: 7,
+            recommendation: 'Enable auto-updates on your primary browsers and remove unmaintained browser extensions that pose hidden supply-chain risks.',
+            mitigationScore: 7,
+            threat: 'Browser & App Exploits'
+          },
+          {
+            id: 'official_stores',
+            title: 'Software Installed Strictly from Official Sources',
+            question: 'Do you exclusively download software and apps from verified developer websites or official app stores (avoiding cracked/pirated software)?',
+            riskyAnswer: false, // No is risky
+            weight: 8,
+            recommendation: 'Strictly avoid pirated or cracked software torrents, which are the #1 delivery mechanism for persistent trojans and crypto-drainers.',
+            mitigationScore: 8,
+            threat: 'Trojanized Software & Keyloggers'
+          },
+          {
+            id: 'app_permissions',
+            title: 'Routine Review of App Permissions',
+            question: 'Do you review and restrict smartphone and desktop application permissions (camera, microphone, background location, contact access)?',
+            riskyAnswer: false, // No is risky
+            weight: 5,
+            recommendation: 'Regularly audit app permission dashboards on iOS/Android and revoke location, microphone, and accessibility access from non-essential apps.',
+            mitigationScore: 5,
+            threat: 'Permission Creep & Spyware'
+          }
+        ]
+      }
+    };
+
+    // 2. STATE STORE
+    // Store user answers as boolean (true = Yes, false = No)
+    let userProfile = {
+      password_reuse: false,
+      two_factor: true,
+      breached_password: false,
+      email_reused: false,
+      os_updates: true,
+      antivirus: true,
+      disk_encryption: true,
+      screen_lock: true,
+      public_wifi: false,
+      vpn_on_public: true,
+      router_default_pw: true,
+      apps_updated: true,
+      official_stores: true,
+      app_permissions: true
+    };
+
+    // What-If Simulation State (Map of controlId -> boolean if fix is simulated)
+    let whatIfFixes = {};
+
+    // Accordion expand/collapse state
+    let openAccordions = {
+      accounts: true,
+      devices: true,
+      networks: true,
+      apps: true
+    };
+
+    // Radar Dimensions
+    const RADAR_CX = 200;
+    const RADAR_CY = 180;
+    const RADAR_RADIUS = 115;
+    const CATEGORY_KEYS = ['accounts', 'devices', 'networks', 'apps'];
+    const CATEGORY_NAMES = {
+      accounts: 'Accounts',
+      devices: 'Devices',
+      networks: 'Networks',
+      apps: 'Apps'
+    };
+
+    // Category angles in radians (0: top, 1: right, 2: bottom, 3: left)
+    const ANGLES = [
+      -Math.PI / 2,         // Accounts: Top
+      0,                    // Devices: Right
+      Math.PI / 2,          // Networks: Bottom
+      Math.PI               // Apps: Left
+    ];
+
+    // Current displayed score for animated counter
+    let displayedScore = 0;
+    let scoreAnimTimer = null;
+
+    // 3. SCORING ENGINE
+    function calculateCategoryScore(catId, profileToUse = userProfile, appliedFixes = {}) {
+      const cat = SECURITY_CONTROLS[catId];
+      if (!cat) return 0;
+
+      let totalPossibleWeight = 0;
+      let activeRiskWeight = 0;
+
+      cat.items.forEach(item => {
+        totalPossibleWeight += item.weight;
+        const answer = profileToUse[item.id];
+        const isRisky = (answer === item.riskyAnswer);
+
+        // Check if simulated fix is currently applied
+        if (isRisky && !appliedFixes[item.id]) {
+          activeRiskWeight += item.weight;
+        }
+      });
+
+      if (totalPossibleWeight === 0) return 0;
+      return Math.round((activeRiskWeight / totalPossibleWeight) * 100);
+    }
+
+    function calculateOverallScore(profileToUse = userProfile, appliedFixes = {}) {
+      let totalWeightsAll = 0;
+      let activeRiskWeightsAll = 0;
+
+      Object.values(SECURITY_CONTROLS).forEach(cat => {
+        cat.items.forEach(item => {
+          totalWeightsAll += item.weight;
+          const answer = profileToUse[item.id];
+          const isRisky = (answer === item.riskyAnswer);
+
+          if (isRisky && !appliedFixes[item.id]) {
+            activeRiskWeightsAll += item.weight;
+          }
+        });
+      });
+
+      if (totalWeightsAll === 0) return 0;
+      return Math.round((activeRiskWeightsAll / totalWeightsAll) * 100);
+    }
+
+    function getRiskBand(score) {
+      if (score <= 30) {
+        return {
+          band: 'Low',
+          label: 'Low Risk',
+          color: '#10b981',
+          bgClass: 'bg-emerald-950/60',
+          textClass: 'text-emerald-400',
+          borderClass: 'border-emerald-800/80',
+          badgeClass: 'bg-emerald-950 text-emerald-300 border-emerald-700/60'
+        };
+      } else if (score <= 60) {
+        return {
+          band: 'Medium',
+          label: 'Medium Risk',
+          color: '#f59e0b',
+          bgClass: 'bg-amber-950/60',
+          textClass: 'text-amber-400',
+          borderClass: 'border-amber-800/80',
+          badgeClass: 'bg-amber-950 text-amber-300 border-amber-700/60'
+        };
+      } else {
+        return {
+          band: 'High',
+          label: 'High Risk',
+          color: '#f43f5e',
+          bgClass: 'bg-rose-950/60',
+          textClass: 'text-rose-400',
+          borderClass: 'border-rose-800/80',
+          badgeClass: 'bg-rose-950 text-rose-300 border-rose-700/60'
+        };
+      }
+    }
+
+    // 4. TOP VULNERABILITIES DETECTOR
+    function getActiveVulnerabilities(profileToUse = userProfile) {
+      const activeList = [];
+
+      Object.values(SECURITY_CONTROLS).forEach(cat => {
+        cat.items.forEach(item => {
+          const answer = profileToUse[item.id];
+          const isRisky = (answer === item.riskyAnswer);
+          if (isRisky) {
+            activeList.push({
+              ...item,
+              categoryName: cat.title,
+              categoryId: cat.id
+            });
+          }
+        });
+      });
+
+      // Sort by weight descending
+      activeList.sort((a, b) => b.weight - a.weight);
+      return activeList;
+    }
+
+    // 5. DOM RENDERING & UI GENERATION
+
+    function renderForm() {
+      const container = document.getElementById('categories-container');
+      container.innerHTML = '';
+
+      Object.values(SECURITY_CONTROLS).forEach(cat => {
+        const catScore = calculateCategoryScore(cat.id, userProfile);
+        const isOpen = openAccordions[cat.id];
+        const band = getRiskBand(catScore);
+
+        const card = document.createElement('div');
+        card.className = 'cyber-card rounded-2xl overflow-hidden border border-slate-800/90 transition-all';
+        card.id = `cat-card-${cat.id}`;
+
+        // Header
+        card.innerHTML = `
+          <div class="p-4 flex items-center justify-between cursor-pointer select-none bg-slate-900/50 hover:bg-slate-900/80 transition" onclick="toggleAccordion('${cat.id}')">
+            <div class="flex items-center space-x-3">
+              <div class="p-2 rounded-xl bg-slate-800/80 text-cyan-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${cat.icon}"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white tracking-wide">${cat.title}</h3>
+                <span class="text-[11px] text-slate-400 font-mono">${cat.items.length} Controls Evaluated</span>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold ${band.badgeClass} border">
+                ${catScore}% Risk
+              </span>
+              <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="accordion-content ${isOpen ? 'block' : 'hidden'} p-4 pt-1 border-t border-slate-800/50 space-y-3" id="accordion-${cat.id}">
+            ${cat.items.map(item => {
+              const currentVal = userProfile[item.id];
+              const isRisky = (currentVal === item.riskyAnswer);
+              return `
+                <div class="p-3 rounded-xl bg-slate-900/40 border ${isRisky ? 'border-rose-900/40 bg-rose-950/10' : 'border-slate-800/80'} flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="text-xs font-semibold text-slate-200">${item.title}</span>
+                      <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400">Weight ${item.weight}/10</span>
+                      ${isRisky ? '<span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-rose-950 text-rose-300 border border-rose-800/60 font-semibold">RISKY</span>' : '<span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40">SAFE</span>'}
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-snug">${item.question}</p>
+                  </div>
+
+                  <!-- Radio / Yes-No Buttons -->
+                  <div class="flex items-center space-x-1.5 self-end sm:self-center font-mono text-xs">
+                    <button type="button" onclick="setAnswer('${item.id}', true)" class="px-3 py-1 rounded-lg border font-medium transition ${currentVal === true ? 'bg-cyan-600 text-white border-cyan-500 shadow-sm shadow-cyan-600/30' : 'bg-slate-800/80 text-slate-400 border-slate-700 hover:text-white'}">
+                      Yes
+                    </button>
+                    <button type="button" onclick="setAnswer('${item.id}', false)" class="px-3 py-1 rounded-lg border font-medium transition ${currentVal === false ? 'bg-cyan-600 text-white border-cyan-500 shadow-sm shadow-cyan-600/30' : 'bg-slate-800/80 text-slate-400 border-slate-700 hover:text-white'}">
+                      No
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function toggleAccordion(catId) {
+      openAccordions[catId] = !openAccordions[catId];
+      renderForm();
+    }
+
+    function toggleAllAccordions(shouldOpen) {
+      Object.keys(openAccordions).forEach(k => openAccordions[k] = shouldOpen);
+      renderForm();
+    }
+
+    // Set an individual user answer
+    function setAnswer(controlId, value) {
+      userProfile[controlId] = value;
+      // If user manually changed an answer that had a simulated fix, clear that simulation fix
+      delete whatIfFixes[controlId];
+      updateDashboard();
+    }
+
+    // 6. "WHAT-IF" SIMULATOR LOGIC (CORE DEMO MOMENT)
+    function toggleWhatIfFix(controlId) {
+      if (whatIfFixes[controlId]) {
+        delete whatIfFixes[controlId];
+      } else {
+        whatIfFixes[controlId] = true;
+      }
+      updateDashboard();
+    }
+
+    function toggleAllWhatIfFixes() {
+      const activeVulns = getActiveVulnerabilities(userProfile).slice(0, 3);
+      const allActive = activeVulns.every(v => whatIfFixes[v.id]);
+
+      if (allActive) {
+        // Clear all
+        whatIfFixes = {};
+      } else {
+        // Simulate all top 3
+        activeVulns.forEach(v => {
+          whatIfFixes[v.id] = true;
+        });
+      }
+      updateDashboard();
+    }
+
+    function resetWhatIfSimulation() {
+      whatIfFixes = {};
+      updateDashboard();
+    }
+
+    // Commit simulated fixes directly into the user's permanent profile
+    function commitSimulatedFixes() {
+      Object.keys(whatIfFixes).forEach(controlId => {
+        // Find control definition
+        for (const cat of Object.values(SECURITY_CONTROLS)) {
+          const found = cat.items.find(i => i.id === controlId);
+          if (found) {
+            // Apply the safe answer
+            userProfile[controlId] = !found.riskyAnswer;
+            break;
+          }
+        }
+      });
+
+      // Clear simulated fixes
+      whatIfFixes = {};
+      updateDashboard();
+
+      // Show temporary toast or feedback
+      showActionNotice('✓ Applied all simulated security fixes to your live profile!');
+    }
+
+    function showActionNotice(text) {
+      const banner = document.getElementById('sim-impact-banner');
+      if (banner) {
+        banner.classList.remove('hidden');
+        document.getElementById('sim-impact-title').innerText = text;
+        document.getElementById('sim-impact-desc').innerText = 'Your security posture is now permanently updated.';
+        setTimeout(() => {
+          banner.classList.add('hidden');
+        }, 4000);
+      }
+    }
+
+    // 7. DASHBOARD SYNCHRONIZATION & ANIMATION
+    function updateDashboard() {
+      const isSimulating = Object.keys(whatIfFixes).length > 0;
+      
+      // 1. Current Baseline Score
+      const baseOverallScore = calculateOverallScore(userProfile, {});
+
+      // 2. Active Display Score (incorporating What-If simulation fixes)
+      const currentSimScore = calculateOverallScore(userProfile, whatIfFixes);
+
+      // Animate Overall Score Number smoothly
+      animateScoreNumber(currentSimScore);
+
+      // Update Risk Level Badge & Colors
+      updateRiskBadge(currentSimScore, baseOverallScore, isSimulating);
+
+      // Update Mini Category Bars
+      updateCategoryBars(isSimulating);
+
+      // Update Top Vulnerabilities Panel & What-If Toggles
+      renderTopVulnerabilities(baseOverallScore, currentSimScore, isSimulating);
+
+      // Update Threat Vector Summary Matrix
+      updateThreatMatrix();
+
+      // Redraw Animated Radar Chart
+      drawRadarChart(baseOverallScore, currentSimScore, isSimulating);
+
+      // Update Form categories (scores and highlights)
+      renderForm();
+    }
+
+    function animateScoreNumber(targetScore) {
+      const displayElem = document.getElementById('overall-score-display');
+      if (!displayElem) return;
+
+      if (scoreAnimTimer) clearInterval(scoreAnimTimer);
+
+      const startScore = displayedScore;
+      const diff = targetScore - startScore;
+      if (diff === 0) {
+        displayElem.innerText = targetScore;
+        return;
+      }
+
+      const steps = 20;
+      let currentStep = 0;
+      const stepValue = diff / steps;
+
+      scoreAnimTimer = setInterval(() => {
+        currentStep++;
+        if (currentStep >= steps) {
+          displayedScore = targetScore;
+          displayElem.innerText = targetScore;
+          clearInterval(scoreAnimTimer);
+        } else {
+          displayedScore = Math.round(startScore + (stepValue * currentStep));
+          displayElem.innerText = displayedScore;
+        }
+      }, 16);
+    }
+
+    function updateRiskBadge(simScore, baseScore, isSimulating) {
+      const badge = document.getElementById('risk-level-badge');
+      const scoreGlow = document.getElementById('score-glow');
+      const deltaIndicator = document.getElementById('score-delta-indicator');
+      const whatIfBadge = document.getElementById('whatif-status-badge');
+      const whatIfDeltaText = document.getElementById('whatif-delta-text');
+      const scoreDisplay = document.getElementById('overall-score-display');
+
+      const band = getRiskBand(simScore);
+      badge.className = `px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider font-mono border transition-all duration-500 ${band.badgeClass}`;
+      badge.innerText = band.label;
+
+      // Color score readout
+      scoreDisplay.style.color = band.color;
+      if (scoreGlow) {
+        scoreGlow.style.backgroundColor = band.color;
+      }
+
+      if (isSimulating && baseScore > simScore) {
+        const drop = baseScore - simScore;
+        const pctDrop = Math.round((drop / baseScore) * 100) || 0;
+
+        deltaIndicator.classList.remove('hidden');
+        deltaIndicator.innerText = `▼ -${drop} pts (-${pctDrop}%)`;
+
+        whatIfBadge.classList.remove('hidden');
+        whatIfDeltaText.innerText = `Score dropping from ${baseScore} to ${simScore} (${drop} point risk reduction)`;
+      } else {
+        deltaIndicator.classList.add('hidden');
+        whatIfBadge.classList.add('hidden');
+      }
+    }
+
+    function updateCategoryBars(isSimulating) {
+      CATEGORY_KEYS.forEach(catId => {
+        const score = calculateCategoryScore(catId, userProfile, whatIfFixes);
+        const scoreElem = document.getElementById(`cat-score-${catId}`);
+        const barElem = document.getElementById(`cat-bar-${catId}`);
+
+        if (scoreElem) scoreElem.innerText = `${score}%`;
+        if (barElem) {
+          barElem.style.width = `${score}%`;
+          if (score <= 30) {
+            barElem.className = 'h-full bg-emerald-400 rounded-full transition-all duration-500';
+          } else if (score <= 60) {
+            barElem.className = 'h-full bg-amber-400 rounded-full transition-all duration-500';
+          } else {
+            barElem.className = 'h-full bg-rose-500 rounded-full transition-all duration-500';
+          }
+        }
+      });
+    }
+
+    function renderTopVulnerabilities(baseScore, simScore, isSimulating) {
+      const container = document.getElementById('top-vulnerabilities-list');
+      const emptyBanner = document.getElementById('no-vulnerabilities-banner');
+      const vulnTag = document.getElementById('vuln-count-tag');
+      const btnToggleAll = document.getElementById('btn-toggle-all-text');
+      const btnCommit = document.getElementById('btn-commit-fixes');
+      const simImpactBanner = document.getElementById('sim-impact-banner');
+
+      const allActiveVulns = getActiveVulnerabilities(userProfile);
+      const top3 = allActiveVulns.slice(0, 3);
+
+      if (top3.length === 0) {
+        container.innerHTML = '';
+        emptyBanner.classList.remove('hidden');
+        vulnTag.innerText = '0 Active Risks';
+        document.getElementById('btn-toggle-all-fixes').classList.add('hidden');
+        btnCommit.classList.add('hidden');
+        simImpactBanner.classList.add('hidden');
+        return;
+      }
+
+      emptyBanner.classList.add('hidden');
+      document.getElementById('btn-toggle-all-fixes').classList.remove('hidden');
+      vulnTag.innerText = `${top3.length} High-Impact Vulnerabilities`;
+
+      // Check if all 3 are currently simulated
+      const allSimulated = top3.every(v => whatIfFixes[v.id]);
+      btnToggleAll.innerText = allSimulated ? 'Reset Simulation' : 'Simulate All Fixes';
+
+      if (isSimulating) {
+        btnCommit.classList.remove('hidden');
+        simImpactBanner.classList.remove('hidden');
+        const drop = baseScore - simScore;
+        document.getElementById('sim-impact-title').innerText = `Simulation Active: -${drop} Risk Points`;
+        document.getElementById('sim-impact-desc').innerText = `Resolving these security vectors brings posture into safer parameters.`;
+      } else {
+        btnCommit.classList.add('hidden');
+        simImpactBanner.classList.add('hidden');
+      }
+
+      container.innerHTML = top3.map((vuln, idx) => {
+        const isSimulated = !!whatIfFixes[vuln.id];
+        let weightBadgeColor = 'bg-rose-950 text-rose-300 border-rose-800';
+        if (vuln.weight >= 9) {
+          weightBadgeColor = 'bg-rose-950 text-rose-300 border-rose-700/80';
+        } else if (vuln.weight >= 7) {
+          weightBadgeColor = 'bg-amber-950 text-amber-300 border-amber-700/80';
+        }
+
+        return `
+          <div class="p-4 rounded-xl border transition-all duration-300 ${isSimulated ? 'bg-emerald-950/20 border-emerald-500/60 shadow-lg shadow-emerald-950/30' : 'bg-slate-900/70 border-slate-800 hover:border-slate-700'}">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                  <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-300 font-mono text-xs flex items-center justify-center font-bold">#${idx + 1}</span>
+                  <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border ${weightBadgeColor}">
+                    Impact Weight ${vuln.weight}/10
+                  </span>
+                  <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/80 text-slate-300">
+                    ${vuln.categoryName}
+                  </span>
+                  ${isSimulated ? '<span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-500/60 font-bold animate-pulse">FIX SIMULATED</span>' : ''}
+                </div>
+
+                <h4 class="text-sm font-bold text-white mb-1">${vuln.title}</h4>
+                <p class="text-xs text-slate-300 leading-relaxed font-sans bg-slate-950/40 p-2 rounded-lg border border-slate-800/60">
+                  <strong class="text-cyan-400">Actionable Fix:</strong> ${vuln.recommendation}
+                </p>
+              </div>
+
+              <!-- What-If Toggle Action -->
+              <div class="sm:self-center shrink-0">
+                <button type="button" onclick="toggleWhatIfFix('${vuln.id}')" class="px-3.5 py-2 rounded-xl text-xs font-mono font-semibold transition-all flex items-center gap-2 ${isSimulated ? 'bg-emerald-500 text-slate-950 hover:bg-emerald-400 shadow-md shadow-emerald-500/30' : 'bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-800/60'}">
+                  <span>${isSimulated ? '✓ Fix Active' : '⚡ Simulate Fix'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateThreatMatrix() {
+      // Credential stuffing risk
+      const credRisky = userProfile.password_reuse || !userProfile.two_factor || userProfile.breached_password;
+      const credBadge = document.getElementById('vector-credential-badge');
+      if (credBadge) {
+        credBadge.innerText = credRisky ? 'HIGH EXPOSURE' : 'HARDENED';
+        credBadge.className = `font-mono font-bold text-[10px] px-2 py-0.5 rounded ${credRisky ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'}`;
+      }
+
+      // Ransomware & Malware
+      const malwareRisky = !userProfile.os_updates || !userProfile.antivirus || !userProfile.official_stores;
+      const malBadge = document.getElementById('vector-ransomware-badge');
+      if (malBadge) {
+        malBadge.innerText = malwareRisky ? 'ELEVATED' : 'HARDENED';
+        malBadge.className = `font-mono font-bold text-[10px] px-2 py-0.5 rounded ${malwareRisky ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'}`;
+      }
+
+      // Man-In-The-Middle
+      const mitmRisky = (userProfile.public_wifi && !userProfile.vpn_on_public) || !userProfile.router_default_pw;
+      const mitmBadge = document.getElementById('vector-mitm-badge');
+      if (mitmBadge) {
+        mitmBadge.innerText = mitmRisky ? 'VULNERABLE' : 'HARDENED';
+        mitmBadge.className = `font-mono font-bold text-[10px] px-2 py-0.5 rounded ${mitmRisky ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'}`;
+      }
+
+      // Physical data theft
+      const physicalRisky = !userProfile.disk_encryption || !userProfile.screen_lock;
+      const physBadge = document.getElementById('vector-datatheft-badge');
+      if (physBadge) {
+        physBadge.innerText = physicalRisky ? 'UNPROTECTED' : 'HARDENED';
+        physBadge.className = `font-mono font-bold text-[10px] px-2 py-0.5 rounded ${physicalRisky ? 'bg-amber-950 text-amber-300 border border-amber-800' : 'bg-emerald-950 text-emerald-300 border border-emerald-800'}`;
+      }
+    }
+
+    // 8. HIGH-PERFORMANCE SVG SPIDER / RADAR CHART GENERATOR
+    function getCoordinates(value, angle) {
+      // Map 0-100 to radial distance (with minimum 10px so polygon doesn't collapse to invisible singularity)
+      const distance = 10 + (value / 100) * (RADAR_RADIUS - 10);
+      const x = RADAR_CX + distance * Math.cos(angle);
+      const y = RADAR_CY + distance * Math.sin(angle);
+      return { x, y };
+    }
+
+    function initRadarGrid() {
+      const gridGroup = document.getElementById('radar-grid-group');
+      const axesGroup = document.getElementById('radar-axes-group');
+      const labelsGroup = document.getElementById('radar-labels-group');
+
+      if (!gridGroup || !axesGroup) return;
+
+      gridGroup.innerHTML = '';
+      axesGroup.innerHTML = '';
+      labelsGroup.innerHTML = '';
+
+      // 4 concentric grid rings (25%, 50%, 75%, 100%)
+      const rings = [0.25, 0.50, 0.75, 1.0];
+      rings.forEach((pct, idx) => {
+        const points = ANGLES.map(angle => {
+          const r = pct * RADAR_RADIUS;
+          const x = RADAR_CX + r * Math.cos(angle);
+          const y = RADAR_CY + r * Math.sin(angle);
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(' ');
+
+        const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        polygon.setAttribute('points', points);
+        polygon.setAttribute('fill', idx === rings.length - 1 ? 'rgba(255,255,255,0.015)' : 'none');
+        polygon.setAttribute('stroke', 'rgba(255, 255, 255, 0.08)');
+        polygon.setAttribute('stroke-width', '1');
+        polygon.setAttribute('stroke-dasharray', idx === rings.length - 1 ? 'none' : '2 2');
+        gridGroup.appendChild(polygon);
+
+        // Ring percentage text
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', (RADAR_CX + 6).toString());
+        text.setAttribute('y', (RADAR_CY - (pct * RADAR_RADIUS) + 4).toString());
+        text.setAttribute('fill', 'rgba(148, 163, 184, 0.4)');
+        text.setAttribute('font-size', '8');
+        text.setAttribute('font-family', 'JetBrains Mono, monospace');
+        text.textContent = `${Math.round(pct * 100)}%`;
+        gridGroup.appendChild(text);
+      });
+
+      // Axis Spokes and Category Labels
+      CATEGORY_KEYS.forEach((catId, idx) => {
+        const angle = ANGLES[idx];
+        const endX = RADAR_CX + RADAR_RADIUS * Math.cos(angle);
+        const endY = RADAR_CY + RADAR_RADIUS * Math.sin(angle);
+
+        // Line from center
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', RADAR_CX.toString());
+        line.setAttribute('y1', RADAR_CY.toString());
+        line.setAttribute('x2', endX.toString());
+        line.setAttribute('y2', endY.toString());
+        line.setAttribute('stroke', 'rgba(255, 255, 255, 0.12)');
+        line.setAttribute('stroke-width', '1');
+        axesGroup.appendChild(line);
+
+        // Label Position with offset
+        const labelDist = RADAR_RADIUS + 25;
+        const lx = RADAR_CX + labelDist * Math.cos(angle);
+        const ly = RADAR_CY + labelDist * Math.sin(angle);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('id', `radar-label-${catId}`);
+        text.setAttribute('x', lx.toString());
+        text.setAttribute('y', ly.toString());
+        text.setAttribute('fill', '#94a3b8');
+        text.setAttribute('font-size', '11');
+        text.setAttribute('font-weight', '600');
+        text.setAttribute('font-family', 'Inter, sans-serif');
+        text.setAttribute('text-anchor', angle === 0 ? 'start' : (angle === Math.PI ? 'end' : 'middle'));
+        text.setAttribute('dominant-baseline', angle === -Math.PI / 2 ? 'auto' : (angle === Math.PI / 2 ? 'hanging' : 'middle'));
+        text.textContent = CATEGORY_NAMES[catId];
+        labelsGroup.appendChild(text);
+      });
+    }
+
+    function drawRadarChart(baseOverallScore, simScore, isSimulating) {
+      const activePoly = document.getElementById('radar-active-polygon');
+      const ghostPoly = document.getElementById('radar-ghost-polygon');
+      const pointsGroup = document.getElementById('radar-points-group');
+      const simLegend = document.getElementById('radar-sim-legend');
+
+      if (!activePoly || !pointsGroup) return;
+
+      // 1. Calculate Baseline Category Scores
+      const baseScores = CATEGORY_KEYS.map(id => calculateCategoryScore(id, userProfile, {}));
+
+      // 2. Calculate Active (Simulated or Baseline) Category Scores
+      const activeScores = CATEGORY_KEYS.map(id => calculateCategoryScore(id, userProfile, whatIfFixes));
+
+      // Calculate Coordinates for Active Polygon
+      const activeCoords = activeScores.map((score, i) => getCoordinates(score, ANGLES[i]));
+      const activePointsString = activeCoords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
+      activePoly.setAttribute('points', activePointsString);
+
+      // Change fill gradient & stroke depending on whether fix is simulated
+      if (isSimulating) {
+        simLegend.classList.remove('hidden');
+        activePoly.setAttribute('fill', 'url(#simGlowGradient)');
+        activePoly.setAttribute('stroke', '#10b981'); // Emerald for simulated improvement
+        activePoly.setAttribute('stroke-width', '2.5');
+
+        // Draw Ghost Baseline Polygon
+        const baseCoords = baseScores.map((score, i) => getCoordinates(score, ANGLES[i]));
+        const basePointsString = baseCoords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
+        ghostPoly.classList.remove('hidden');
+        ghostPoly.setAttribute('points', basePointsString);
+      } else {
+        simLegend.classList.add('hidden');
+        ghostPoly.classList.add('hidden');
+
+        // Choose glow based on overall risk
+        if (baseOverallScore > 60) {
+          activePoly.setAttribute('fill', 'url(#dangerGlowGradient)');
+          activePoly.setAttribute('stroke', '#f43f5e');
+        } else {
+          activePoly.setAttribute('fill', 'url(#riskGlowGradient)');
+          activePoly.setAttribute('stroke', '#06b6d4');
+        }
+        activePoly.setAttribute('stroke-width', '2.2');
+      }
+
+      // Update Point Vertices & Labels
+      pointsGroup.innerHTML = '';
+      activeScores.forEach((score, i) => {
+        const coord = activeCoords[i];
+        const catId = CATEGORY_KEYS[i];
+
+        // Vertex Dot
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('class', 'radar-point');
+        circle.setAttribute('cx', coord.x.toFixed(1));
+        circle.setAttribute('cy', coord.y.toFixed(1));
+        circle.setAttribute('r', '4');
+        circle.setAttribute('fill', isSimulating ? '#10b981' : (score > 60 ? '#f43f5e' : '#06b6d4'));
+        circle.setAttribute('stroke', '#090d18');
+        circle.setAttribute('stroke-width', '2');
+        pointsGroup.appendChild(circle);
+
+        // Update Category Label text to include live %
+        const labelElem = document.getElementById(`radar-label-${catId}`);
+        if (labelElem) {
+          labelElem.textContent = `${CATEGORY_NAMES[catId]} (${score}%)`;
+          labelElem.setAttribute('fill', score > 60 ? '#fb7185' : (score > 30 ? '#fde047' : '#94a3b8'));
+        }
+      });
+    }
+
+    // 9. PERSONA PRESETS LOADER
+    function loadPersona(type) {
+      whatIfFixes = {};
+
+      if (type === 'high_risk') {
+        // High Risk Target (~85-90% risk)
+        userProfile = {
+          password_reuse: true,     // Risky (+8)
+          two_factor: false,        // Risky (+9)
+          breached_password: true,  // Risky (+10)
+          email_reused: true,       // Risky (+5)
+          os_updates: false,        // Risky (+8)
+          antivirus: false,         // Risky (+6)
+          disk_encryption: false,   // Risky (+7)
+          screen_lock: false,       // Risky (+7)
+          public_wifi: true,        // Risky (+6)
+          vpn_on_public: false,     // Risky (+8)
+          router_default_pw: false, // Risky (+9)
+          apps_updated: false,      // Risky (+7)
+          official_stores: false,   // Risky (+8)
+          app_permissions: false    // Risky (+5)
+        };
+      } else if (type === 'typical') {
+        // Typical Remote Worker (~45-55% risk)
+        userProfile = {
+          password_reuse: true,     // Risky (+8)
+          two_factor: true,         // Safe
+          breached_password: false, // Safe
+          email_reused: true,       // Risky (+5)
+          os_updates: true,         // Safe
+          antivirus: true,          // Safe
+          disk_encryption: false,   // Risky (+7)
+          screen_lock: true,        // Safe
+          public_wifi: true,        // Risky (+6)
+          vpn_on_public: false,     // Risky (+8)
+          router_default_pw: true,  // Safe
+          apps_updated: true,       // Safe
+          official_stores: true,    // Safe
+          app_permissions: false    // Risky (+5)
+        };
+      } else if (type === 'fortress') {
+        // Cyber Fortress (0% risk)
+        userProfile = {
+          password_reuse: false,    // Safe
+          two_factor: true,         // Safe
+          breached_password: false, // Safe
+          email_reused: false,      // Safe
+          os_updates: true,         // Safe
+          antivirus: true,          // Safe
+          disk_encryption: true,    // Safe
+          screen_lock: true,        // Safe
+          public_wifi: false,       // Safe
+          vpn_on_public: true,      // Safe
+          router_default_pw: true,  // Safe
+          apps_updated: true,       // Safe
+          official_stores: true,    // Safe
+          app_permissions: true     // Safe
+        };
+      }
+
+      updateDashboard();
+    }
+
+    function resetProfile() {
+      loadPersona('typical');
+    }
+
+    // 10. REPORT EXPORT & CLIPBOARD
+    function generateReportSummary() {
+      const baseOverall = calculateOverallScore(userProfile, {});
+      const band = getRiskBand(baseOverall);
+      const topVulns = getActiveVulnerabilities(userProfile);
+
+      let text = `====================================================\n`;
+      text += `DIGITAL TWIN — CYBERSECURITY RISK PREDICTION REPORT\n`;
+      text += `Morningstar Lab • Rushil S & Nikitha H S\n`;
+      text += `Date: ${new Date().toLocaleString()}\n`;
+      text += `====================================================\n\n`;
+      text += `OVERALL RISK POSTURE: ${baseOverall}/100 (${band.label.toUpperCase()})\n\n`;
+      text += `CATEGORY BREAKDOWN:\n`;
+      CATEGORY_KEYS.forEach(k => {
+        text += `- ${CATEGORY_NAMES[k]}: ${calculateCategoryScore(k, userProfile)}% risk\n`;
+      });
+      text += `\nACTIVE TOP VULNERABILITIES (${topVulns.length} total):\n`;
+      topVulns.slice(0, 5).forEach((v, i) => {
+        text += `${i + 1}. [Weight ${v.weight}/10] ${v.title} (${v.categoryName})\n`;
+        text += `   Remediation: ${v.recommendation}\n`;
+      });
+      text += `\nEngine: Client-Side Digital Twin Threat Predictor v2.4\n`;
+      return text;
+    }
+
+    function copyAssessmentReport() {
+      const text = generateReportSummary();
+      navigator.clipboard.writeText(text).then(() => {
+        const btnText = document.getElementById('copy-report-text');
+        btnText.innerText = 'Copied to Clipboard!';
+        setTimeout(() => {
+          btnText.innerText = 'Copy Risk Report';
+        }, 2500);
+      });
+    }
+
+    function exportJsonData() {
+      const data = {
+        metadata: {
+          app: "Digital Twin — Cybersecurity Risk Predictor",
+          authors: "Rushil S & Nikitha H S",
+          team: "Morningstar",
+          timestamp: new Date().toISOString()
+        },
+        scores: {
+          overall: calculateOverallScore(userProfile),
+          categories: {
+            accounts: calculateCategoryScore('accounts', userProfile),
+            devices: calculateCategoryScore('devices', userProfile),
+            networks: calculateCategoryScore('networks', userProfile),
+            apps: calculateCategoryScore('apps', userProfile)
+          }
+        },
+        profile: userProfile,
+        activeVulnerabilities: getActiveVulnerabilities(userProfile)
+      };
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Cyber_Digital_Twin_Report_${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // 11. INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      initRadarGrid();
+      // Start with Typical User profile
+      loadPersona('typical');
+    });
+  </script>
+</body>
+</html>
