@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-"""
-Digital Twin — Cybersecurity Risk Predictor
-Local Web Server & Telemetry API
-Team: Morningstar (Rushil S & Nikitha H S)
-
-Runs a local zero-dependency HTTP server and opens the application in your browser.
-"""
 
 import os
 import sys
