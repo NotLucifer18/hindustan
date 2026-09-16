@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Twin — Cybersecurity Risk Predictor | Morningstar Command Center</title>
-  <meta name="description" content="Black & Red Cyber Command Center for Digital Twin Cybersecurity Risk Prediction, live attack surface telemetry, animated spider chart, and What-If remediation simulator. Built by Morningstar (Rushil S & Nikitha H S).">
+  <title>Digital Twin — Cybersecurity Threat & Risk Predictor | Morningstar Command</title>
+  <meta name="description" content="Enterprise-grade Digital Twin Cyber Risk Prediction and Attack Surface Modeling platform with 24 telemetry vectors, live animated spider chart, multi-tier What-If remediation bundles, and MITRE ATT&CK threat intelligence. Built by Morningstar (Rushil S & Nikitha H S).">
 
-  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <!-- Fonts: Inter for UI & JetBrains Mono for Telemetry -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,25 +23,25 @@
             mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
+            carbon: {
+              950: '#06070a',
+              900: '#090b10',
+              850: '#0e1118',
+              800: '#141822',
+              700: '#1c2230',
+              600: '#283044',
+              500: '#3b4660'
+            },
             crimson: {
-              950: '#140306',
-              900: '#23060a',
-              850: '#350a11',
-              800: '#520c19',
-              700: '#7f1225',
-              600: '#b91c1c',
+              950: '#1a0407',
+              900: '#2d060c',
+              800: '#4d0b15',
+              700: '#751020',
+              600: '#a3162c',
               500: '#dc2626',
               400: '#ef4444',
-              neon: '#ff1a40',
-              glow: '#ff3355'
-            },
-            dark: {
-              950: '#030407',
-              900: '#07090e',
-              850: '#0b0e17',
-              800: '#101420',
-              700: '#171d2e',
-              600: '#222a42'
+              neon: '#ff2244',
+              bright: '#ff445f'
             }
           }
         }
@@ -50,245 +50,227 @@
   </script>
 
   <style>
-    /* Custom Red & Black Cyber Command Aesthetics */
+    /* Engineering-grade SOC command interface (Anti-AI-Slop Design System) */
+    :root {
+      --bg-canvas: #06070a;
+      --panel-surface: rgba(14, 17, 24, 0.88);
+      --panel-border: #1c2230;
+      --panel-border-hover: #2e374d;
+      --accent-red: #ff2244;
+      --accent-emerald: #10b981;
+    }
+
     body {
-      background-color: #030407;
-      color: #e2e8f0;
+      background-color: var(--bg-canvas);
+      color: #cbd5e1;
       background-image: 
-        radial-gradient(ellipse 90% 50% at 50% -25%, rgba(220, 38, 38, 0.22), transparent),
-        radial-gradient(ellipse 60% 40% at 85% 90%, rgba(185, 28, 28, 0.12), transparent),
+        radial-gradient(circle at 50% 0%, rgba(220, 38, 38, 0.12) 0%, transparent 45%),
         linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      background-size: 100% 100%, 32px 32px, 32px 32px;
       min-height: 100vh;
     }
 
-    /* Glassmorphism Cyber Panels */
-    .cyber-panel {
-      background: rgba(11, 14, 23, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(220, 38, 38, 0.2);
-      box-shadow: 0 10px 35px -10px rgba(0, 0, 0, 0.7);
+    /* Crisp Precision Panels */
+    .soc-panel {
+      background: var(--panel-surface);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .cyber-panel:hover {
-      border-color: rgba(239, 68, 68, 0.45);
+    .soc-panel:hover {
+      border-color: var(--panel-border-hover);
     }
-    .cyber-panel-glow {
-      border-color: rgba(255, 26, 64, 0.6);
-      box-shadow: 0 0 30px -5px rgba(239, 68, 68, 0.35);
-    }
-
-    /* Red Neon Glow Utilities */
-    .glow-red {
-      box-shadow: 0 0 25px -4px rgba(239, 68, 68, 0.5);
-    }
-    .glow-red-sm {
-      box-shadow: 0 0 12px -2px rgba(239, 68, 68, 0.4);
-    }
-    .glow-emerald {
-      box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.5);
-    }
-    .text-glow-red {
-      text-shadow: 0 0 12px rgba(255, 26, 64, 0.7);
+    .soc-panel-danger {
+      border-color: rgba(239, 68, 68, 0.4);
+      background: linear-gradient(180deg, rgba(30, 8, 12, 0.6) 0%, rgba(14, 17, 24, 0.9) 100%);
     }
 
-    /* SVG Radar transitions */
+    /* Sharp Navigation Tabs */
+    .soc-tab {
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #94a3b8;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+    .soc-tab:hover {
+      color: #ffffff;
+      background: #141822;
+      border-color: #283044;
+    }
+    .soc-tab-active {
+      color: #ffffff;
+      background: #181d2a;
+      border-color: #dc2626;
+      box-shadow: 0 0 16px -4px rgba(220, 38, 38, 0.35);
+    }
+
+    /* Radar Chart Smooth Morphing */
     .radar-polygon {
-      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .radar-point {
-      transition: cx 0.45s cubic-bezier(0.16, 1, 0.3, 1), cy 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: cx 0.4s cubic-bezier(0.16, 1, 0.3, 1), cy 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Custom scrollbar */
+    /* Minimalist Technical Scrollbar */
     ::-webkit-scrollbar {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #07090e;
+      background: #090b10;
     }
     ::-webkit-scrollbar-thumb {
-      background: #350a11;
-      border-radius: 4px;
-      border: 1px solid rgba(220, 38, 38, 0.3);
+      background: #1e2536;
+      border-radius: 3px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #7f1225;
+      background: #3b4660;
     }
 
-    /* Navigation Tab Active Indicator */
-    .nav-tab-active {
-      background: linear-gradient(180deg, rgba(220, 38, 38, 0.25) 0%, rgba(185, 28, 28, 0.08) 100%);
-      border-color: #ef4444;
-      color: #ffffff;
-      box-shadow: 0 0 15px -3px rgba(239, 68, 68, 0.4);
-    }
-
-    /* Scanline effect */
-    @keyframes scanline {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(1000%); }
-    }
-    .scanline-overlay {
-      position: relative;
-      overflow: hidden;
-    }
-    .scanline-overlay::after {
-      content: " ";
-      display: block;
-      position: absolute;
-      top: 0; left: 0; bottom: 0; right: 0;
-      background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(220, 38, 38, 0.05) 50%);
-      background-size: 100% 4px;
-      z-index: 2;
-      pointer-events: none;
-      opacity: 0.7;
-    }
-
-    /* Subtle pulse */
-    @keyframes crimson-pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.75; transform: scale(1.03); }
-    }
-    .animate-crimson-pulse {
-      animation: crimson-pulse 2s infinite ease-in-out;
+    /* Subtle Technical LED indicator */
+    .led-pip {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
     }
   </style>
 </head>
-<body class="selection:bg-red-600/30 selection:text-red-200 antialiased min-h-screen flex flex-col">
+<body class="antialiased min-h-screen flex flex-col font-sans selection:bg-crimson-900 selection:text-red-200">
 
-  <!-- ==================== TOP COMMAND HEADER ==================== -->
-  <header class="border-b border-crimson-900/80 bg-dark-950/90 backdrop-blur-2xl sticky top-0 z-50">
+  <!-- ==================== ENTERPRISE SOC TOP HEADER ==================== -->
+  <header class="border-b border-carbon-700 bg-carbon-950/95 sticky top-0 z-50 backdrop-blur-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Top Row: Branding, Persona Quick Presets & Engine Status -->
-      <div class="h-20 flex items-center justify-between border-b border-white/[0.04]">
+      <!-- Primary Brand Bar -->
+      <div class="h-16 flex items-center justify-between border-b border-carbon-800/80">
         
-        <!-- Morningstar Brand & Authors -->
-        <div class="flex items-center space-x-4">
-          <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-crimson-neon via-red-700 to-black p-[1px] shadow-lg shadow-crimson-500/25">
-            <div class="h-full w-full bg-dark-950 rounded-[11px] flex items-center justify-center">
-              <svg class="w-7 h-7 text-crimson-neon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-            </div>
+        <!-- Left: Brand & Telemetry System Identifier -->
+        <div class="flex items-center space-x-3.5">
+          <div class="h-9 w-9 rounded-lg bg-carbon-900 border border-crimson-600/60 flex items-center justify-center text-crimson-neon">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <span class="font-mono text-xs tracking-widest uppercase font-extrabold text-crimson-neon px-2.5 py-0.5 rounded bg-crimson-950/80 border border-crimson-700/60 shadow-sm shadow-red-950">
+              <span class="font-mono text-[10px] uppercase font-bold tracking-widest text-crimson-bright px-1.5 py-0.2 rounded bg-crimson-950 border border-crimson-800/80">
                 MORNINGSTAR
               </span>
-              <span class="text-xs text-red-400/80 font-mono tracking-wider font-semibold">CYBER LABS</span>
+              <span class="text-xs font-semibold text-white tracking-tight">CYBERSECURITY DEFENSE LABS</span>
             </div>
-            <h1 class="text-lg sm:text-xl font-black tracking-tight text-white flex items-center gap-2">
-              Digital Twin <span class="text-xs font-mono font-medium px-2 py-0.5 rounded bg-crimson-950/90 text-red-300 border border-red-900/50">Risk Predictor</span>
-            </h1>
-            <p class="text-[11px] text-slate-400 font-mono">
-              Lead Authors: <span class="text-slate-200 font-semibold">Rushil S &amp; Nikitha H S</span>
-            </p>
+            <div class="text-[11px] text-slate-400 font-mono flex items-center gap-2 mt-0.5">
+              <span>Digital Twin Threat Predictor v2.4</span>
+              <span class="text-slate-600">•</span>
+              <span>Researchers: <strong class="text-slate-300 font-medium">Rushil S &amp; Nikitha H S</strong></span>
+            </div>
           </div>
         </div>
 
-        <!-- Presets Selector (Desktop) -->
-        <div class="hidden lg:flex items-center space-x-2 bg-dark-900/90 p-1.5 rounded-xl border border-red-950/80">
-          <span class="text-[11px] text-red-300/70 font-mono uppercase px-2 font-bold">Presets:</span>
-          <button onclick="loadPersona('high_risk')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-crimson-950/70 hover:bg-crimson-900 text-red-300 border border-crimson-700/60 transition flex items-center gap-1.5 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-crimson-neon animate-ping"></span>
-            High Risk Target
+        <!-- Center/Right: Target Persona Selectors -->
+        <div class="hidden lg:flex items-center space-x-2 font-mono text-xs">
+          <span class="text-slate-400 text-[11px] uppercase tracking-wider mr-1">Target Profile:</span>
+          <button onclick="loadPersona('high_risk')" class="px-2.5 py-1 rounded bg-crimson-950 hover:bg-crimson-900/80 text-red-300 border border-crimson-800/80 transition flex items-center gap-1.5">
+            <span class="led-pip bg-crimson-bright animate-ping"></span>
+            Critical Target
           </button>
-          <button onclick="loadPersona('typical')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-dark-850 hover:bg-dark-800 text-amber-300 border border-amber-800/40 transition flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-            Typical User
+          <button onclick="loadPersona('typical')" class="px-2.5 py-1 rounded bg-carbon-850 hover:bg-carbon-800 text-amber-300 border border-amber-800/50 transition flex items-center gap-1.5">
+            <span class="led-pip bg-amber-400"></span>
+            Typical Remote
           </button>
-          <button onclick="loadPersona('fortress')" class="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-dark-850 hover:bg-dark-800 text-emerald-300 border border-emerald-800/40 transition flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            Fortress
+          <button onclick="loadPersona('fortress')" class="px-2.5 py-1 rounded bg-carbon-850 hover:bg-carbon-800 text-emerald-300 border border-emerald-800/50 transition flex items-center gap-1.5">
+            <span class="led-pip bg-emerald-400"></span>
+            Hardened Fortress
           </button>
-          <button onclick="resetProfile()" class="px-2.5 py-1.5 rounded-lg text-xs font-mono bg-dark-800 hover:bg-dark-700 text-slate-300 transition">
+          <button onclick="resetProfile()" class="px-2 py-1 rounded bg-carbon-800 hover:bg-carbon-700 text-slate-300 border border-carbon-600 transition">
             Reset
           </button>
         </div>
 
-        <!-- Engine Live Badge -->
-        <div class="flex items-center space-x-3">
-          <div class="flex items-center space-x-2 text-[11px] font-mono text-red-400 bg-crimson-950/80 border border-crimson-700/70 px-3 py-1.5 rounded-xl shadow-sm shadow-red-950">
-            <span class="w-2 h-2 rounded-full bg-crimson-neon animate-pulse"></span>
-            <span class="font-bold tracking-wider">DEFCON 1 • CLIENT SECURE</span>
+        <!-- Right: Status Readout -->
+        <div class="flex items-center space-x-2.5 font-mono text-xs">
+          <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-carbon-900 border border-carbon-700 text-slate-300 text-[11px]">
+            <span class="led-pip bg-emerald-400"></span>
+            <span>CLIENT-SIDE ENGINE LIVE</span>
           </div>
         </div>
       </div>
 
-      <!-- Bottom Row: 5 Cyber Navigation Tabs -->
-      <nav class="flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto text-xs sm:text-sm font-mono font-semibold select-none">
-        <button id="tab-btn-overview" onclick="switchPage('overview')" class="nav-tab-active px-3 sm:px-4 py-2 rounded-xl border border-transparent transition flex items-center gap-2 whitespace-nowrap">
-          <span>📊</span>
-          <span>1. Executive Overview</span>
+      <!-- Navigation Bar (5 Specialized SOC Views) -->
+      <nav class="flex items-center space-x-1.5 py-2 overflow-x-auto select-none">
+        <button id="tab-btn-overview" onclick="switchPage('overview')" class="soc-tab soc-tab-active font-mono">
+          <svg class="w-3.5 h-3.5 text-crimson-bright" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          <span>Executive Overview</span>
         </button>
-        <button id="tab-btn-telemetry" onclick="switchPage('telemetry')" class="px-3 sm:px-4 py-2 rounded-xl text-slate-400 hover:text-white border border-transparent hover:border-red-950 transition flex items-center gap-2 whitespace-nowrap">
-          <span>⚙️</span>
-          <span>2. Risk Telemetry (14 Controls)</span>
+        <button id="tab-btn-telemetry" onclick="switchPage('telemetry')" class="soc-tab font-mono">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          <span>Risk Controls (24 Vectors)</span>
         </button>
-        <button id="tab-btn-whatif" onclick="switchPage('whatif')" class="px-3 sm:px-4 py-2 rounded-xl text-slate-400 hover:text-white border border-transparent hover:border-red-950 transition flex items-center gap-2 whitespace-nowrap">
-          <span class="text-crimson-neon animate-pulse">⚡</span>
-          <span>3. What-If Simulator</span>
-          <span id="nav-sim-badge" class="hidden text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-600/50">ACTIVE</span>
+        <button id="tab-btn-whatif" onclick="switchPage('whatif')" class="soc-tab font-mono">
+          <svg class="w-3.5 h-3.5 text-crimson-bright" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>What-If Simulator</span>
+          <span id="nav-sim-badge" class="hidden text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-600/50">ACTIVE</span>
         </button>
-        <button id="tab-btn-threats" onclick="switchPage('threats')" class="px-3 sm:px-4 py-2 rounded-xl text-slate-400 hover:text-white border border-transparent hover:border-red-950 transition flex items-center gap-2 whitespace-nowrap">
-          <span>🎯</span>
-          <span>4. Threat Intelligence</span>
+        <button id="tab-btn-threats" onclick="switchPage('threats')" class="soc-tab font-mono">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+          <span>MITRE ATT&amp;CK Matrix</span>
         </button>
-        <button id="tab-btn-audit" onclick="switchPage('audit')" class="px-3 sm:px-4 py-2 rounded-xl text-slate-400 hover:text-white border border-transparent hover:border-red-950 transition flex items-center gap-2 whitespace-nowrap">
-          <span>📑</span>
-          <span>5. Audit &amp; Compliance</span>
+        <button id="tab-btn-audit" onclick="switchPage('audit')" class="soc-tab font-mono">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Audit &amp; Compliance</span>
         </button>
       </nav>
 
     </div>
 
     <!-- Mobile Preset Bar -->
-    <div class="lg:hidden flex items-center justify-between px-4 py-2 border-t border-red-950/60 bg-dark-900 overflow-x-auto text-xs space-x-2">
-      <span class="text-red-400 font-mono font-bold whitespace-nowrap">Presets:</span>
-      <button onclick="loadPersona('high_risk')" class="px-2.5 py-1 rounded bg-crimson-950 text-red-300 border border-crimson-700/60 whitespace-nowrap font-mono font-semibold">High Risk</button>
-      <button onclick="loadPersona('typical')" class="px-2.5 py-1 rounded bg-dark-850 text-amber-300 border border-amber-800/40 whitespace-nowrap font-mono">Typical</button>
-      <button onclick="loadPersona('fortress')" class="px-2.5 py-1 rounded bg-dark-850 text-emerald-300 border border-emerald-800/40 whitespace-nowrap font-mono">Fortress</button>
-      <button onclick="resetProfile()" class="px-2 py-1 rounded bg-dark-800 text-slate-300 whitespace-nowrap font-mono">Reset</button>
+    <div class="lg:hidden flex items-center justify-between px-4 py-2 border-t border-carbon-800 bg-carbon-900 overflow-x-auto text-xs font-mono space-x-2">
+      <span class="text-slate-400">Presets:</span>
+      <button onclick="loadPersona('high_risk')" class="px-2 py-0.5 rounded bg-crimson-950 text-red-300 border border-crimson-800">Critical</button>
+      <button onclick="loadPersona('typical')" class="px-2 py-0.5 rounded bg-carbon-800 text-amber-300 border border-amber-800">Typical</button>
+      <button onclick="loadPersona('fortress')" class="px-2 py-0.5 rounded bg-carbon-800 text-emerald-300 border border-emerald-800">Fortress</button>
+      <button onclick="resetProfile()" class="px-2 py-0.5 rounded bg-carbon-800 text-slate-300">Reset</button>
     </div>
   </header>
 
-  <!-- ==================== MAIN CONTENT PAGES CONTAINER ==================== -->
+  <!-- ==================== MAIN APPLICATION CONTAINER ==================== -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-1 w-full">
 
-    <!-- GLOBAL ACTIVE WHAT-IF BANNER (Visible on all pages when simulation is engaged) -->
-    <div id="global-sim-alert" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-r from-emerald-950/90 via-dark-900 to-crimson-950/60 border border-emerald-500/60 shadow-lg shadow-emerald-950/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <!-- GLOBAL SIMULATION NOTIFICATION BAR -->
+    <div id="global-sim-alert" class="hidden mb-6 p-4 rounded-xl bg-carbon-900 border border-emerald-500/60 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 font-black text-xl">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-400 font-bold">
           ⚡
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-mono font-bold text-xs uppercase px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-600/60">
-              SIMULATION ACTIVE
-            </span>
-            <span id="global-sim-delta-badge" class="font-mono font-extrabold text-sm text-emerald-400">
-              ▼ -38 Risk Points
-            </span>
+            <span class="text-xs font-bold text-emerald-300">REMEDIATION SIMULATION ACTIVE</span>
+            <span id="global-sim-delta-badge" class="text-xs font-bold text-emerald-400">▼ -0 pts</span>
           </div>
-          <p class="text-xs text-slate-300 mt-0.5">
-            Observing projected posture improvement. Your permanent profile remains unchanged until committed.
-          </p>
+          <p class="text-[11px] text-slate-400">Observing projected security posture. Live form inputs remain unchanged until committed.</p>
         </div>
       </div>
-      <div class="flex items-center gap-2 shrink-0 font-mono text-xs">
-        <button onclick="switchPage('whatif')" class="px-3 py-1.5 rounded-xl bg-dark-800 hover:bg-dark-700 text-slate-200 border border-slate-700 transition">
-          View Simulator
+      <div class="flex items-center gap-2 text-xs">
+        <button onclick="switchPage('whatif')" class="px-3 py-1.5 rounded-lg bg-carbon-800 hover:bg-carbon-700 text-slate-200 border border-carbon-600 transition">
+          View Playbook
         </button>
-        <button onclick="commitSimulatedFixes()" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-dark-950 font-bold transition shadow-md shadow-emerald-600/30">
-          Apply to Profile
+        <button onclick="commitSimulatedFixes()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-carbon-950 font-bold transition">
+          Commit to Profile
         </button>
-        <button onclick="resetWhatIfSimulation()" class="px-2.5 py-1.5 rounded-xl text-slate-400 hover:text-white transition">
-          Dismiss
+        <button onclick="resetWhatIfSimulation()" class="px-2.5 py-1.5 text-slate-400 hover:text-white transition">
+          Reset
         </button>
       </div>
     </div>
@@ -296,192 +278,168 @@
     <!-- ==================== PAGE 1: EXECUTIVE OVERVIEW ==================== -->
     <section id="page-overview" class="space-y-6">
       
-      <!-- Top Metrics Row: Big Score + Quick Telemetry Cards -->
+      <!-- Top Metrics Row -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- Overall Score Card (5 Cols) -->
-        <div class="lg:col-span-5 cyber-panel rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between border-crimson-800/60">
-          <div id="overview-glow" class="absolute -right-16 -top-16 w-56 h-56 rounded-full blur-3xl opacity-25 pointer-events-none bg-crimson-neon transition-all duration-700"></div>
-
+        <!-- Score & Status Card (5 Cols) -->
+        <div class="lg:col-span-5 soc-panel p-6 flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono font-bold uppercase tracking-widest text-red-400/80">Digital Twin Threat Level</span>
-              <span class="text-[11px] font-mono text-slate-400">Composite Risk Model</span>
+            <div class="flex items-center justify-between pb-3 border-b border-carbon-800">
+              <span class="text-xs font-mono uppercase font-bold tracking-wider text-slate-400">Digital Twin Threat Level</span>
+              <span class="text-[11px] font-mono text-slate-500">24 Control Vectors</span>
             </div>
 
-            <!-- Big Number Readout -->
-            <div class="mt-4 flex items-baseline gap-3">
-              <span id="overview-score-number" class="font-mono text-6xl sm:text-7xl font-black tracking-tight text-white transition-colors duration-500 text-glow-red">
+            <div class="mt-5 flex items-baseline gap-3">
+              <span id="overview-score-number" class="font-mono text-6xl font-extrabold tracking-tight text-white transition-colors duration-400">
                 0
               </span>
-              <span class="text-slate-500 font-mono text-2xl font-bold">/100</span>
+              <span class="text-slate-500 font-mono text-2xl font-semibold">/100</span>
             </div>
 
-            <!-- Risk Badge -->
-            <div class="mt-3 flex items-center gap-2">
-              <span id="overview-risk-badge" class="px-3.5 py-1 rounded-full text-xs font-mono font-extrabold uppercase tracking-wider border transition-all duration-300">
+            <div class="mt-3 flex items-center gap-2 font-mono">
+              <span id="overview-risk-badge" class="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider border">
                 Low Risk
               </span>
-              <span id="overview-delta-pill" class="hidden text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-600/50">
+              <span id="overview-delta-pill" class="hidden text-xs font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-700/60">
                 ▼ 0 pts
               </span>
             </div>
 
-            <!-- Score Bands Legend -->
-            <div class="mt-6 pt-4 border-t border-red-950/80 grid grid-cols-3 gap-2 text-[10px] font-mono text-center">
-              <div class="p-2 rounded-xl bg-dark-900 border border-emerald-900/40 text-emerald-400">
+            <!-- Score Scale Gauge -->
+            <div class="mt-6 pt-4 border-t border-carbon-800 grid grid-cols-3 gap-2 text-[10px] font-mono text-center">
+              <div class="p-2 rounded bg-carbon-900 border border-emerald-900/50 text-emerald-400">
                 <div class="font-bold">0 — 30</div>
                 <div class="text-[9px] text-slate-400">HARDENED</div>
               </div>
-              <div class="p-2 rounded-xl bg-dark-900 border border-amber-900/40 text-amber-400">
+              <div class="p-2 rounded bg-carbon-900 border border-amber-900/50 text-amber-400">
                 <div class="font-bold">31 — 60</div>
                 <div class="text-[9px] text-slate-400">ELEVATED</div>
               </div>
-              <div class="p-2 rounded-xl bg-dark-900 border border-crimson-800/40 text-crimson-neon">
+              <div class="p-2 rounded bg-carbon-900 border border-crimson-800/60 text-crimson-bright">
                 <div class="font-bold">61 — 100</div>
                 <div class="text-[9px] text-slate-400">CRITICAL</div>
               </div>
             </div>
           </div>
 
-          <div class="mt-6 flex items-center justify-between pt-4 border-t border-white/[0.05]">
-            <button onclick="switchPage('whatif')" class="w-full py-2.5 rounded-xl font-mono text-xs font-bold bg-crimson-900/70 hover:bg-crimson-800 text-white border border-crimson-600/50 transition flex items-center justify-center gap-2 shadow-md shadow-crimson-950">
-              <span>⚡ Launch "What-If" Simulator</span>
-              <span>→</span>
-            </button>
+          <div class="mt-6 pt-4 border-t border-carbon-800 flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-400">Active Vulnerabilities:</span>
+            <span id="overview-active-vuln-count" class="font-bold text-crimson-bright">0 Detected</span>
           </div>
         </div>
 
-        <!-- 4 Category Surfaces Breakdown (7 Cols) -->
-        <div class="lg:col-span-7 cyber-panel rounded-3xl p-6 border-red-950 flex flex-col justify-between">
+        <!-- 4 Defensive Surfaces Matrix (7 Cols) -->
+        <div class="lg:col-span-7 soc-panel p-6 flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center justify-between pb-3 border-b border-carbon-800 mb-4">
               <div>
-                <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                  <span class="w-2.5 h-2.5 rounded-sm bg-crimson-neon"></span>
-                  Defensive Surface Breakdown
-                </h3>
-                <p class="text-xs text-slate-400">Live risk scores computed across 4 security layers</p>
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-300">Surface Telemetry Matrix</h3>
+                <p class="text-[11px] text-slate-400">Weighted scores across the 4 defensive domains</p>
               </div>
-              <button onclick="switchPage('telemetry')" class="text-xs font-mono text-red-400 hover:text-red-300 underline">
-                Configure 14 Controls →
+              <button onclick="switchPage('telemetry')" class="text-xs font-mono text-crimson-bright hover:underline">
+                Configure 24 Controls →
               </button>
             </div>
 
-            <!-- 4 Cards Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- 4 Grid Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               
               <!-- Accounts -->
-              <div class="p-4 rounded-2xl bg-dark-900/90 border border-red-950/80 hover:border-red-800/60 transition">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-xs font-bold text-slate-200">1. Accounts &amp; Identity</span>
-                  <span id="badge-cat-accounts" class="font-mono font-bold text-xs text-red-400">0%</span>
+              <div class="p-3.5 rounded-lg bg-carbon-900 border border-carbon-800">
+                <div class="flex items-center justify-between mb-1.5 font-mono text-xs">
+                  <span class="font-semibold text-slate-200">1. Identity &amp; Auth</span>
+                  <span id="badge-cat-accounts" class="font-bold text-crimson-bright">0%</span>
                 </div>
-                <div class="w-full bg-dark-800 rounded-full h-2 overflow-hidden mb-2">
-                  <div id="bar-cat-accounts" class="h-full bg-crimson-neon rounded-full transition-all duration-500" style="width: 0%"></div>
+                <div class="w-full bg-carbon-800 rounded-full h-1.5 overflow-hidden mb-2">
+                  <div id="bar-cat-accounts" class="h-full bg-crimson-neon rounded-full transition-all duration-400" style="width: 0%"></div>
                 </div>
-                <p class="text-[11px] text-slate-400">Passwords, 2FA, data breach dumps, and email exposure.</p>
+                <p class="text-[11px] text-slate-400">Passwords, MFA, vault adoption, security questions.</p>
               </div>
 
               <!-- Devices -->
-              <div class="p-4 rounded-2xl bg-dark-900/90 border border-red-950/80 hover:border-red-800/60 transition">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-xs font-bold text-slate-200">2. Endpoint &amp; Devices</span>
-                  <span id="badge-cat-devices" class="font-mono font-bold text-xs text-red-400">0%</span>
+              <div class="p-3.5 rounded-lg bg-carbon-900 border border-carbon-800">
+                <div class="flex items-center justify-between mb-1.5 font-mono text-xs">
+                  <span class="font-semibold text-slate-200">2. Endpoint Integrity</span>
+                  <span id="badge-cat-devices" class="font-bold text-crimson-bright">0%</span>
                 </div>
-                <div class="w-full bg-dark-800 rounded-full h-2 overflow-hidden mb-2">
-                  <div id="bar-cat-devices" class="h-full bg-crimson-neon rounded-full transition-all duration-500" style="width: 0%"></div>
+                <div class="w-full bg-carbon-800 rounded-full h-1.5 overflow-hidden mb-2">
+                  <div id="bar-cat-devices" class="h-full bg-crimson-neon rounded-full transition-all duration-400" style="width: 0%"></div>
                 </div>
-                <p class="text-[11px] text-slate-400">OS patch levels, antivirus, BitLocker, and screen timeout.</p>
+                <p class="text-[11px] text-slate-400">OS patching, antivirus/EDR, BitLocker, 3-2-1 backup.</p>
               </div>
 
               <!-- Networks -->
-              <div class="p-4 rounded-2xl bg-dark-900/90 border border-red-950/80 hover:border-red-800/60 transition">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-xs font-bold text-slate-200">3. Network &amp; Wi-Fi</span>
-                  <span id="badge-cat-networks" class="font-mono font-bold text-xs text-red-400">0%</span>
+              <div class="p-3.5 rounded-lg bg-carbon-900 border border-carbon-800">
+                <div class="flex items-center justify-between mb-1.5 font-mono text-xs">
+                  <span class="font-semibold text-slate-200">3. Network Perimeter</span>
+                  <span id="badge-cat-networks" class="font-bold text-crimson-bright">0%</span>
                 </div>
-                <div class="w-full bg-dark-800 rounded-full h-2 overflow-hidden mb-2">
-                  <div id="bar-cat-networks" class="h-full bg-crimson-neon rounded-full transition-all duration-500" style="width: 0%"></div>
+                <div class="w-full bg-carbon-800 rounded-full h-1.5 overflow-hidden mb-2">
+                  <div id="bar-cat-networks" class="h-full bg-crimson-neon rounded-full transition-all duration-400" style="width: 0%"></div>
                 </div>
-                <p class="text-[11px] text-slate-400">Public Wi-Fi exposure, VPN tunneling, router credentials.</p>
+                <p class="text-[11px] text-slate-400">Public Wi-Fi, VPN, router admin, DNS-over-HTTPS, UPnP.</p>
               </div>
 
               <!-- Apps -->
-              <div class="p-4 rounded-2xl bg-dark-900/90 border border-red-950/80 hover:border-red-800/60 transition">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-xs font-bold text-slate-200">4. Apps &amp; Software</span>
-                  <span id="badge-cat-apps" class="font-mono font-bold text-xs text-red-400">0%</span>
+              <div class="p-3.5 rounded-lg bg-carbon-900 border border-carbon-800">
+                <div class="flex items-center justify-between mb-1.5 font-mono text-xs">
+                  <span class="font-semibold text-slate-200">4. Application Hygiene</span>
+                  <span id="badge-cat-apps" class="font-bold text-crimson-bright">0%</span>
                 </div>
-                <div class="w-full bg-dark-800 rounded-full h-2 overflow-hidden mb-2">
-                  <div id="bar-cat-apps" class="h-full bg-crimson-neon rounded-full transition-all duration-500" style="width: 0%"></div>
+                <div class="w-full bg-carbon-800 rounded-full h-1.5 overflow-hidden mb-2">
+                  <div id="bar-cat-apps" class="h-full bg-crimson-neon rounded-full transition-all duration-400" style="width: 0%"></div>
                 </div>
-                <p class="text-[11px] text-slate-400">App updates, official stores only, and permission review.</p>
+                <p class="text-[11px] text-slate-400">App updates, official sources, browser extensions, macros.</p>
               </div>
 
             </div>
           </div>
 
-          <!-- Bottom Callout -->
-          <div class="mt-4 p-3 rounded-xl bg-dark-950/60 border border-red-950 flex items-center justify-between text-xs font-mono">
-            <span class="text-slate-400">Active Vulnerability Count:</span>
-            <span id="overview-active-vuln-count" class="font-bold text-crimson-neon">0 Active Risks</span>
+          <div class="mt-4 pt-3 border-t border-carbon-800 flex items-center justify-between font-mono text-xs">
+            <span class="text-slate-400">Evaluation Engine:</span>
+            <span class="text-slate-300">Composite Risk Model (Weights 1–10)</span>
           </div>
         </div>
 
       </div>
 
-      <!-- Radar Chart Card (Multidimensional Spider Chart) -->
-      <div class="cyber-panel rounded-3xl p-6 border-red-950 relative">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+      <!-- Radar / Spider Chart -->
+      <div class="soc-panel p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-carbon-800">
           <div>
-            <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-white flex items-center gap-2">
-              <svg class="w-4 h-4 text-crimson-neon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="9" stroke-width="2"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18M3 12h18"/>
-              </svg>
-              Multidimensional Attack Surface (Animated Spider Chart)
+            <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+              <span class="w-2 h-2 rounded bg-crimson-neon"></span>
+              Multidimensional Attack Surface Spider Chart
             </h3>
-            <p class="text-xs text-slate-400">Vector coordinates map risk magnitude across all four operational sectors</p>
+            <p class="text-[11px] text-slate-400">4-Sector Vector Coordinate Representation</p>
           </div>
-          <div class="flex items-center gap-3 text-xs font-mono">
+          <div class="flex items-center gap-4 text-xs font-mono">
             <span class="flex items-center gap-1.5 text-slate-300">
-              <span class="w-2.5 h-2.5 rounded-sm bg-crimson-neon"></span> Current Risk
+              <span class="w-2.5 h-2.5 rounded-sm bg-crimson-bright"></span> Current Attack Surface
             </span>
             <span id="overview-sim-legend" class="hidden flex items-center gap-1.5 text-emerald-400">
-              <span class="w-2.5 h-2.5 rounded-sm bg-emerald-400"></span> Simulated Hardened
+              <span class="w-2.5 h-2.5 rounded-sm bg-emerald-400"></span> Simulated Hardened Posture
             </span>
           </div>
         </div>
 
-        <!-- SVG Radar Display -->
         <div class="w-full flex justify-center items-center py-4">
-          <svg id="radar-svg-overview" viewBox="0 0 400 360" class="w-full max-w-[440px] h-auto overflow-visible select-none">
+          <svg id="radar-svg-overview" viewBox="0 0 400 360" class="w-full max-w-[420px] h-auto overflow-visible select-none font-mono">
             <defs>
-              <!-- Glowing Red Gradient -->
               <radialGradient id="redRadarGradient" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#ff1a40" stop-opacity="0.5" />
-                <stop offset="100%" stop-color="#7f1225" stop-opacity="0.08" />
+                <stop offset="0%" stop-color="#ff2244" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="#a3162c" stop-opacity="0.06" />
               </radialGradient>
-              
-              <!-- Glowing Emerald Gradient for What-If -->
               <radialGradient id="greenRadarGradient" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="#10b981" stop-opacity="0.45" />
-                <stop offset="100%" stop-color="#10b981" stop-opacity="0.08" />
+                <stop offset="100%" stop-color="#059669" stop-opacity="0.06" />
               </radialGradient>
             </defs>
-
-            <!-- Grid Rings -->
             <g id="radar-grid-overview"></g>
-            <!-- Axes Lines -->
             <g id="radar-axes-overview"></g>
-            <!-- Ghost Baseline Polygon -->
-            <polygon id="radar-ghost-overview" class="radar-polygon hidden" fill="none" stroke="#ff1a40" stroke-dasharray="4 3" stroke-width="1.8" stroke-opacity="0.8" />
-            <!-- Active Polygon -->
-            <polygon id="radar-poly-overview" class="radar-polygon" fill="url(#redRadarGradient)" stroke="#ff1a40" stroke-width="2.4" />
-            <!-- Vertices -->
+            <polygon id="radar-ghost-overview" class="radar-polygon hidden" fill="none" stroke="#ff2244" stroke-dasharray="4 3" stroke-width="1.8" stroke-opacity="0.75" />
+            <polygon id="radar-poly-overview" class="radar-polygon" fill="url(#redRadarGradient)" stroke="#ff2244" stroke-width="2.2" />
             <g id="radar-points-overview"></g>
-            <!-- Labels -->
             <g id="radar-labels-overview"></g>
           </svg>
         </div>
@@ -489,22 +447,21 @@
 
     </section>
 
-    <!-- ==================== PAGE 2: RISK PROFILE TELEMETRY ==================== -->
+    <!-- ==================== PAGE 2: RISK PROFILE TELEMETRY (24 CONTROLS) ==================== -->
     <section id="page-telemetry" class="hidden space-y-6">
       
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-red-950">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-carbon-800">
         <div>
-          <h2 class="text-base font-mono font-black uppercase tracking-wider text-white flex items-center gap-2">
-            <span class="text-crimson-neon">⚙️</span>
-            <span>Security Control Telemetry</span>
+          <h2 class="text-sm font-mono font-bold uppercase tracking-wider text-white">
+            Security Control Telemetry (24 Vectors)
           </h2>
-          <p class="text-xs text-slate-400">14 Weighted Defense Controls across 4 Vector Surfaces</p>
+          <p class="text-xs text-slate-400">Configure real-world operational security posture across 4 defensive surfaces</p>
         </div>
-        <div class="flex items-center gap-2 text-xs font-mono">
-          <button onclick="toggleAllAccordions(true)" class="px-3 py-1 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700 transition">
+        <div class="flex items-center gap-2 font-mono text-xs">
+          <button onclick="toggleAllAccordions(true)" class="px-3 py-1 rounded bg-carbon-850 hover:bg-carbon-800 text-slate-300 border border-carbon-700 transition">
             Expand All
           </button>
-          <button onclick="toggleAllAccordions(false)" class="px-3 py-1 rounded-lg bg-dark-850 hover:bg-dark-800 text-slate-300 border border-slate-700 transition">
+          <button onclick="toggleAllAccordions(false)" class="px-3 py-1 rounded bg-carbon-850 hover:bg-carbon-800 text-slate-300 border border-carbon-700 transition">
             Collapse All
           </button>
         </div>
@@ -512,114 +469,132 @@
 
       <!-- Categories Container -->
       <div id="telemetry-categories-container" class="space-y-4">
-        <!-- Rendered dynamically -->
+        <!-- Injected via JavaScript -->
       </div>
 
     </section>
 
-    <!-- ==================== PAGE 3: WHAT-IF CYBER SIMULATOR ==================== -->
+    <!-- ==================== PAGE 3: WHAT-IF CYBER REMEDIATION SIMULATOR ==================== -->
     <section id="page-whatif" class="hidden space-y-6">
       
-      <!-- Top Simulation Control Banner -->
-      <div class="cyber-panel rounded-3xl p-6 border-crimson-800/70 bg-gradient-to-b from-dark-900/90 to-crimson-950/40">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
+      <!-- Top Simulation Control Header -->
+      <div class="soc-panel p-6 border-crimson-800/80">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-carbon-800">
           <div>
             <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded text-xs font-mono font-extrabold uppercase bg-crimson-950 text-crimson-neon border border-crimson-700/60 shadow-sm">
-                CORE DEMO MOMENT
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-crimson-950 text-crimson-bright border border-crimson-800">
+                CORE DEMO WORKSPACE
               </span>
-              <h2 class="text-lg font-black text-white uppercase font-mono tracking-wide flex items-center gap-2">
-                <span>⚡ "What-If" Cyber Remediation Simulator</span>
+              <h2 class="text-base font-mono font-bold text-white uppercase tracking-wide">
+                What-If Attack Surface Remediation Simulator
               </h2>
             </div>
-            <p class="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-              Test immediate defensive countermeasures. Watch the animated spider chart and digital twin score contract live as vulnerabilities are mitigated.
+            <p class="text-xs text-slate-400 mt-1 max-w-2xl leading-relaxed">
+              Model defensive countermeasures before operational execution. Watch the animated spider chart contract live and evaluate projected risk reductions.
             </p>
           </div>
 
-          <!-- Quick Actions -->
-          <div class="flex items-center gap-3 font-mono text-xs">
-            <button id="whatif-btn-all" onclick="toggleAllWhatIfFixes()" class="px-4 py-2.5 rounded-xl font-bold bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-600/60 transition flex items-center gap-2 shadow-md">
-              <span class="text-emerald-400">⚡</span>
-              <span id="whatif-btn-all-label">Simulate All Fixes</span>
+          <div class="flex items-center gap-2 font-mono text-xs">
+            <button id="whatif-btn-commit" onclick="commitSimulatedFixes()" class="hidden px-3.5 py-2 rounded-lg font-bold bg-emerald-600 hover:bg-emerald-500 text-carbon-950 transition">
+              Apply Fixes to Profile
             </button>
-            <button id="whatif-btn-commit" onclick="commitSimulatedFixes()" class="hidden px-4 py-2.5 rounded-xl font-bold bg-crimson-600 hover:bg-crimson-500 text-white transition shadow-lg shadow-crimson-600/30">
-              Apply Fixes Permanently
+            <button onclick="resetWhatIfSimulation()" class="px-3 py-2 rounded-lg bg-carbon-800 hover:bg-carbon-700 text-slate-300 border border-carbon-600 transition">
+              Reset Simulation
             </button>
           </div>
         </div>
 
-        <!-- Comparative Readout Bar -->
-        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-center font-mono">
-          <div class="p-3.5 rounded-2xl bg-dark-950/80 border border-red-950">
-            <div class="text-[11px] text-slate-400 uppercase">Current Baseline Risk</div>
-            <div id="sim-base-score-readout" class="text-2xl font-black text-white mt-1">0/100</div>
-          </div>
-          <div class="p-3.5 rounded-2xl bg-dark-950/80 border border-emerald-950">
-            <div class="text-[11px] text-slate-400 uppercase">Simulated Risk Posture</div>
-            <div id="sim-projected-score-readout" class="text-2xl font-black text-emerald-400 mt-1">0/100</div>
-          </div>
-          <div class="p-3.5 rounded-2xl bg-dark-950/80 border border-cyan-950">
-            <div class="text-[11px] text-slate-400 uppercase">Projected Reduction</div>
-            <div id="sim-points-saved-readout" class="text-2xl font-black text-cyan-400 mt-1">0 pts (0%)</div>
+        <!-- Multi-Level Quick Remediation Bundles -->
+        <div class="mt-4 pt-2">
+          <span class="text-[11px] font-mono uppercase font-bold text-slate-400 tracking-wider">Quick Remediation Bundles:</span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2 font-mono text-xs">
+            
+            <button onclick="applySimulationBundle('max_impact')" class="p-3 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-crimson-700 text-left transition flex flex-col justify-between">
+              <div class="flex items-center justify-between w-full mb-1">
+                <span class="font-bold text-slate-200">⚡ Max Impact Bundle</span>
+                <span class="text-[10px] text-crimson-bright font-bold">Top 3 Risks</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-sans">Mitigates the 3 highest weighted threats for immediate risk reduction.</span>
+            </button>
+
+            <button onclick="applySimulationBundle('quick_wins')" class="p-3 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-amber-700 text-left transition flex flex-col justify-between">
+              <div class="flex items-center justify-between w-full mb-1">
+                <span class="font-bold text-slate-200">⏱️ Zero-Cost Quick Wins</span>
+                <span class="text-[10px] text-amber-400 font-bold">&lt; 5 Minutes</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-sans">Fixes low-friction settings (UPnP, screen timeout, guest Wi-Fi, email alias).</span>
+            </button>
+
+            <button onclick="applySimulationBundle('full_harden')" class="p-3 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-emerald-700 text-left transition flex flex-col justify-between">
+              <div class="flex items-center justify-between w-full mb-1">
+                <span class="font-bold text-slate-200">🛡️ Total Perimeter Hardening</span>
+                <span class="text-[10px] text-emerald-400 font-bold">All Vulnerabilities</span>
+              </div>
+              <span class="text-[11px] text-slate-400 font-sans">Simulates complete mitigation across all 24 security controls.</span>
+            </button>
+
           </div>
         </div>
+
+        <!-- Comparative Metrics Bar -->
+        <div class="mt-4 grid grid-cols-3 gap-3 pt-3 border-t border-carbon-800 text-center font-mono">
+          <div class="p-3 rounded bg-carbon-900/90 border border-carbon-800">
+            <div class="text-[10px] text-slate-400 uppercase font-semibold">Current Baseline</div>
+            <div id="sim-base-score-readout" class="text-xl font-bold text-white mt-1">0/100</div>
+          </div>
+          <div class="p-3 rounded bg-carbon-900/90 border border-carbon-800">
+            <div class="text-[10px] text-slate-400 uppercase font-semibold">Simulated Posture</div>
+            <div id="sim-projected-score-readout" class="text-xl font-bold text-emerald-400 mt-1">0/100</div>
+          </div>
+          <div class="p-3 rounded bg-carbon-900/90 border border-carbon-800">
+            <div class="text-[10px] text-slate-400 uppercase font-semibold">Projected Reduction</div>
+            <div id="sim-points-saved-readout" class="text-xl font-bold text-cyan-400 mt-1">0 pts (0%)</div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Main Simulation Grid (Vulnerabilities List + Dedicated Live Radar) -->
+      <!-- Main Simulation Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- Left: Top Vulnerabilities with Interactive Toggle Switches (7 Cols) -->
-        <div class="lg:col-span-7 space-y-4">
-          <div class="flex items-center justify-between text-xs font-mono text-slate-400">
-            <span class="font-bold text-slate-200">PRIORITIZED ATTACK VECTORS DETECTED</span>
-            <span id="whatif-vuln-count-text" class="text-crimson-neon">3 Active Threats</span>
+        <!-- Left: Vulnerability Playbooks List (7 Cols) -->
+        <div class="lg:col-span-7 space-y-3">
+          <div class="flex items-center justify-between text-xs font-mono text-slate-400 pb-1">
+            <span class="font-bold text-slate-300 uppercase">Prioritized Remediation Playbooks</span>
+            <span id="whatif-vuln-count-text" class="text-crimson-bright font-semibold">0 Active Threats</span>
           </div>
 
-          <!-- List container -->
-          <div id="whatif-vulns-list" class="space-y-3.5">
+          <!-- Injected Playbooks List -->
+          <div id="whatif-playbooks-list" class="space-y-3">
             <!-- Dynamically populated -->
           </div>
 
-          <!-- Zero Vulnerabilities State -->
-          <div id="whatif-zero-state" class="hidden p-8 text-center rounded-2xl bg-emerald-950/30 border border-emerald-600/50">
-            <div class="w-12 h-12 rounded-full bg-emerald-900/60 text-emerald-300 mx-auto flex items-center justify-center text-xl mb-3">
-              ✓
-            </div>
-            <h4 class="text-base font-bold text-emerald-300 font-mono">Zero Critical Vulnerabilities Detected</h4>
-            <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">
-              All 14 security controls are hardened. No attack vectors require remediation.
-            </p>
+          <div id="whatif-zero-state" class="hidden p-8 text-center rounded-xl soc-panel">
+            <div class="text-emerald-400 font-mono font-bold text-sm">All Evaluated Vectors Hardened</div>
+            <p class="text-xs text-slate-400 mt-1">No active vulnerabilities identified in current profile configuration.</p>
           </div>
         </div>
 
-        <!-- Right: Dedicated Live Radar Comparison Display (5 Cols) -->
-        <div class="lg:col-span-5 cyber-panel rounded-3xl p-6 border-red-950 flex flex-col items-center justify-between">
-          <div class="w-full text-center">
-            <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-300">Live Dual-Contour Radar</h4>
-            <p class="text-[11px] text-slate-400">Dashed red = Baseline | Green = Hardened</p>
+        <!-- Right: Live Dual-Contour Radar Display (5 Cols) -->
+        <div class="lg:col-span-5 soc-panel p-6 flex flex-col justify-between">
+          <div class="text-center font-mono">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Live Dual-Contour Radar</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">Dashed red = Baseline • Solid green = Simulated</p>
           </div>
 
-          <!-- Radar SVG Canvas -->
           <div class="w-full flex justify-center py-4">
-            <svg id="radar-svg-sim" viewBox="0 0 400 360" class="w-full max-w-[340px] h-auto overflow-visible select-none">
-              <!-- Grid Rings -->
+            <svg id="radar-svg-sim" viewBox="0 0 400 360" class="w-full max-w-[340px] h-auto overflow-visible select-none font-mono">
               <g id="radar-grid-sim"></g>
-              <!-- Axes Lines -->
               <g id="radar-axes-sim"></g>
-              <!-- Ghost Baseline Polygon -->
-              <polygon id="radar-ghost-sim" class="radar-polygon" fill="none" stroke="#ff1a40" stroke-dasharray="4 3" stroke-width="1.8" stroke-opacity="0.85" />
-              <!-- Active Polygon -->
-              <polygon id="radar-poly-sim" class="radar-polygon" fill="url(#greenRadarGradient)" stroke="#10b981" stroke-width="2.5" />
-              <!-- Vertices -->
+              <polygon id="radar-ghost-sim" class="radar-polygon" fill="none" stroke="#ff2244" stroke-dasharray="4 3" stroke-width="1.8" stroke-opacity="0.85" />
+              <polygon id="radar-poly-sim" class="radar-polygon" fill="url(#greenRadarGradient)" stroke="#10b981" stroke-width="2.4" />
               <g id="radar-points-sim"></g>
-              <!-- Labels -->
               <g id="radar-labels-sim"></g>
             </svg>
           </div>
 
-          <div class="w-full p-3 rounded-xl bg-dark-950/80 border border-emerald-950 text-center text-xs font-mono text-emerald-400">
-            Polygon contracts inward as risk is eliminated
+          <div class="p-2.5 rounded bg-carbon-900 border border-carbon-800 text-center text-xs font-mono text-emerald-400">
+            Contracting polygon reflects risk surface elimination
           </div>
         </div>
 
@@ -627,106 +602,132 @@
 
     </section>
 
-    <!-- ==================== PAGE 4: THREAT INTELLIGENCE MATRIX ==================== -->
+    <!-- ==================== PAGE 4: MITRE ATT&CK THREAT INTELLIGENCE MATRIX ==================== -->
     <section id="page-threats" class="hidden space-y-6">
       
-      <div class="pb-2 border-b border-red-950 flex items-center justify-between">
-        <div>
-          <h2 class="text-base font-mono font-black uppercase tracking-wider text-white flex items-center gap-2">
-            <span class="text-crimson-neon">🎯</span>
-            <span>Threat Vector Exposure Intelligence</span>
-          </h2>
-          <p class="text-xs text-slate-400">Real-world adversary exploitation vectors correlated against your digital twin</p>
+      <div class="pb-3 border-b border-carbon-800">
+        <h2 class="text-sm font-mono font-bold uppercase tracking-wider text-white">
+          MITRE ATT&amp;CK Adversary Intelligence Matrix
+        </h2>
+        <p class="text-xs text-slate-400">Correlates active digital twin misconfigurations with real-world adversary tactics and techniques</p>
+      </div>
+
+      <!-- Cyber Kill Chain Progression Strip -->
+      <div class="soc-panel p-5">
+        <div class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-3">
+          Cyber Kill Chain Exposure Pathway
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 font-mono text-xs">
+          
+          <div id="killchain-step-1" class="p-3 rounded bg-carbon-900 border border-carbon-800 transition">
+            <div class="text-[10px] text-slate-400 font-bold uppercase">Phase 1</div>
+            <div class="font-bold text-white mt-0.5">Initial Access</div>
+            <div id="killchain-step-1-status" class="text-[11px] text-crimson-bright mt-1">EVALUATING</div>
+          </div>
+
+          <div id="killchain-step-2" class="p-3 rounded bg-carbon-900 border border-carbon-800 transition">
+            <div class="text-[10px] text-slate-400 font-bold uppercase">Phase 2</div>
+            <div class="font-bold text-white mt-0.5">Execution &amp; Evasion</div>
+            <div id="killchain-step-2-status" class="text-[11px] text-crimson-bright mt-1">EVALUATING</div>
+          </div>
+
+          <div id="killchain-step-3" class="p-3 rounded bg-carbon-900 border border-carbon-800 transition">
+            <div class="text-[10px] text-slate-400 font-bold uppercase">Phase 3</div>
+            <div class="font-bold text-white mt-0.5">Credential Dumping</div>
+            <div id="killchain-step-3-status" class="text-[11px] text-crimson-bright mt-1">EVALUATING</div>
+          </div>
+
+          <div id="killchain-step-4" class="p-3 rounded bg-carbon-900 border border-carbon-800 transition">
+            <div class="text-[10px] text-slate-400 font-bold uppercase">Phase 4</div>
+            <div class="font-bold text-white mt-0.5">Exfiltration / Impact</div>
+            <div id="killchain-step-4-status" class="text-[11px] text-crimson-bright mt-1">EVALUATING</div>
+          </div>
+
         </div>
       </div>
 
-      <!-- 4 Threat Vectors Detailed Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Adversary Profile Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         
-        <!-- Vector 1: Credential Stuffing -->
-        <div id="threat-card-credential" class="cyber-panel rounded-3xl p-6 border-red-950 transition-all">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-crimson-950 text-crimson-neon border border-crimson-800/60 font-mono text-xs font-bold">T1110</span>
-              <h3 class="text-sm font-bold text-white">Credential Stuffing &amp; Account Takeover</h3>
+        <!-- Actor 1: Initial Access Brokers -->
+        <div id="actor-card-iab" class="soc-panel p-5 border-carbon-800">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2 font-mono">
+              <span class="px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800 text-[10px] font-bold">T1110 / T1078</span>
+              <span class="text-xs font-bold text-white">Initial Access Brokers (IABs)</span>
             </div>
-            <span id="threat-badge-credential" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border">
-              EVALUATING
-            </span>
+            <span id="actor-badge-iab" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border">EVALUATING</span>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Adversaries weaponize billions of leaked credentials from public breach dumps to automate credential spraying bots across banking, email, and cloud providers.
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Specialized threat groups harvest credentials via breach dumps, brute-force dictionary bots, and UPnP gateway traversal to auction enterprise login access on darknet forums.
           </p>
-          <div class="p-3.5 rounded-xl bg-dark-950/80 border border-red-950 text-xs font-mono space-y-1.5">
-            <div class="text-slate-400 text-[11px] uppercase font-bold">Key Defensive Controls:</div>
-            <div class="text-slate-300 flex items-center gap-2"><span>•</span> Unique passwords via vault (Zero reuse)</div>
-            <div class="text-slate-300 flex items-center gap-2"><span>•</span> Hardware/App 2FA (FIDO2 or TOTP)</div>
+          <div class="mt-3 p-2.5 rounded bg-carbon-900 border border-carbon-800 font-mono text-[11px] text-slate-400">
+            <strong class="text-slate-300">Defense Mapping:</strong> Enforce 2FA/MFA, eliminate password reuse, and disable router UPnP.
           </div>
         </div>
 
-        <!-- Vector 2: Ransomware & Malware -->
-        <div id="threat-card-ransomware" class="cyber-panel rounded-3xl p-6 border-red-950 transition-all">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-crimson-950 text-crimson-neon border border-crimson-800/60 font-mono text-xs font-bold">T1204</span>
-              <h3 class="text-sm font-bold text-white">Ransomware &amp; Zero-Day Endpoint Exploitation</h3>
+        <!-- Actor 2: Ransomware Operators -->
+        <div id="actor-card-ransomware" class="soc-panel p-5 border-carbon-800">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2 font-mono">
+              <span class="px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800 text-[10px] font-bold">T1486 / T1204</span>
+              <span class="text-xs font-bold text-white">Ransomware Syndicates (LockBit/BlackCat)</span>
             </div>
-            <span id="threat-badge-ransomware" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border">
-              EVALUATING
-            </span>
+            <span id="actor-badge-ransomware" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border">EVALUATING</span>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Missing kernel security patches and lack of active antivirus detection create avenues for drive-by malware downloads, privilege escalation, and file system encryption.
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Syndicates weaponize unpatched zero-day vulnerabilities in operating systems and office macro loaders to achieve kernel privilege escalation and encrypt localized drive storage.
           </p>
-          <div class="p-3.5 rounded-xl bg-dark-950/80 border border-red-950 text-xs font-mono space-y-1.5">
-            <div class="text-slate-400 text-[11px] uppercase font-bold">Key Defensive Controls:</div>
-            <div class="text-slate-300 flex items-center gap-2"><span>•</span> Continuous OS security updates</div>
-            <div class="text-slate-300 flex items-center gap-2"><span>•</span> Real-time EDR / Windows Defender Active</div>
+          <div class="mt-3 p-2.5 rounded bg-carbon-900 border border-carbon-800 font-mono text-[11px] text-slate-400">
+            <strong class="text-slate-300">Defense Mapping:</strong> Automated 14-day OS patching, 3-2-1 offline backups, and macro block policies.
           </div>
         </div>
 
-        <!-- Vector 3: Man-in-the-Middle -->
-        <div id="threat-card-mitm" class="cyber-panel rounded-3xl p-6 border-red-950 transition-all">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-crimson-950 text-crimson-neon border border-crimson-800/60 font-mono text-xs font-bold">T1557</span>
-              <h3 class="text-sm font-bold text-white">Man-In-The-Middle (MITM) &amp; Wi-Fi Eavesdropping</h3>
+        <!-- Actor 3: Eavesdropping & Rogue AP Actors -->
+        <div id="actor-card-mitm" class="soc-panel p-5 border-carbon-800">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2 font-mono">
+              <span class="px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800 text-[10px] font-bold">T1557 / T1040</span>
+              <span class="text-xs font-bold text-white">Adversary-in-the-Middle (AiTM)</span>
             </div>
-            <span id="threat-badge-mitm" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border">
-              EVALUATING
-            </span>
+            <span id="actor-badge-mitm" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border">EVALUATING</span>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Rogue Wi-Fi access points ("Evil Twin") and factory-default router credentials allow local attackers to intercept unencrypted traffic, inject malicious packets, or poison DNS tables.
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Actors deploy rogue access points ("Evil Twin") in public venues and probe default router administrative passwords to poison local DNS cache and capture session tokens.
           </p>
-          <div class="p-3.5 rounded-xl bg-dark-950/80 border border-red-950 text-xs font-mono space-y-1.5">
-            <div class="text-slate-400 text-[11px] uppercase font-bold">Key Defensive Controls:</div>
-            <div class="text-slate-300 flex items-center gap-2"><span>•</span> Encrypted VPN tunnel on open Wi-Fi</div>
-            <div class="text-slate-300 flex items-center gap-2"><span>•</span> Non-default router admin credentials</div>
+          <div class="mt-3 p-2.5 rounded bg-carbon-900 border border-carbon-800 font-mono text-[11px] text-slate-400">
+            <strong class="text-slate-300">Defense Mapping:</strong> Continuous VPN routing on public Wi-Fi, DNS-over-HTTPS, and modified router credentials.
           </div>
         </div>
 
-        <!-- Vector 4: Supply Chain & Untrusted Apps -->
-        <div id="threat-card-supplychain" class="cyber-panel rounded-3xl p-6 border-red-950 transition-all">
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-crimson-950 text-crimson-neon border border-crimson-800/60 font-mono text-xs font-bold">T1195</span>
-              <h3 class="text-sm font-bold text-white">Supply Chain &amp; Malicious App Permissions</h3>
+        <!-- Actor 4: Infostealer & Supply Chain Malvertising -->
+        <div id="actor-card-infostealer" class="soc-panel p-5 border-carbon-800">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2 font-mono">
+              <span class="px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800 text-[10px] font-bold">T1195 / T1539</span>
+              <span class="text-xs font-bold text-white">Infostealer &amp; Supply Chain Malware</span>
             </div>
-            <span id="threat-badge-supplychain" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border">
-              EVALUATING
-            </span>
+            <span id="actor-badge-infostealer" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border">EVALUATING</span>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Pirated software packages and unverified apps frequently contain embedded remote access trojans (RATs) and background infostealers that harvest browser cookies and crypto wallets.
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Trojanized installers and untrusted browser extensions execute background memory scrapers that exfiltrate browser session cookies, API keys, and crypto wallets.
           </p>
-          <div class="p-3.5 rounded-xl bg-dark-950/80 border border-red-950 text-xs font-mono space-y-1.5">
-            <div class="text-slate-400 text-[11px] uppercase font-bold">Key Defensive Controls:</div>
-            <div class="text-slate-300 flex items-center gap-2"><span>•</span> Official stores &amp; verified signatures only</div>
-            <div class="text-slate-300 flex items-center gap-2"><span>•</span> Regular app permission auditing</div>
+          <div class="mt-3 p-2.5 rounded bg-carbon-900 border border-carbon-800 font-mono text-[11px] text-slate-400">
+            <strong class="text-slate-300">Defense Mapping:</strong> Official developer sources only, browser extension audit, and disabled sideloading.
           </div>
         </div>
 
+      </div>
+
+      <!-- Live Simulated Threat Intelligence Feed -->
+      <div class="soc-panel p-5">
+        <div class="flex items-center justify-between pb-3 border-b border-carbon-800 mb-3">
+          <span class="text-xs font-mono font-bold uppercase text-slate-400 tracking-wider">Simulated Global Threat Telemetry Feed</span>
+          <span class="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5"><span class="led-pip bg-emerald-400"></span> REAL-TIME SYNDICATION</span>
+        </div>
+        <div id="intel-feed-container" class="space-y-2 text-xs font-mono">
+          <!-- Injected dynamically based on active vulnerabilities -->
+        </div>
       </div>
 
     </section>
@@ -734,93 +735,79 @@
     <!-- ==================== PAGE 5: AUDIT & COMPLIANCE REPORT ==================== -->
     <section id="page-audit" class="hidden space-y-6">
       
-      <!-- Executive Cyber Certificate Panel -->
-      <div class="cyber-panel rounded-3xl p-8 border-red-900/60 relative overflow-hidden bg-gradient-to-b from-dark-950 via-dark-900 to-crimson-950/30">
+      <div class="soc-panel p-8 bg-gradient-to-b from-carbon-900 to-carbon-950">
         
-        <!-- Watermark / Stamp -->
-        <div class="absolute right-8 top-8 opacity-10 pointer-events-none font-mono text-8xl font-black text-crimson-neon">
-          SEAL
-        </div>
-
-        <!-- Certificate Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-red-950">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-carbon-800">
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded bg-crimson-950 text-crimson-neon border border-crimson-700/60">
-                OFFICIAL AUDIT REPORT
+              <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800">
+                OFFICIAL AUDIT CERTIFICATE
               </span>
-              <span class="text-xs font-mono text-slate-400">CERT-DT-2026-X</span>
+              <span class="text-[11px] font-mono text-slate-500">ISO/IEC 27001 &amp; NIST CSF MAPPED</span>
             </div>
-            <h2 class="text-2xl font-black text-white tracking-tight mt-1 font-mono uppercase">
-              Digital Twin Security Posture Certificate
+            <h2 class="text-xl font-bold font-mono text-white mt-1 uppercase">
+              Digital Twin Security Posture Attestation
             </h2>
             <p class="text-xs text-slate-400 font-mono">
-              Research Organization: <span class="text-slate-200 font-bold">Morningstar Cyber Labs</span> • Authors: <span class="text-slate-200">Rushil S &amp; Nikitha H S</span>
+              Evaluated by: <span class="text-slate-200 font-bold">Morningstar Defense Labs</span> • Authors: <span class="text-slate-200">Rushil S &amp; Nikitha H S</span>
             </p>
           </div>
           <div class="text-right font-mono">
-            <div class="text-xs text-slate-400">TIMESTAMP</div>
+            <div class="text-[10px] text-slate-500">AUDIT DATE</div>
             <div id="audit-timestamp" class="text-xs text-slate-200 font-bold">2026-09-16</div>
           </div>
         </div>
 
-        <!-- Audit Summary Numbers -->
-        <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-4 font-mono text-center">
-          <div class="p-4 rounded-2xl bg-dark-950/80 border border-red-950">
-            <div class="text-[11px] text-slate-400">OVERALL RISK</div>
-            <div id="audit-overall-score" class="text-3xl font-black text-crimson-neon mt-1">0/100</div>
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-3 font-mono text-center">
+          <div class="p-3.5 rounded bg-carbon-900 border border-carbon-800">
+            <div class="text-[10px] text-slate-500 uppercase">Overall Threat Score</div>
+            <div id="audit-overall-score" class="text-2xl font-black text-crimson-bright mt-1">0/100</div>
           </div>
-          <div class="p-4 rounded-2xl bg-dark-950/80 border border-red-950">
-            <div class="text-[11px] text-slate-400">RISK BAND</div>
-            <div id="audit-risk-band" class="text-lg font-bold text-slate-200 mt-2">Low Risk</div>
+          <div class="p-3.5 rounded bg-carbon-900 border border-carbon-800">
+            <div class="text-[10px] text-slate-500 uppercase">Posture Band</div>
+            <div id="audit-risk-band" class="text-sm font-bold text-slate-200 mt-2">Low Risk</div>
           </div>
-          <div class="p-4 rounded-2xl bg-dark-950/80 border border-red-950">
-            <div class="text-[11px] text-slate-400">CONTROLS AUDITED</div>
-            <div class="text-3xl font-black text-white mt-1">14 / 14</div>
+          <div class="p-3.5 rounded bg-carbon-900 border border-carbon-800">
+            <div class="text-[10px] text-slate-500 uppercase">Audited Vectors</div>
+            <div class="text-2xl font-black text-white mt-1">24 / 24</div>
           </div>
-          <div class="p-4 rounded-2xl bg-dark-950/80 border border-red-950">
-            <div class="text-[11px] text-slate-400">ACTIVE RISKS</div>
-            <div id="audit-active-risks" class="text-3xl font-black text-red-400 mt-1">0</div>
+          <div class="p-3.5 rounded bg-carbon-900 border border-carbon-800">
+            <div class="text-[10px] text-slate-500 uppercase">Active Weaknesses</div>
+            <div id="audit-active-risks" class="text-2xl font-black text-crimson-bright mt-1">0</div>
           </div>
         </div>
 
-        <!-- Category Score Table -->
-        <div class="mt-6 pt-6 border-t border-red-950">
-          <h3 class="text-xs font-mono font-bold uppercase text-slate-400 mb-3">Defensive Layer Evaluation Table</h3>
+        <div class="mt-6 pt-5 border-t border-carbon-800">
+          <h3 class="text-xs font-mono font-bold uppercase text-slate-400 mb-3">Defensive Domain Evaluation Breakdown</h3>
           <div class="overflow-x-auto">
             <table class="w-full text-xs font-mono text-left">
-              <thead class="text-slate-400 border-b border-red-950 bg-dark-950/60">
+              <thead class="text-slate-500 border-b border-carbon-800 bg-carbon-900/60">
                 <tr>
                   <th class="p-2.5">Domain</th>
-                  <th class="p-2.5">Evaluated Controls</th>
-                  <th class="p-2.5">Layer Risk Score</th>
+                  <th class="p-2.5">Vectors</th>
+                  <th class="p-2.5">Domain Risk Score</th>
                   <th class="p-2.5">Status</th>
                 </tr>
               </thead>
-              <tbody id="audit-table-body" class="divide-y divide-red-950/60 text-slate-300">
-                <!-- Dynamically populated -->
+              <tbody id="audit-table-body" class="divide-y divide-carbon-800 text-slate-300">
+                <!-- Injected via JavaScript -->
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- Export Buttons -->
-        <div class="mt-8 pt-6 border-t border-red-950 flex flex-wrap items-center justify-between gap-4">
+        <div class="mt-8 pt-5 border-t border-carbon-800 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
           <div class="flex items-center gap-3">
-            <button onclick="copyAssessmentReport()" class="px-4 py-2 rounded-xl font-mono text-xs font-bold bg-dark-850 hover:bg-dark-800 text-white border border-slate-700 transition flex items-center gap-2">
-              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
+            <button onclick="copyAssessmentReport()" class="px-3.5 py-2 rounded bg-carbon-800 hover:bg-carbon-700 text-slate-200 border border-carbon-600 transition flex items-center gap-2 font-bold">
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
               <span id="audit-copy-btn-text">Copy Executive Summary</span>
             </button>
-            <button onclick="exportJsonData()" class="px-4 py-2 rounded-xl font-mono text-xs font-bold bg-dark-850 hover:bg-dark-800 text-white border border-slate-700 transition flex items-center gap-2">
-              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
+            <button onclick="exportJsonData()" class="px-3.5 py-2 rounded bg-carbon-800 hover:bg-carbon-700 text-slate-200 border border-carbon-600 transition flex items-center gap-2 font-bold">
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
               Export JSON Telemetry
             </button>
           </div>
-          <button onclick="window.print()" class="px-4 py-2 rounded-xl font-mono text-xs font-bold bg-crimson-900/60 hover:bg-crimson-800 text-red-200 border border-crimson-600/50 transition">
+          <button onclick="window.print()" class="px-3.5 py-2 rounded bg-crimson-900 hover:bg-crimson-800 text-red-200 border border-crimson-700 transition font-bold">
             Print Audit Certificate
           </button>
         </div>
@@ -831,259 +818,461 @@
 
   </main>
 
-  <!-- ==================== COMMAND CENTER FOOTER ==================== -->
-  <footer class="border-t border-red-950/80 bg-dark-950/90 py-6 text-xs text-slate-400 font-mono mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center space-x-2">
-        <span class="font-bold text-crimson-neon">MORNINGSTAR CYBERSECURITY COMMAND CENTER</span>
-        <span>•</span>
-        <span>Rushil S &amp; Nikitha H S</span>
+  <!-- ==================== MINIMALIST SOC FOOTER ==================== -->
+  <footer class="border-t border-carbon-800 bg-carbon-950/90 py-4 text-xs font-mono text-slate-500 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="text-slate-300 font-bold">MORNINGSTAR CYBERSECURITY DEFENSE LABS</span> • Rushil S &amp; Nikitha H S
       </div>
-      <div class="flex items-center space-x-4">
-        <span>Engine v2.4.0 (Client-Side)</span>
+      <div class="flex items-center space-x-3">
+        <span>Engine v2.4</span>
         <span>•</span>
-        <span class="text-emerald-400">100% Zero-Leakage In-Memory Engine</span>
+        <span class="text-emerald-400">100% Client-Side In-Memory Evaluation</span>
       </div>
     </div>
   </footer>
 
-  <!-- ==================== JAVASCRIPT STATE ENGINE ==================== -->
+  <!-- ==================== JAVASCRIPT STATE & CALCULATION ENGINE ==================== -->
   <script>
     /**
-     * MORNINGSTAR CYBER COMMAND ENGINE (Black & Red Multi-Page Architecture)
+     * MORNINGSTAR CYBERSECURITY DIGITAL TWIN ENGINE (24-VECTOR ENTERPRISE SPEC)
      * Authors: Rushil S & Nikitha H S
      */
 
-    // 1. SECURITY CONTROLS & WEIGHT MATRIX
+    // 1. EXPANDED SECURITY CONTROLS SPECIFICATION (24 VECTORS)
     const SECURITY_CONTROLS = {
       accounts: {
         id: 'accounts',
-        title: 'Account & Identity Protection',
+        title: 'Identity, Authentication & Credential Hygiene',
+        shortName: 'Accounts',
         icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
         items: [
           {
             id: 'password_reuse',
             title: 'Password Reuse Across Accounts',
-            question: 'Do you reuse identical or similar passwords across multiple online services?',
+            question: 'Do you reuse identical or similar passwords across multiple services?',
             riskyAnswer: true,
             weight: 8,
-            recommendation: 'Deploy a password manager (e.g. Bitwarden, 1Password) to generate unique 16+ char passwords for every domain, neutralizing credential stuffing.',
-            threat: 'Credential Stuffing'
+            mitre: 'T1110.004',
+            mitreMitigation: 'M1027',
+            timeToFix: '15 mins',
+            friction: 'Low',
+            recommendation: 'Use a password vault to generate unique 16+ character passwords for every service to neutralize credential stuffing.',
+            playbook: ['Install a reputable password manager (Bitwarden, 1Password).', 'Export and audit existing passwords.', 'Replace duplicates starting with email and financial portals.']
           },
           {
             id: 'two_factor',
-            title: 'Two-Factor Authentication (2FA)',
-            question: 'Is Two-Factor Authentication (2FA / MFA) enforced on your email and banking accounts?',
+            title: 'Two-Factor Authentication (2FA / MFA)',
+            question: 'Is Two-Factor Authentication enforced on primary email and banking portals?',
             riskyAnswer: false,
             weight: 9,
-            recommendation: 'Enable 2FA (Authenticator App or FIDO2 hardware key) on your primary email and banking portals to block ~99.9% of automated credential takeovers.',
-            threat: 'Account Takeover'
+            mitre: 'T1078',
+            mitreMitigation: 'M1032',
+            timeToFix: '5 mins',
+            friction: 'Low',
+            recommendation: 'Enable TOTP authenticator apps or FIDO2 hardware keys on primary logins to eliminate ~99.9% of automated account takeovers.',
+            playbook: ['Open Security Settings in your Google/Microsoft account.', 'Enable Authenticator App (Aegis, Google Auth, 1Password).', 'Save and store offline backup emergency recovery codes.']
           },
           {
             id: 'breached_password',
             title: 'Known Breached Password in Use',
-            question: 'Do you currently use any password that has previously appeared in a public data breach dump?',
+            question: 'Do you currently use any password that has appeared in a public data breach dump?',
             riskyAnswer: true,
             weight: 10,
-            recommendation: 'Immediately rotate all credentials flagged in public breach dumps; threat actors continuously cycle these in automated dictionary brute-force bots.',
-            threat: 'Instant Account Breach'
+            mitre: 'T1110.003',
+            mitreMitigation: 'M1027',
+            timeToFix: '5 mins',
+            friction: 'Medium',
+            recommendation: 'Immediately rotate all credentials flagged in public breach dumps; threat actors continuously run these in automated dictionary bots.',
+            playbook: ['Verify breached emails on HaveIBeenPwned.', 'Change the compromised password immediately.', 'Revoke all active device sessions for that account.']
           },
           {
             id: 'email_reused',
             title: 'Single Email Handle Across All Sites',
-            question: 'Do you use your primary email address for financial services, social media, and random newsletters?',
+            question: 'Do you use your primary email address for financial services, social media, and newsletters?',
             riskyAnswer: true,
             weight: 5,
-            recommendation: 'Use email aliases (e.g. SimpleLogin, iCloud Hide My Email) to decouple your high-value financial identity from public newsletter exposure.',
-            threat: 'Identity Correlation'
+            mitre: 'T1589.002',
+            mitreMitigation: 'M1016',
+            timeToFix: '3 mins',
+            friction: 'Low',
+            recommendation: 'Use masked email aliases (SimpleLogin, DuckDuckGo, iCloud Hide My Email) to decouple your identity from public newsletter exposure.',
+            playbook: ['Create an email alias service account.', 'Generate unique aliases when signing up for public forums and newsletters.', 'Isolate banking and critical auth to your private primary email.']
+          },
+          {
+            id: 'pwd_manager',
+            title: 'Dedicated Password Vault Utilization',
+            question: 'Do you store credentials in an encrypted zero-knowledge password vault (rather than browser auto-fill or text notes)?',
+            riskyAnswer: false,
+            weight: 7,
+            mitre: 'T1555.003',
+            mitreMitigation: 'M1027',
+            timeToFix: '10 mins',
+            friction: 'Low',
+            recommendation: 'Store secrets in an audited zero-knowledge vault; browser credential caches are routinely harvested by infostealer malware (RedLine, Lumma).',
+            playbook: ['Choose an open-source or audited vault (Bitwarden, KeePassXC).', 'Import browser credentials and clear browser saved passwords.', 'Lock the vault with a strong master passphrase.']
+          },
+          {
+            id: 'sec_questions',
+            title: 'Predictable Security Question Hygiene',
+            question: 'Do you provide truthful personal answers to recovery security questions (e.g. mother’s maiden name, pet’s name)?',
+            riskyAnswer: true,
+            weight: 4,
+            mitre: 'T1586.002',
+            mitreMitigation: 'M1027',
+            timeToFix: '5 mins',
+            friction: 'Low',
+            recommendation: 'Treat security questions as secondary passwords by generating random alphanumeric strings and storing them in your password vault.',
+            playbook: ['Log into account recovery settings.', 'Replace real answers with 24-character random strings generated by your vault.', 'Save the strings in vault secure notes.']
           }
         ]
       },
       devices: {
         id: 'devices',
-        title: 'Endpoint & Device Integrity',
+        title: 'Endpoint Integrity, Storage & Host Security',
+        shortName: 'Devices',
         icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
         items: [
           {
             id: 'os_updates',
-            title: 'Operating System Updates Current',
-            question: 'Is your operating system (Windows/macOS/Linux) configured for automatic security updates and patched within 14 days?',
+            title: 'Automated OS Patching within 14 Days',
+            question: 'Is your operating system set to install security updates automatically and kept patched within 14 days of release?',
             riskyAnswer: false,
             weight: 8,
-            recommendation: 'Turn on automatic OS security updates to patch active zero-day kernel vulnerabilities and privilege escalation chains promptly.',
-            threat: 'OS Zero-Day Exploitation'
+            mitre: 'T1068',
+            mitreMitigation: 'M1051',
+            timeToFix: '5 mins',
+            friction: 'Low',
+            recommendation: 'Enable automatic OS updates to patch known exploited zero-day kernel vulnerabilities before widespread automated exploitation.',
+            playbook: ['Open Windows Update or macOS Software Update.', 'Enable "Automatically keep my device up to date".', 'Restart to apply pending security patches.']
           },
           {
             id: 'antivirus',
-            title: 'Antivirus & Threat Protection Active',
-            question: 'Is active, real-time antivirus or endpoint detection (e.g. Windows Defender, Malwarebytes) enabled?',
+            title: 'Real-Time Antivirus / EDR Active',
+            question: 'Is real-time cloud-delivered threat protection (e.g. Windows Defender, Malwarebytes) active with daily definitions?',
             riskyAnswer: false,
             weight: 6,
-            recommendation: 'Ensure real-time threat protection is active with cloud-delivered intelligence to detect emerging infostealers and spyware.',
-            threat: 'Malware & Infostealers'
+            mitre: 'T1204.002',
+            mitreMitigation: 'M1049',
+            timeToFix: '2 mins',
+            friction: 'Low',
+            recommendation: 'Keep real-time antivirus and cloud protection active to intercept dropped payloads and malicious PowerShell execution chains.',
+            playbook: ['Open Windows Security -> Virus & threat protection.', 'Verify Real-time protection is toggled ON.', 'Run a quick system scan to verify definitions are current.']
           },
           {
             id: 'disk_encryption',
-            title: 'Full-Disk Storage Encryption On',
-            question: 'Is full-disk storage encryption (BitLocker, FileVault, or LUKS) turned on for all internal drives?',
+            title: 'Full-Disk Storage Encryption (BitLocker/FileVault)',
+            question: 'Is full-disk storage encryption active on all internal system drives?',
             riskyAnswer: false,
             weight: 7,
-            recommendation: 'Enable BitLocker or FileVault to ensure stored confidential files cannot be read if the physical device is lost or stolen.',
-            threat: 'Physical Data Theft'
+            mitre: 'T1005',
+            mitreMitigation: 'M1041',
+            timeToFix: '5 mins',
+            friction: 'Low',
+            recommendation: 'Enable BitLocker or FileVault to ensure stored confidential files cannot be extracted offline if the device is lost or stolen.',
+            playbook: ['Search for BitLocker or FileVault in OS settings.', 'Turn on BitLocker/FileVault.', 'Save recovery key securely in your cloud vault or offline backup.']
           },
           {
             id: 'screen_lock',
-            title: 'Device Lock & Biometrics Configured',
-            question: 'Does your device automatically lock within 5 minutes and require a PIN, password, or biometric scan?',
+            title: 'Screen Timeout (< 3 Mins) with Biometrics',
+            question: 'Does your device automatically lock within 3 minutes and require a PIN, passcode, or biometrics to unlock?',
             riskyAnswer: false,
             weight: 7,
-            recommendation: 'Set an automatic screen timeout under 3 minutes with biometric or strong PIN verification to prevent unauthorized physical tampering.',
-            threat: 'Unauthorized Physical Access'
+            mitre: 'T1200',
+            mitreMitigation: 'M1028',
+            timeToFix: '1 min',
+            friction: 'Low',
+            recommendation: 'Set screen lock timeout to under 3 minutes with biometric or strong PIN verification to prevent unauthorized local tampering.',
+            playbook: ['Open Power & Sleep settings.', 'Set "When plugged in, turn off after" to 3 minutes or less.', 'Configure Windows Hello or Touch ID.']
+          },
+          {
+            id: 'backup_321',
+            title: 'Automated 3-2-1 Encrypted Backups',
+            question: 'Do you maintain automated backups following the 3-2-1 rule (3 copies, 2 media, 1 offsite/cloud with encryption)?',
+            riskyAnswer: false,
+            weight: 8,
+            mitre: 'T1486',
+            mitreMitigation: 'M1053',
+            timeToFix: '15 mins',
+            friction: 'Medium',
+            recommendation: 'Maintain immutable or offline backups; it is the single definitive defense against complete data loss from ransomware encryption.',
+            playbook: ['Configure an encrypted cloud backup (OneDrive Personal Vault, Backblaze).', 'Schedule weekly image copies to an external drive.', 'Disconnect the external drive when backup completes.']
+          },
+          {
+            id: 'remote_wipe',
+            title: 'Remote Wipe & Find My Device Enabled',
+            question: 'Is remote location tracking and cryptographic remote wipe capability enabled for this device?',
+            riskyAnswer: false,
+            weight: 5,
+            mitre: 'T1082',
+            mitreMitigation: 'M1041',
+            timeToFix: '2 mins',
+            friction: 'Low',
+            recommendation: 'Enable Find My Device to allow immediate cryptographic wiping of stored user partitions in the event of theft.',
+            playbook: ['Open Settings -> Privacy & Security -> Find my device.', 'Toggle "Find my device" to ON.', 'Verify your account can locate device remotely from browser.']
           }
         ]
       },
       networks: {
         id: 'networks',
-        title: 'Network & Connectivity Surface',
+        title: 'Perimeter, Connectivity & Gateway Surface',
+        shortName: 'Networks',
         icon: 'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0',
         items: [
           {
             id: 'public_wifi',
-            title: 'Frequent Unsecured Public Wi-Fi Use',
-            question: 'Do you routinely connect to public Wi-Fi networks (airports, cafes, hotels, open hotspots)?',
+            title: 'Frequent Unsecured Public Wi-Fi Usage',
+            question: 'Do you regularly connect to public Wi-Fi networks (airports, cafes, open hotspots)?',
             riskyAnswer: true,
             weight: 6,
-            recommendation: 'Avoid conducting sensitive authentication or financial operations over untrusted public Wi-Fi hotspots prone to ARP spoofing.',
-            threat: 'Eavesdropping & MITM'
+            mitre: 'T1557.002',
+            mitreMitigation: 'M1030',
+            timeToFix: '1 min',
+            friction: 'Low',
+            recommendation: 'Avoid conducting sensitive authentication or financial operations over untrusted public Wi-Fi networks prone to ARP spoofing.',
+            playbook: ['Disable "Connect automatically to open hotspots" in Wi-Fi settings.', 'Use mobile hotspot tethering instead of open cafe Wi-Fi.', 'Verify HTTPS padlock on all visited sites.']
           },
           {
             id: 'vpn_on_public',
-            title: 'VPN Active on Public Wi-Fi',
-            question: 'Do you always activate an encrypted Virtual Private Network (VPN) when connecting to untrusted networks?',
+            title: 'Encrypted VPN Active on Untrusted Networks',
+            question: 'Do you route traffic through an encrypted VPN tunnel whenever connected to untrusted networks?',
             riskyAnswer: false,
             weight: 8,
-            recommendation: 'Always route your public internet traffic through an encrypted WireGuard or OpenVPN tunnel to thwart local packet sniffing.',
-            threat: 'Packet Sniffing & Hijacking'
+            mitre: 'T1040',
+            mitreMitigation: 'M1030',
+            timeToFix: '2 mins',
+            friction: 'Low',
+            recommendation: 'Always route untrusted network traffic through an encrypted WireGuard or OpenVPN tunnel to thwart local packet sniffing and sidejacking.',
+            playbook: ['Install a verified VPN client (Mullvad, ProtonVPN, WireGuard).', 'Enable "Auto-connect on untrusted Wi-Fi".', 'Activate Kill Switch to block leaks if connection drops.']
           },
           {
             id: 'router_default_pw',
             title: 'Home Router Default Password Changed',
-            question: 'Have you changed your home Wi-Fi router’s default administrative credentials and WPA2/WPA3 password?',
+            question: 'Have you changed your home Wi-Fi router’s factory default admin login credentials?',
             riskyAnswer: false,
             weight: 9,
-            recommendation: 'Change factory router admin passwords from default ("admin/admin") to prevent remote attackers from re-routing your DNS queries.',
-            threat: 'Router Compromise & DNS Poisoning'
+            mitre: 'T1078.001',
+            mitreMitigation: 'M1027',
+            timeToFix: '5 mins',
+            friction: 'Low',
+            recommendation: 'Change factory router admin credentials from default ("admin/admin") to prevent remote attackers from modifying DNS and routing tables.',
+            playbook: ['Navigate to 192.168.1.1 in browser.', 'Log into router administration console.', 'Change default password to a strong 20-character passphrase.']
+          },
+          {
+            id: 'secure_dns',
+            title: 'Encrypted DNS (DoH / DoT / NextDNS) Configured',
+            question: 'Do you use encrypted DNS resolution (DNS-over-HTTPS or NextDNS) rather than plain unencrypted ISP DNS?',
+            riskyAnswer: false,
+            weight: 6,
+            mitre: 'T1584.008',
+            mitreMitigation: 'M1037',
+            timeToFix: '3 mins',
+            friction: 'Low',
+            recommendation: 'Enable DNS-over-HTTPS in your browser or OS to prevent local network observers from logging domain requests and hijacking queries.',
+            playbook: ['In Chrome/Edge, go to Settings -> Privacy and security -> Security.', 'Under "Use secure DNS", select Cloudflare (1.1.1.1) or NextDNS.', 'Verify encrypted DNS at 1.1.1.1/help.']
+          },
+          {
+            id: 'guest_iot_wifi',
+            title: 'Segmented Guest Subnet for Smart/IoT Devices',
+            question: 'Are smart home appliances, IoT devices, and cameras isolated on a separate guest Wi-Fi subnet?',
+            riskyAnswer: false,
+            weight: 7,
+            mitre: 'T1046',
+            mitreMitigation: 'M1030',
+            timeToFix: '8 mins',
+            friction: 'Low',
+            recommendation: 'Isolate IoT devices on a dedicated guest Wi-Fi network to prevent compromised smart devices from laterally attacking PCs.',
+            playbook: ['Log into home router admin.', 'Enable Guest Wi-Fi Network with client isolation.', 'Connect smart TVs, bulbs, and cameras to Guest Wi-Fi only.']
+          },
+          {
+            id: 'upnp_disabled',
+            title: 'Universal Plug and Play (UPnP) Disabled on Router',
+            question: 'Is Universal Plug and Play (UPnP) turned OFF in your home router settings?',
+            riskyAnswer: false,
+            weight: 7,
+            mitre: 'T1599',
+            mitreMitigation: 'M1030',
+            timeToFix: '3 mins',
+            friction: 'Low',
+            recommendation: 'Disable UPnP on your router; malware on local devices can abuse UPnP to automatically punch port-forwarding holes through your firewall.',
+            playbook: ['Open router settings page.', 'Locate UPnP in Advanced / NAT / Firewall settings.', 'Toggle UPnP to Disabled and click Save.']
           }
         ]
       },
       apps: {
         id: 'apps',
-        title: 'Application & Software Hygiene',
+        title: 'Application, Browser & Supply Chain Hygiene',
+        shortName: 'Apps',
         icon: 'M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7c0-2-1.5-3-3.5-3h-9C5.5 4 4 5 4 7zm0 4h16',
         items: [
           {
             id: 'apps_updated',
-            title: 'Applications Regularly Updated',
-            question: 'Are your browsers, browser extensions, and installed software updated at least monthly?',
+            title: 'Browsers & Software Updated Automatically',
+            question: 'Are web browsers and desktop/mobile applications updated at least monthly?',
             riskyAnswer: false,
             weight: 7,
-            recommendation: 'Enable auto-updates on your primary browsers and prune unmaintained browser extensions that represent supply-chain exposure.',
-            threat: 'Browser & App Exploits'
+            mitre: 'T1190',
+            mitreMitigation: 'M1051',
+            timeToFix: '3 mins',
+            friction: 'Low',
+            recommendation: 'Enable auto-updates across browsers and desktop apps to patch browser sandbox escapes and remote code execution vulnerabilities.',
+            playbook: ['Check browser "About" page to force latest stable update.', 'Enable Microsoft Store / App Store automatic app updates.', 'Uninstall unused software utilities.']
           },
           {
             id: 'official_stores',
-            title: 'Software Installed Strictly from Official Sources',
-            question: 'Do you exclusively install software from verified developer sites or official app stores (avoiding cracked torrents)?',
+            title: 'Software Strictly Installed from Official Sources',
+            question: 'Do you strictly download applications from verified developer sites or official stores (avoiding pirated software)?',
             riskyAnswer: false,
             weight: 8,
-            recommendation: 'Strictly avoid pirated or cracked software torrents, which are the #1 delivery mechanism for persistent trojans and crypto-drainers.',
-            threat: 'Trojanized Software'
+            mitre: 'T1195.002',
+            mitreMitigation: 'M1045',
+            timeToFix: '1 min',
+            friction: 'Low',
+            recommendation: 'Avoid cracked or pirated software; torrented repackaged executables are the primary vehicle for persistent infostealers and rootkits.',
+            playbook: ['Never run cracked games or software keygens.', 'Only download binaries signed with verified digital certificates.', 'Scan downloaded files with VirusTotal before execution.']
           },
           {
             id: 'app_permissions',
-            title: 'Routine Review of App Permissions',
-            question: 'Do you review and restrict mobile and desktop app permissions (microphone, camera, location, contacts)?',
+            title: 'Routine Review of Application Permissions',
+            question: 'Do you routinely review and restrict smartphone and desktop app permissions (microphone, camera, background location)?',
             riskyAnswer: false,
             weight: 5,
-            recommendation: 'Audit app permissions regularly and revoke microphone, location, and accessibility access from non-essential utilities.',
-            threat: 'Permission Creep & Spyware'
+            mitre: 'T1548',
+            mitreMitigation: 'M1026',
+            timeToFix: '5 mins',
+            friction: 'Low',
+            recommendation: 'Audit app permissions regularly and revoke microphone, location, and accessibility privileges from non-essential utilities.',
+            playbook: ['Open Settings -> Privacy -> App Permissions.', 'Review Microphone and Camera permissions.', 'Set location permission to "Only while using app" or Revoke.']
+          },
+          {
+            id: 'browser_extensions',
+            title: 'Browser Extension Audit (Pruned Dormant Addons)',
+            question: 'Have you audited your installed browser extensions and removed unmaintained or unnecessary plugins?',
+            riskyAnswer: false,
+            weight: 6,
+            mitre: 'T1176',
+            mitreMitigation: 'M1021',
+            timeToFix: '4 mins',
+            friction: 'Low',
+            recommendation: 'Prune unused browser extensions; dormant extensions are often sold to malicious operators who push updates containing cookie-stealers.',
+            playbook: ['Navigate to chrome://extensions or edge://extensions.', 'Review all installed plugins.', 'Remove any extension not actively used every week.']
+          },
+          {
+            id: 'no_sideloading',
+            title: 'Developer Mode / Sideloading Disabled',
+            question: 'Are Developer Mode and unknown APK sideloading kept disabled on mobile and production devices?',
+            riskyAnswer: false,
+            weight: 8,
+            mitre: 'T1204.002',
+            mitreMitigation: 'M1045',
+            timeToFix: '2 mins',
+            friction: 'Low',
+            recommendation: 'Keep developer debugging and unknown APK sideloading disabled to prevent unverified apps from bypassing OS sandbox security checks.',
+            playbook: ['Open phone Settings -> Security.', 'Verify "Install unknown apps" is disallowed for browsers.', 'Ensure USB Debugging is turned OFF.']
+          },
+          {
+            id: 'macro_disabled',
+            title: 'Office Document Macro Execution Blocked',
+            question: 'Is automatic macro execution in downloaded Word/Excel documents disabled by policy?',
+            riskyAnswer: false,
+            weight: 7,
+            mitre: 'T1204.002',
+            mitreMitigation: 'M1042',
+            timeToFix: '2 mins',
+            friction: 'Low',
+            recommendation: 'Block VBA macros in downloaded office documents; malicious macro attachments remain a primary vector for initial corporate intrusion.',
+            playbook: ['Open Microsoft Office Trust Center.', 'Select Macro Settings.', 'Choose "Disable all macros with notification".']
           }
         ]
       }
     };
 
-    // 2. STATE STORE
+    // 2. UNIFIED REACTIVE STATE STORE
     let userProfile = {
+      // Accounts (6)
       password_reuse: false,
       two_factor: true,
       breached_password: false,
       email_reused: false,
+      pwd_manager: true,
+      sec_questions: false,
+      // Devices (6)
       os_updates: true,
       antivirus: true,
       disk_encryption: true,
       screen_lock: true,
+      backup_321: true,
+      remote_wipe: true,
+      // Networks (6)
       public_wifi: false,
       vpn_on_public: true,
       router_default_pw: true,
+      secure_dns: true,
+      guest_iot_wifi: true,
+      upnp_disabled: true,
+      // Apps (6)
       apps_updated: true,
       official_stores: true,
-      app_permissions: true
+      app_permissions: true,
+      browser_extensions: true,
+      no_sideloading: true,
+      macro_disabled: true
     };
 
     let whatIfFixes = {};
     let openAccordions = { accounts: true, devices: true, networks: true, apps: true };
     let activePage = 'overview';
 
-    // Radar Chart Geometry
+    // Radar Geometry Settings
     const RADAR_CX = 200;
     const RADAR_CY = 180;
     const RADAR_RADIUS = 115;
     const CATEGORY_KEYS = ['accounts', 'devices', 'networks', 'apps'];
     const CATEGORY_NAMES = {
-      accounts: 'Accounts',
-      devices: 'Devices',
-      networks: 'Networks',
-      apps: 'Apps'
+      accounts: 'Identity & Auth',
+      devices: 'Endpoint Integrity',
+      networks: 'Network Perimeter',
+      apps: 'App Hygiene'
     };
     const ANGLES = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
 
     let displayedScore = 0;
     let scoreAnimTimer = null;
 
-    // 3. SCORING ENGINE
+    // 3. SCORING ALGORITHM
     function calculateCategoryScore(catId, profileToUse = userProfile, appliedFixes = {}) {
       const cat = SECURITY_CONTROLS[catId];
       if (!cat) return 0;
-      let total = 0, active = 0;
+      let totalWeight = 0, activeWeight = 0;
       cat.items.forEach(item => {
-        total += item.weight;
+        totalWeight += item.weight;
         const isRisky = (profileToUse[item.id] === item.riskyAnswer);
         if (isRisky && !appliedFixes[item.id]) {
-          active += item.weight;
+          activeWeight += item.weight;
         }
       });
-      return total === 0 ? 0 : Math.round((active / total) * 100);
+      return totalWeight === 0 ? 0 : Math.round((activeWeight / totalWeight) * 100);
     }
 
     function calculateOverallScore(profileToUse = userProfile, appliedFixes = {}) {
-      let total = 0, active = 0;
+      let totalWeight = 0, activeWeight = 0;
       Object.values(SECURITY_CONTROLS).forEach(cat => {
         cat.items.forEach(item => {
-          total += item.weight;
+          totalWeight += item.weight;
           const isRisky = (profileToUse[item.id] === item.riskyAnswer);
           if (isRisky && !appliedFixes[item.id]) {
-            active += item.weight;
+            activeWeight += item.weight;
           }
         });
       });
-      return total === 0 ? 0 : Math.round((active / total) * 100);
+      return totalWeight === 0 ? 0 : Math.round((activeWeight / totalWeight) * 100);
     }
 
     function getRiskBand(score) {
       if (score <= 30) {
         return {
           band: 'Low',
-          label: 'Low Risk',
+          label: 'Hardened Posture',
           color: '#10b981',
           borderClass: 'border-emerald-700/60',
           badgeClass: 'bg-emerald-950 text-emerald-300 border-emerald-600/60'
@@ -1091,7 +1280,7 @@
       } else if (score <= 60) {
         return {
           band: 'Medium',
-          label: 'Medium Risk',
+          label: 'Elevated Threat',
           color: '#f59e0b',
           borderClass: 'border-amber-700/60',
           badgeClass: 'bg-amber-950 text-amber-300 border-amber-600/60'
@@ -1099,10 +1288,10 @@
       } else {
         return {
           band: 'High',
-          label: 'High Threat Exposure',
-          color: '#ff1a40',
-          borderClass: 'border-crimson-700/80',
-          badgeClass: 'bg-crimson-950 text-crimson-neon border-crimson-700/80 font-black'
+          label: 'Critical Vulnerability',
+          color: '#ff2244',
+          borderClass: 'border-crimson-800',
+          badgeClass: 'bg-crimson-950 text-crimson-bright border-crimson-700'
         };
       }
     }
@@ -1124,38 +1313,25 @@
       return activeList;
     }
 
-    // 4. MULTI-PAGE NAVIGATION
+    // 4. NAVIGATION TAB SWITCHER
     function switchPage(pageId) {
       activePage = pageId;
       const pages = ['overview', 'telemetry', 'whatif', 'threats', 'audit'];
-      
       pages.forEach(p => {
         const pageEl = document.getElementById(`page-${p}`);
         const tabBtn = document.getElementById(`tab-btn-${p}`);
         if (pageEl) {
-          if (p === pageId) {
-            pageEl.classList.remove('hidden');
-          } else {
-            pageEl.classList.add('hidden');
-          }
+          pageEl.className = (p === pageId) ? 'space-y-6' : 'hidden space-y-6';
         }
         if (tabBtn) {
-          if (p === pageId) {
-            tabBtn.className = 'nav-tab-active px-3 sm:px-4 py-2 rounded-xl border border-transparent transition flex items-center gap-2 whitespace-nowrap';
-          } else {
-            tabBtn.className = 'px-3 sm:px-4 py-2 rounded-xl text-slate-400 hover:text-white border border-transparent hover:border-red-950 transition flex items-center gap-2 whitespace-nowrap';
-          }
+          tabBtn.className = (p === pageId) ? 'soc-tab soc-tab-active font-mono' : 'soc-tab font-mono';
         }
       });
-
-      // Scroll top smoothly
       window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Refresh page specific views
       updateAllViews();
     }
 
-    // 5. WHAT-IF SIMULATOR CONTROLS
+    // 5. WHAT-IF REMEDIATION SIMULATION CONTROLS
     function toggleWhatIfFix(controlId) {
       if (whatIfFixes[controlId]) {
         delete whatIfFixes[controlId];
@@ -1165,13 +1341,23 @@
       updateAllViews();
     }
 
-    function toggleAllWhatIfFixes() {
-      const top3 = getActiveVulnerabilities(userProfile).slice(0, 3);
-      const allActive = top3.every(v => whatIfFixes[v.id]);
-      if (allActive) {
+    function applySimulationBundle(bundleType) {
+      const activeVulns = getActiveVulnerabilities(userProfile);
+      if (bundleType === 'max_impact') {
         whatIfFixes = {};
-      } else {
-        top3.forEach(v => { whatIfFixes[v.id] = true; });
+        activeVulns.slice(0, 3).forEach(v => { whatIfFixes[v.id] = true; });
+      } else if (bundleType === 'quick_wins') {
+        whatIfFixes = {};
+        const quickWinIds = ['upnp_disabled', 'screen_lock', 'email_reused', 'guest_iot_wifi', 'sec_questions', 'secure_dns'];
+        activeVulns.forEach(v => {
+          if (quickWinIds.includes(v.id)) whatIfFixes[v.id] = true;
+        });
+        if (Object.keys(whatIfFixes).length === 0 && activeVulns.length > 0) {
+          whatIfFixes[activeVulns[0].id] = true;
+        }
+      } else if (bundleType === 'full_harden') {
+        whatIfFixes = {};
+        activeVulns.forEach(v => { whatIfFixes[v.id] = true; });
       }
       updateAllViews();
     }
@@ -1211,7 +1397,7 @@
       renderTelemetryPage();
     }
 
-    // 6. VIEW RENDERING & RADAR GENERATION
+    // 6. HIGH-PERFORMANCE RADAR SPIDER GENERATOR
     function getCoordinates(value, angle) {
       const distance = 10 + (value / 100) * (RADAR_RADIUS - 10);
       return {
@@ -1240,8 +1426,8 @@
 
         const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
         polygon.setAttribute('points', points);
-        polygon.setAttribute('fill', idx === rings.length - 1 ? 'rgba(255,255,255,0.015)' : 'none');
-        polygon.setAttribute('stroke', 'rgba(220, 38, 38, 0.15)');
+        polygon.setAttribute('fill', idx === rings.length - 1 ? 'rgba(255,255,255,0.012)' : 'none');
+        polygon.setAttribute('stroke', 'rgba(255, 255, 255, 0.08)');
         polygon.setAttribute('stroke-width', '1');
         polygon.setAttribute('stroke-dasharray', idx === rings.length - 1 ? 'none' : '2 2');
         gridG.appendChild(polygon);
@@ -1249,14 +1435,13 @@
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.setAttribute('x', (RADAR_CX + 6).toString());
         text.setAttribute('y', (RADAR_CY - (pct * RADAR_RADIUS) + 4).toString());
-        text.setAttribute('fill', 'rgba(239, 68, 68, 0.4)');
+        text.setAttribute('fill', 'rgba(148, 163, 184, 0.35)');
         text.setAttribute('font-size', '8');
-        text.setAttribute('font-family', 'JetBrains Mono, monospace');
         text.textContent = `${Math.round(pct * 100)}%`;
         gridG.appendChild(text);
       });
 
-      // Axis lines & labels
+      // Axis spokes & Category Labels
       CATEGORY_KEYS.forEach((catId, idx) => {
         const angle = ANGLES[idx];
         const endX = RADAR_CX + RADAR_RADIUS * Math.cos(angle);
@@ -1267,11 +1452,11 @@
         line.setAttribute('y1', RADAR_CY.toString());
         line.setAttribute('x2', endX.toString());
         line.setAttribute('y2', endY.toString());
-        line.setAttribute('stroke', 'rgba(220, 38, 38, 0.25)');
+        line.setAttribute('stroke', 'rgba(255, 255, 255, 0.12)');
         line.setAttribute('stroke-width', '1');
         axesG.appendChild(line);
 
-        const labelDist = RADAR_RADIUS + 25;
+        const labelDist = RADAR_RADIUS + 24;
         const lx = RADAR_CX + labelDist * Math.cos(angle);
         const ly = RADAR_CY + labelDist * Math.sin(angle);
 
@@ -1280,9 +1465,8 @@
         text.setAttribute('x', lx.toString());
         text.setAttribute('y', ly.toString());
         text.setAttribute('fill', '#94a3b8');
-        text.setAttribute('font-size', '11');
+        text.setAttribute('font-size', '10.5');
         text.setAttribute('font-weight', '600');
-        text.setAttribute('font-family', 'Inter, sans-serif');
         text.setAttribute('text-anchor', angle === 0 ? 'start' : (angle === Math.PI ? 'end' : 'middle'));
         text.setAttribute('dominant-baseline', angle === -Math.PI / 2 ? 'auto' : (angle === Math.PI / 2 ? 'hanging' : 'middle'));
         text.textContent = CATEGORY_NAMES[catId];
@@ -1315,8 +1499,8 @@
         }
       } else {
         activePoly.setAttribute('fill', 'url(#redRadarGradient)');
-        activePoly.setAttribute('stroke', '#ff1a40');
-        activePoly.setAttribute('stroke-width', '2.4');
+        activePoly.setAttribute('stroke', '#ff2244');
+        activePoly.setAttribute('stroke-width', '2.2');
         if (ghostPoly) ghostPoly.classList.add('hidden');
       }
 
@@ -1329,9 +1513,9 @@
         circle.setAttribute('class', 'radar-point');
         circle.setAttribute('cx', coord.x.toFixed(1));
         circle.setAttribute('cy', coord.y.toFixed(1));
-        circle.setAttribute('r', '4.5');
-        circle.setAttribute('fill', isSimulating ? '#10b981' : '#ff1a40');
-        circle.setAttribute('stroke', '#07090e');
+        circle.setAttribute('r', '4');
+        circle.setAttribute('fill', isSimulating ? '#10b981' : '#ff2244');
+        circle.setAttribute('stroke', '#06070a');
         circle.setAttribute('stroke-width', '2');
         pointsG.appendChild(circle);
 
@@ -1343,7 +1527,7 @@
       });
     }
 
-    // 7. COMPONENT UPDATERS
+    // 7. COMPONENT RENDERERS
     function animateScoreDisplay(elemId, targetScore) {
       const el = document.getElementById(elemId);
       if (!el) return;
@@ -1380,51 +1564,52 @@
         const band = getRiskBand(catScore);
 
         const card = document.createElement('div');
-        card.className = 'cyber-panel rounded-2xl overflow-hidden border border-red-950/80 transition-all';
+        card.className = 'soc-panel overflow-hidden transition-all';
         card.innerHTML = `
-          <div class="p-4 flex items-center justify-between cursor-pointer select-none bg-dark-900/60 hover:bg-dark-900 transition" onclick="toggleAccordion('${cat.id}')">
+          <div class="p-4 flex items-center justify-between cursor-pointer select-none bg-carbon-900/60 hover:bg-carbon-900 transition" onclick="toggleAccordion('${cat.id}')">
             <div class="flex items-center space-x-3">
-              <div class="p-2 rounded-xl bg-crimson-950 text-crimson-neon border border-crimson-800/60">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="p-2 rounded bg-carbon-850 text-crimson-bright border border-carbon-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${cat.icon}"/>
                 </svg>
               </div>
               <div>
-                <h3 class="text-sm font-bold text-white tracking-wide font-mono">${cat.title}</h3>
-                <span class="text-[11px] text-slate-400 font-mono">${cat.items.length} Controls Evaluated</span>
+                <h3 class="text-xs font-bold text-white uppercase tracking-wider font-mono">${cat.title}</h3>
+                <span class="text-[11px] text-slate-400 font-mono">${cat.items.length} Controls Mapped</span>
               </div>
             </div>
 
-            <div class="flex items-center space-x-3">
-              <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold ${band.badgeClass} border">
+            <div class="flex items-center space-x-3 font-mono">
+              <span class="px-2 py-0.5 rounded text-xs font-bold ${band.badgeClass} border">
                 ${catScore}% Risk
               </span>
-              <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </div>
 
-          <div class="${isOpen ? 'block' : 'hidden'} p-4 pt-2 border-t border-red-950/60 space-y-3 bg-dark-950/40">
+          <div class="${isOpen ? 'block' : 'hidden'} p-4 pt-1 border-t border-carbon-800 space-y-2.5 bg-carbon-950/40">
             ${cat.items.map(item => {
               const currentVal = userProfile[item.id];
               const isRisky = (currentVal === item.riskyAnswer);
               return `
-                <div class="p-3.5 rounded-xl border ${isRisky ? 'border-crimson-800/60 bg-crimson-950/20' : 'border-dark-700 bg-dark-900/50'} flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition">
+                <div class="p-3 rounded-lg border ${isRisky ? 'border-crimson-900/80 bg-crimson-950/20' : 'border-carbon-800 bg-carbon-900/40'} flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition">
                   <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="text-xs font-bold text-slate-200">${item.title}</span>
-                      <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-dark-800 text-slate-400">Weight: ${item.weight}/10</span>
-                      ${isRisky ? '<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-crimson-950 text-crimson-neon border border-crimson-700/80 font-bold">VULNERABLE</span>' : '<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700/60 font-bold">HARDENED</span>'}
+                    <div class="flex flex-wrap items-center gap-2 mb-1 font-mono">
+                      <span class="text-xs font-semibold text-slate-200">${item.title}</span>
+                      <span class="text-[10px] px-1.5 py-0.2 rounded bg-carbon-800 text-slate-400 border border-carbon-700">Weight ${item.weight}/10</span>
+                      <span class="text-[10px] px-1.5 py-0.2 rounded bg-carbon-800 text-slate-400 border border-carbon-700">${item.mitre}</span>
+                      ${isRisky ? '<span class="text-[10px] px-1.5 py-0.2 rounded bg-crimson-950 text-crimson-bright border border-crimson-800 font-bold">VULNERABLE</span>' : '<span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">HARDENED</span>'}
                     </div>
                     <p class="text-[11px] text-slate-400 leading-snug">${item.question}</p>
                   </div>
 
-                  <div class="flex items-center space-x-2 self-end sm:self-center font-mono text-xs">
-                    <button type="button" onclick="setAnswer('${item.id}', true)" class="px-3.5 py-1.5 rounded-lg border font-bold transition ${currentVal === true ? 'bg-crimson-600 text-white border-crimson-500 shadow-md shadow-crimson-600/40' : 'bg-dark-800 text-slate-400 border-dark-700 hover:text-white'}">
+                  <div class="flex items-center space-x-1.5 self-end sm:self-center font-mono text-xs">
+                    <button type="button" onclick="setAnswer('${item.id}', true)" class="px-3 py-1 rounded border font-semibold transition ${currentVal === true ? 'bg-crimson-600 text-white border-crimson-500' : 'bg-carbon-800 text-slate-400 border-carbon-700 hover:text-white'}">
                       Yes
                     </button>
-                    <button type="button" onclick="setAnswer('${item.id}', false)" class="px-3.5 py-1.5 rounded-lg border font-bold transition ${currentVal === false ? 'bg-crimson-600 text-white border-crimson-500 shadow-md shadow-crimson-600/40' : 'bg-dark-800 text-slate-400 border-dark-700 hover:text-white'}">
+                    <button type="button" onclick="setAnswer('${item.id}', false)" class="px-3 py-1 rounded border font-semibold transition ${currentVal === false ? 'bg-crimson-600 text-white border-crimson-500' : 'bg-carbon-800 text-slate-400 border-carbon-700 hover:text-white'}">
                       No
                     </button>
                   </div>
@@ -1438,23 +1623,20 @@
     }
 
     function renderWhatIfPage(baseScore, simScore, isSimulating) {
-      const listContainer = document.getElementById('whatif-vulns-list');
+      const playbooksList = document.getElementById('whatif-playbooks-list');
       const zeroState = document.getElementById('whatif-zero-state');
       const countText = document.getElementById('whatif-vuln-count-text');
-      const btnAllLabel = document.getElementById('whatif-btn-all-label');
       const btnCommit = document.getElementById('whatif-btn-commit');
 
-      // Score readouts
       document.getElementById('sim-base-score-readout').innerText = `${baseScore}/100`;
       document.getElementById('sim-projected-score-readout').innerText = `${simScore}/100`;
-      
       const drop = baseScore - simScore;
       const pct = baseScore > 0 ? Math.round((drop / baseScore) * 100) : 0;
       document.getElementById('sim-points-saved-readout').innerText = `▼ ${drop} pts (${pct}%)`;
 
-      const top3 = getActiveVulnerabilities(userProfile).slice(0, 3);
-      if (top3.length === 0) {
-        listContainer.innerHTML = '';
+      const activeVulns = getActiveVulnerabilities(userProfile);
+      if (activeVulns.length === 0) {
+        playbooksList.innerHTML = '';
         zeroState.classList.remove('hidden');
         countText.innerText = '0 Active Threats';
         btnCommit.classList.add('hidden');
@@ -1462,43 +1644,47 @@
       }
 
       zeroState.classList.add('hidden');
-      countText.innerText = `${top3.length} High-Impact Threats Identified`;
+      countText.innerText = `${activeVulns.length} Active Threat Vectors`;
+      if (isSimulating) btnCommit.classList.remove('hidden'); else btnCommit.classList.add('hidden');
 
-      const allSimulated = top3.every(v => whatIfFixes[v.id]);
-      btnAllLabel.innerText = allSimulated ? 'Reset Simulation' : 'Simulate All Fixes';
-
-      if (isSimulating) {
-        btnCommit.classList.remove('hidden');
-      } else {
-        btnCommit.classList.add('hidden');
-      }
-
-      listContainer.innerHTML = top3.map((vuln, idx) => {
+      playbooksList.innerHTML = activeVulns.map((vuln, idx) => {
         const isSim = !!whatIfFixes[vuln.id];
         return `
-          <div class="cyber-panel rounded-2xl p-5 border transition-all duration-300 ${isSim ? 'border-emerald-500/70 bg-emerald-950/20 shadow-lg shadow-emerald-950/40' : 'border-red-950 bg-dark-900/80'}">
-            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div class="soc-panel p-4 border transition-all ${isSim ? 'border-emerald-500/70 bg-emerald-950/20' : 'border-carbon-800 bg-carbon-900/80'}">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
               <div class="flex-1">
-                <div class="flex flex-wrap items-center gap-2 mb-2">
-                  <span class="w-5 h-5 rounded-md bg-crimson-950 text-crimson-neon font-mono text-xs flex items-center justify-center font-black">#${idx + 1}</span>
-                  <span class="text-xs font-mono font-extrabold px-2.5 py-0.5 rounded bg-crimson-950 text-crimson-neon border border-crimson-700/80">
-                    Impact Weight ${vuln.weight}/10
+                <div class="flex flex-wrap items-center gap-2 mb-1.5 font-mono">
+                  <span class="w-4 h-4 rounded bg-carbon-800 text-slate-300 text-[10px] flex items-center justify-center font-bold">#${idx + 1}</span>
+                  <span class="text-[10px] font-bold px-2 py-0.2 rounded bg-crimson-950 text-crimson-bright border border-crimson-800">
+                    Impact: ${vuln.weight}/10
                   </span>
-                  <span class="text-xs font-mono px-2 py-0.5 rounded bg-dark-800 text-slate-300">
-                    ${vuln.categoryName}
+                  <span class="text-[10px] px-2 py-0.2 rounded bg-carbon-800 text-slate-300 border border-carbon-700">
+                    MITRE ${vuln.mitre} (${vuln.mitreMitigation})
                   </span>
-                  ${isSim ? '<span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-600/60 animate-pulse">SIMULATION ACTIVE</span>' : ''}
+                  <span class="text-[10px] px-2 py-0.2 rounded bg-carbon-800 text-slate-400">
+                    ⏱️ ${vuln.timeToFix}
+                  </span>
+                  <span class="text-[10px] px-2 py-0.2 rounded bg-carbon-800 text-slate-400">
+                    Friction: ${vuln.friction}
+                  </span>
+                  ${isSim ? '<span class="text-[10px] font-bold px-2 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-600 animate-pulse">SIMULATED</span>' : ''}
                 </div>
 
-                <h4 class="text-sm font-bold text-white mb-1.5 font-mono">${vuln.title}</h4>
-                <div class="text-xs text-slate-300 leading-relaxed bg-dark-950/80 p-3 rounded-xl border border-red-950 font-sans">
-                  <strong class="text-crimson-neon font-mono">Adversary Tactic:</strong> ${vuln.threat} — <strong class="text-emerald-400 font-mono">Remediation:</strong> ${vuln.recommendation}
+                <h4 class="text-xs font-bold text-white mb-1 font-mono">${vuln.title}</h4>
+                <p class="text-xs text-slate-300 leading-relaxed font-sans">${vuln.recommendation}</p>
+
+                <!-- Implementation Guide Steps -->
+                <div class="mt-2 p-2.5 rounded bg-carbon-950/80 border border-carbon-800 font-mono text-[11px] text-slate-400">
+                  <div class="text-slate-300 font-bold mb-1">Execution Steps:</div>
+                  <ol class="list-decimal list-inside space-y-0.5">
+                    ${vuln.playbook.map(step => `<li>${step}</li>`).join('')}
+                  </ol>
                 </div>
               </div>
 
               <div class="sm:self-center shrink-0">
-                <button type="button" onclick="toggleWhatIfFix('${vuln.id}')" class="px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${isSim ? 'bg-emerald-500 text-dark-950 hover:bg-emerald-400 shadow-lg shadow-emerald-500/40' : 'bg-crimson-950 hover:bg-crimson-900 text-red-200 border border-crimson-700/70'}">
-                  <span>${isSim ? '✓ Mitigated' : '⚡ Simulate Fix'}</span>
+                <button type="button" onclick="toggleWhatIfFix('${vuln.id}')" class="px-3 py-2 rounded font-mono text-xs font-bold transition flex items-center gap-1.5 ${isSim ? 'bg-emerald-500 text-carbon-950 hover:bg-emerald-400' : 'bg-carbon-800 hover:bg-carbon-700 text-slate-200 border border-carbon-600'}">
+                  <span>${isSim ? '✓ Mitigated' : '⚡ Simulate'}</span>
                 </button>
               </div>
             </div>
@@ -1508,45 +1694,78 @@
     }
 
     function renderThreatMatrix() {
-      // Credential stuffing
-      const credRisky = userProfile.password_reuse || !userProfile.two_factor || userProfile.breached_password;
-      const credBadge = document.getElementById('threat-badge-credential');
-      const credCard = document.getElementById('threat-card-credential');
-      if (credBadge && credCard) {
-        credBadge.innerText = credRisky ? 'CRITICAL EXPOSURE' : 'HARDENED';
-        credBadge.className = `px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border ${credRisky ? 'bg-crimson-950 text-crimson-neon border-crimson-700' : 'bg-emerald-950 text-emerald-300 border-emerald-700'}`;
-        credCard.className = `cyber-panel rounded-3xl p-6 transition-all ${credRisky ? 'border-crimson-800/80 cyber-panel-glow' : 'border-red-950'}`;
+      // Phase 1: Initial Access
+      const p1Risky = userProfile.password_reuse || !userProfile.two_factor || userProfile.breached_password || userProfile.public_wifi;
+      const step1El = document.getElementById('killchain-step-1-status');
+      if (step1El) {
+        step1El.innerText = p1Risky ? 'EXPOSED' : 'HARDENED';
+        step1El.className = p1Risky ? 'text-[11px] text-crimson-bright font-bold mt-1' : 'text-[11px] text-emerald-400 font-bold mt-1';
       }
 
-      // Ransomware
-      const malRisky = !userProfile.os_updates || !userProfile.antivirus || !userProfile.official_stores;
-      const malBadge = document.getElementById('threat-badge-ransomware');
-      const malCard = document.getElementById('threat-card-ransomware');
-      if (malBadge && malCard) {
-        malBadge.innerText = malRisky ? 'HIGH RISK' : 'HARDENED';
-        malBadge.className = `px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border ${malRisky ? 'bg-crimson-950 text-crimson-neon border-crimson-700' : 'bg-emerald-950 text-emerald-300 border-emerald-700'}`;
-        malCard.className = `cyber-panel rounded-3xl p-6 transition-all ${malRisky ? 'border-crimson-800/80 cyber-panel-glow' : 'border-red-950'}`;
+      // Phase 2: Execution
+      const p2Risky = !userProfile.os_updates || !userProfile.official_stores || !userProfile.macro_disabled;
+      const step2El = document.getElementById('killchain-step-2-status');
+      if (step2El) {
+        step2El.innerText = p2Risky ? 'EXPOSED' : 'HARDENED';
+        step2El.className = p2Risky ? 'text-[11px] text-crimson-bright font-bold mt-1' : 'text-[11px] text-emerald-400 font-bold mt-1';
       }
 
-      // MITM
-      const mitmRisky = (userProfile.public_wifi && !userProfile.vpn_on_public) || !userProfile.router_default_pw;
-      const mitmBadge = document.getElementById('threat-badge-mitm');
-      const mitmCard = document.getElementById('threat-card-mitm');
-      if (mitmBadge && mitmCard) {
-        mitmBadge.innerText = mitmRisky ? 'ELEVATED' : 'HARDENED';
-        mitmBadge.className = `px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border ${mitmRisky ? 'bg-amber-950 text-amber-300 border-amber-700' : 'bg-emerald-950 text-emerald-300 border-emerald-700'}`;
-        mitmCard.className = `cyber-panel rounded-3xl p-6 transition-all ${mitmRisky ? 'border-amber-900/80' : 'border-red-950'}`;
+      // Phase 3: Credential Dumping
+      const p3Risky = !userProfile.pwd_manager || userProfile.email_reused || !userProfile.two_factor;
+      const step3El = document.getElementById('killchain-step-3-status');
+      if (step3El) {
+        step3El.innerText = p3Risky ? 'EXPOSED' : 'HARDENED';
+        step3El.className = p3Risky ? 'text-[11px] text-crimson-bright font-bold mt-1' : 'text-[11px] text-emerald-400 font-bold mt-1';
       }
 
-      // Supply Chain
-      const supRisky = !userProfile.official_stores || !userProfile.app_permissions;
-      const supBadge = document.getElementById('threat-badge-supplychain');
-      const supCard = document.getElementById('threat-card-supplychain');
-      if (supBadge && supCard) {
-        supBadge.innerText = supRisky ? 'VULNERABLE' : 'HARDENED';
-        supBadge.className = `px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border ${supRisky ? 'bg-crimson-950 text-crimson-neon border-crimson-700' : 'bg-emerald-950 text-emerald-300 border-emerald-700'}`;
-        supCard.className = `cyber-panel rounded-3xl p-6 transition-all ${supRisky ? 'border-crimson-800/80 cyber-panel-glow' : 'border-red-950'}`;
+      // Phase 4: Impact / Exfiltration
+      const p4Risky = !userProfile.backup_321 || !userProfile.disk_encryption || !userProfile.antivirus;
+      const step4El = document.getElementById('killchain-step-4-status');
+      if (step4El) {
+        step4El.innerText = p4Risky ? 'HIGH IMPACT' : 'CONTAINED';
+        step4El.className = p4Risky ? 'text-[11px] text-crimson-bright font-bold mt-1' : 'text-[11px] text-emerald-400 font-bold mt-1';
       }
+
+      // Actor cards
+      updateActorBadge('iab', userProfile.password_reuse || !userProfile.two_factor || !userProfile.upnp_disabled);
+      updateActorBadge('ransomware', !userProfile.os_updates || !userProfile.backup_321 || !userProfile.macro_disabled);
+      updateActorBadge('mitm', (userProfile.public_wifi && !userProfile.vpn_on_public) || !userProfile.router_default_pw);
+      updateActorBadge('infostealer', !userProfile.official_stores || !userProfile.browser_extensions || !userProfile.no_sideloading);
+
+      // Threat Feed
+      renderThreatFeed();
+    }
+
+    function updateActorBadge(actorId, isExposed) {
+      const badge = document.getElementById(`actor-badge-${actorId}`);
+      const card = document.getElementById(`actor-card-${actorId}`);
+      if (badge && card) {
+        badge.innerText = isExposed ? 'EXPOSED' : 'PROTECTED';
+        badge.className = `px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border ${isExposed ? 'bg-crimson-950 text-crimson-bright border-crimson-800' : 'bg-emerald-950 text-emerald-400 border-emerald-800'}`;
+        card.className = `soc-panel p-5 border ${isExposed ? 'border-crimson-900/80' : 'border-carbon-800'}`;
+      }
+    }
+
+    function renderThreatFeed() {
+      const feed = document.getElementById('intel-feed-container');
+      if (!feed) return;
+      const active = getActiveVulnerabilities(userProfile);
+      if (active.length === 0) {
+        feed.innerHTML = '<div class="p-2 text-slate-500">Zero active threat campaigns correlated against current profile posture.</div>';
+        return;
+      }
+      feed.innerHTML = active.slice(0, 4).map(v => `
+        <div class="p-2.5 rounded bg-carbon-900 border border-carbon-800 flex items-start justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-crimson-bright font-bold">[ALERT-${v.mitre}]</span>
+              <span class="text-slate-300 font-semibold">${v.title}</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5 font-sans">Adversaries weaponizing this technique against unhardened consumer and enterprise digital twins.</p>
+          </div>
+          <span class="px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800 text-[10px] font-bold shrink-0">ACTIVE VECTOR</span>
+        </div>
+      `).join('');
     }
 
     function renderAuditPage(baseScore) {
@@ -1565,8 +1784,8 @@
           const b = getRiskBand(score);
           return `
             <tr>
-              <td class="p-2.5 font-bold text-white">${CATEGORY_NAMES[catId]}</td>
-              <td class="p-2.5 text-slate-400">${SECURITY_CONTROLS[catId].items.length} Controls</td>
+              <td class="p-2.5 font-bold text-white">${SECURITY_CONTROLS[catId].title}</td>
+              <td class="p-2.5 text-slate-400">6 Controls Mapped</td>
               <td class="p-2.5 font-bold" style="color: ${b.color}">${score}%</td>
               <td class="p-2.5">
                 <span class="px-2 py-0.5 rounded ${b.badgeClass} text-[10px] font-bold">
@@ -1584,7 +1803,7 @@
       const baseOverall = calculateOverallScore(userProfile, {});
       const simOverall = calculateOverallScore(userProfile, whatIfFixes);
 
-      // 1. Global Simulation Alert Banner & Nav Badge
+      // Global Notification Alert
       const globalSimAlert = document.getElementById('global-sim-alert');
       const navSimBadge = document.getElementById('nav-sim-badge');
       const globalDelta = document.getElementById('global-sim-delta-badge');
@@ -1595,14 +1814,14 @@
         navSimBadge.classList.remove('hidden');
         overviewLegend.classList.remove('hidden');
         const drop = baseOverall - simOverall;
-        globalDelta.innerText = `▼ -${drop} Risk Points (${baseOverall} → ${simOverall})`;
+        globalDelta.innerText = `▼ -${drop} pts reduction (${baseOverall} → ${simOverall})`;
       } else {
         globalSimAlert.classList.add('hidden');
         navSimBadge.classList.add('hidden');
         overviewLegend.classList.add('hidden');
       }
 
-      // 2. Executive Overview Page
+      // Executive Overview Page
       animateScoreDisplay('overview-score-number', simOverall);
       const band = getRiskBand(simOverall);
       const overviewBadge = document.getElementById('overview-risk-badge');
@@ -1610,7 +1829,7 @@
       const overviewDeltaPill = document.getElementById('overview-delta-pill');
 
       if (overviewBadge) {
-        overviewBadge.className = `px-3.5 py-1 rounded-full text-xs font-mono font-extrabold uppercase tracking-wider border transition-all duration-300 ${band.badgeClass}`;
+        overviewBadge.className = `px-2.5 py-0.5 rounded text-xs font-mono font-bold uppercase tracking-wider border ${band.badgeClass}`;
         overviewBadge.innerText = band.label;
       }
       if (overviewScoreNum) overviewScoreNum.style.color = band.color;
@@ -1622,7 +1841,7 @@
         overviewDeltaPill.classList.add('hidden');
       }
 
-      // Category Bars on Overview
+      // Category Progress Bars
       CATEGORY_KEYS.forEach(catId => {
         const s = calculateCategoryScore(catId, userProfile, whatIfFixes);
         const b = document.getElementById(`badge-cat-${catId}`);
@@ -1630,7 +1849,7 @@
         if (b) b.innerText = `${s}%`;
         if (bar) {
           bar.style.width = `${s}%`;
-          bar.style.backgroundColor = s > 60 ? '#ff1a40' : (s > 30 ? '#f59e0b' : '#10b981');
+          bar.style.backgroundColor = s > 60 ? '#ff2244' : (s > 30 ? '#f59e0b' : '#10b981');
         }
       });
 
@@ -1638,40 +1857,40 @@
       const countBadge = document.getElementById('overview-active-vuln-count');
       if (countBadge) countBadge.innerText = `${activeVulns.length} Active Risks`;
 
-      // 3. Render Radars
+      // Render Radars
       renderRadarCanvas('overview', isSimulating);
       renderRadarCanvas('sim', isSimulating);
 
-      // 4. Render Telemetry & What-If & Threat Matrix & Audit
+      // Render Specialized Views
       renderTelemetryPage();
       renderWhatIfPage(baseOverall, simOverall, isSimulating);
       renderThreatMatrix();
       renderAuditPage(baseOverall);
     }
 
-    // 8. PERSONA PRESETS
+    // 8. TARGET PERSONA PRESETS (24 CONTROLS)
     function loadPersona(type) {
       whatIfFixes = {};
       if (type === 'high_risk') {
         userProfile = {
-          password_reuse: true, two_factor: false, breached_password: true, email_reused: true,
-          os_updates: false, antivirus: false, disk_encryption: false, screen_lock: false,
-          public_wifi: true, vpn_on_public: false, router_default_pw: false,
-          apps_updated: false, official_stores: false, app_permissions: false
+          password_reuse: true, two_factor: false, breached_password: true, email_reused: true, pwd_manager: false, sec_questions: true,
+          os_updates: false, antivirus: false, disk_encryption: false, screen_lock: false, backup_321: false, remote_wipe: false,
+          public_wifi: true, vpn_on_public: false, router_default_pw: false, secure_dns: false, guest_iot_wifi: false, upnp_disabled: false,
+          apps_updated: false, official_stores: false, app_permissions: false, browser_extensions: false, no_sideloading: false, macro_disabled: false
         };
       } else if (type === 'typical') {
         userProfile = {
-          password_reuse: true, two_factor: true, breached_password: false, email_reused: true,
-          os_updates: true, antivirus: true, disk_encryption: false, screen_lock: true,
-          public_wifi: true, vpn_on_public: false, router_default_pw: true,
-          apps_updated: true, official_stores: true, app_permissions: false
+          password_reuse: true, two_factor: true, breached_password: false, email_reused: true, pwd_manager: false, sec_questions: true,
+          os_updates: true, antivirus: true, disk_encryption: false, screen_lock: true, backup_321: false, remote_wipe: true,
+          public_wifi: true, vpn_on_public: false, router_default_pw: true, secure_dns: false, guest_iot_wifi: false, upnp_disabled: false,
+          apps_updated: true, official_stores: true, app_permissions: false, browser_extensions: false, no_sideloading: true, macro_disabled: false
         };
       } else if (type === 'fortress') {
         userProfile = {
-          password_reuse: false, two_factor: true, breached_password: false, email_reused: false,
-          os_updates: true, antivirus: true, disk_encryption: true, screen_lock: true,
-          public_wifi: false, vpn_on_public: true, router_default_pw: true,
-          apps_updated: true, official_stores: true, app_permissions: true
+          password_reuse: false, two_factor: true, breached_password: false, email_reused: false, pwd_manager: true, sec_questions: false,
+          os_updates: true, antivirus: true, disk_encryption: true, screen_lock: true, backup_321: true, remote_wipe: true,
+          public_wifi: false, vpn_on_public: true, router_default_pw: true, secure_dns: true, guest_iot_wifi: true, upnp_disabled: true,
+          apps_updated: true, official_stores: true, app_permissions: true, browser_extensions: true, no_sideloading: true, macro_disabled: true
         };
       }
       updateAllViews();
@@ -1681,35 +1900,34 @@
       loadPersona('typical');
     }
 
-    // 9. EXPORT UTILITIES
+    // 9. EXPORT & ATTESTATION
     function copyAssessmentReport() {
       const baseOverall = calculateOverallScore(userProfile, {});
       const band = getRiskBand(baseOverall);
       const activeVulns = getActiveVulnerabilities(userProfile);
 
       let text = `====================================================\n`;
-      text += `MORNINGSTAR CYBERSECURITY COMMAND CENTER\n`;
-      text += `Digital Twin Threat Assessment & Audit Certificate\n`;
+      text += `MORNINGSTAR CYBERSECURITY DEFENSE LABS\n`;
+      text += `Digital Twin Threat Assessment & Audit Attestation\n`;
       text += `Authors: Rushil S & Nikitha H S\n`;
       text += `Date: ${new Date().toLocaleString()}\n`;
       text += `====================================================\n\n`;
-      text += `OVERALL COMPOSITE RISK: ${baseOverall}/100 (${band.label.toUpperCase()})\n\n`;
-      text += `LAYER BREAKDOWN:\n`;
+      text += `COMPOSITE THREAT SCORE: ${baseOverall}/100 (${band.label.toUpperCase()})\n\n`;
+      text += `EVALUATED DOMAINS:\n`;
       CATEGORY_KEYS.forEach(k => {
-        text += `- ${CATEGORY_NAMES[k]}: ${calculateCategoryScore(k, userProfile)}% risk\n`;
+        text += `- ${SECURITY_CONTROLS[k].title}: ${calculateCategoryScore(k, userProfile)}% risk\n`;
       });
-      text += `\nACTIVE TOP VULNERABILITIES (${activeVulns.length} total):\n`;
+      text += `\nPRIORITIZED ACTIVE VULNERABILITIES (${activeVulns.length} total):\n`;
       activeVulns.forEach((v, i) => {
-        text += `${i + 1}. [Weight ${v.weight}/10] ${v.title} (${v.categoryName})\n`;
-        text += `   Tactic: ${v.threat}\n`;
+        text += `${i + 1}. [Weight ${v.weight}/10] [${v.mitre}] ${v.title}\n`;
         text += `   Remediation: ${v.recommendation}\n`;
       });
-      text += `\nGenerated via Morningstar Cyber Risk Predictor v2.4\n`;
+      text += `\nAttestation generated by Morningstar Cyber Threat Predictor v2.4\n`;
 
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.getElementById('audit-copy-btn-text');
         if (btn) {
-          btn.innerText = 'Copied Successfully!';
+          btn.innerText = 'Copied to Clipboard!';
           setTimeout(() => { btn.innerText = 'Copy Executive Summary'; }, 2500);
         }
       });
@@ -1718,16 +1936,16 @@
     function exportJsonData() {
       const data = {
         metadata: {
-          app: "Digital Twin — Cybersecurity Risk Predictor",
+          app: "Digital Twin — Cybersecurity Threat & Risk Predictor",
           authors: "Rushil S & Nikitha H S",
-          team: "Morningstar",
+          organization: "Morningstar Cyber Labs",
           version: "2.4.0",
-          theme: "Black & Red Cyber Command Center",
+          spec: "24-Vector Enterprise Cyber Threat Matrix",
           timestamp: new Date().toISOString()
         },
         scores: {
           overall: calculateOverallScore(userProfile),
-          categories: {
+          domains: {
             accounts: calculateCategoryScore('accounts', userProfile),
             devices: calculateCategoryScore('devices', userProfile),
             networks: calculateCategoryScore('networks', userProfile),
@@ -1747,7 +1965,7 @@
       URL.revokeObjectURL(url);
     }
 
-    // 10. INITIALIZATION
+    // 10. LIFECYCLE INITIALIZATION
     window.addEventListener('DOMContentLoaded', () => {
       setupRadarGrid('overview');
       setupRadarGrid('sim');

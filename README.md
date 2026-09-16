@@ -1,87 +1,75 @@
-# Digital Twin — Cybersecurity Risk Predictor
-### Morningstar Cyber Command Center
+# Digital Twin — Cybersecurity Threat & Risk Predictor
+### Morningstar Cybersecurity Defense Labs
 
-[![Theme](https://img.shields.io/badge/Theme-Black%20%26%20Red%20Cyber%20Command-ff1a40.svg)](#)
-[![Team](https://img.shields.io/badge/Team-Morningstar-dc2626.svg)](#)
-[![Researchers](https://img.shields.io/badge/Researchers-Rushil%20S%20%26%20Nikitha%20H%20S-10b981.svg)](#)
-[![Architecture](https://img.shields.io/badge/Architecture-5--Page%20Zero--Backend%20SPA-101420.svg)](#)
+[![Interface](https://img.shields.io/badge/Interface-Enterprise%20SOC%20Command%20Center-ff2244.svg)](#)
+[![Team](https://img.shields.io/badge/Organization-Morningstar%20Cyber%20Labs-141822.svg)](#)
+[![Researchers](https://img.shields.io/badge/Lead%20Researchers-Rushil%20S%20%26%20Nikitha%20H%20S-10b981.svg)](#)
+[![Controls](https://img.shields.io/badge/Security%20Controls-24%20Vectors%20(MITRE%20Mapped)-3b4660.svg)](#)
 
-An aggressive, high-contrast **Black & Red** cyber-warfare dashboard that models an individual's digital risk profile ("Digital Twin") across four defensive surfaces. Built with hardware-accelerated **animated SVG spider charts**, interactive weighted risk telemetry, and a real-time **What-If Cyber Remediation Simulator**.
+A high-performance, engineering-grade Security Operations Center (SOC) dashboard that models an individual's digital cyber risk profile across 24 critical threat vectors. Built with **hardware-accelerated animated SVG spider charts**, real-world **MITRE ATT&CK matrix mappings**, and a multi-bundle **What-If Attack Surface Remediation Simulator**.
 
 ---
 
-## Authors & Branding
-- **Organization**: Morningstar Cyber Labs
+## Authors & Organization
+- **Organization**: Morningstar Cybersecurity Defense Labs
 - **Researchers**: Rushil S & Nikitha H S
-- **App Title**: Digital Twin — Cybersecurity Risk Predictor
+- **System**: Digital Twin — Cybersecurity Threat & Risk Predictor v2.4
 
 ---
 
-## 5 Specialized Cyber Command Pages
+## 24 Security Controls Across 4 Defensive Surfaces
 
-### 1. 📊 Executive Overview
-- Giant Blood-Red Digital Score Gauge (0–100) with dynamic rolling counter and threat level indicator.
-- Interactive High-Contrast SVG Spider/Radar Chart with crimson glowing contours.
-- Category summary cards (Accounts, Devices, Networks, Apps) with mini progress bars.
-- Quick persona presets (🚨 High Risk Target, ⚠️ Typical User, 🛡️ Cyber Fortress, 🔄 Reset).
+### Surface 1: Identity & Credential Hygiene (Accounts)
+1. **Password Reuse Across Accounts** *(Weight: 8, MITRE T1110.004)*
+2. **Two-Factor Authentication (2FA/MFA)** *(Weight: 9, MITRE T1078)*
+3. **Known Breached Credentials in Active Use** *(Weight: 10, MITRE T1110.003)*
+4. **Primary Email Reused for Public Signups** *(Weight: 5, MITRE T1589.002)*
+5. **Dedicated Password Vault Utilization** *(Weight: 7, MITRE T1555.003)*
+6. **Predictable Security Question Hygiene** *(Weight: 4, MITRE T1586.002)*
 
-### 2. ⚙️ Risk Profile Telemetry (14 Controls)
-- Detailed breakdown across 4 defensive surfaces with collapsible accordions:
-  - **Accounts**: Password reuse (w:8), 2FA enabled (w:9), breached passwords (w:10), email reused (w:5).
-  - **Devices**: OS updates (w:8), antivirus installed (w:6), disk encryption (w:7), screen lock (w:7).
-  - **Networks**: Public Wi-Fi usage (w:6), VPN on public Wi-Fi (w:8), router default password changed (w:9).
-  - **Apps**: Regular app updates (w:7), official app stores only (w:8), app permissions review (w:5).
-- High-visibility red/green binary toggle switches with threat weights (1-10) and live category risk badges.
+### Surface 2: Endpoint Integrity & Physical Security (Devices)
+7. **Automated OS Patching within 14 Days** *(Weight: 8, MITRE T1068)*
+8. **Real-Time Antivirus / EDR Active** *(Weight: 6, MITRE T1204.002)*
+9. **Full-Disk Storage Encryption (BitLocker/FileVault)** *(Weight: 7, MITRE T1005)*
+10. **Screen Lock Timeout (< 3 Mins) with Biometrics** *(Weight: 7, MITRE T1200)*
+11. **Automated 3-2-1 Encrypted Backups** *(Weight: 8, MITRE T1486)*
+12. **Remote Wipe & Device Localization** *(Weight: 5, MITRE T1082)*
 
-### 3. ⚡ "What-If" Cyber Remediation Simulator (The Core Demo Moment)
-- Dedicated simulation workstation:
-  - Side-by-side comparative posture view: **Current Baseline Risk vs. Hardened Posture**.
-  - Top 3 highest-weighted vulnerabilities with live **"⚡ Simulate Fix"** toggles.
-  - Global **"⚡ Simulate All Fixes"** action button.
-  - Live animated SVG radar chart displaying dual contours (baseline red dashed ghost contour vs. morphing green simulated contour).
-  - Dynamic score reduction readout (e.g. `▼ -38 pts (-45%)`).
-  - **"Apply Fixes to Profile"** button to commit changes permanently.
+### Surface 3: Perimeter, Connectivity & Gateway Surface (Networks)
+13. **Frequent Public Wi-Fi Usage** *(Weight: 6, MITRE T1557.002)*
+14. **Encrypted VPN Active on Untrusted Networks** *(Weight: 8, MITRE T1040)*
+15. **Home Router Default Admin Password Changed** *(Weight: 9, MITRE T1078.001)*
+16. **Encrypted DNS (DoH / DoT / NextDNS)** *(Weight: 6, MITRE T1584.008)*
+17. **Segmented Guest Subnet for Smart/IoT Devices** *(Weight: 7, MITRE T1046)*
+18. **Universal Plug and Play (UPnP) Disabled** *(Weight: 7, MITRE T1599)*
 
-### 4. 🎯 Threat Intelligence Matrix
-- Deep technical breakdown of 4 real-world adversary attack vectors:
-  1. **Credential Stuffing & Takeover** (T1110 - Breach dump botnets).
-  2. **Ransomware & Zero-Day Endpoint Exploits** (T1204 - Privilege escalation).
-  3. **Man-In-The-Middle (MITM) & Wi-Fi Eavesdropping** (T1557 - Evil Twin, DNS poisoning).
-  4. **Supply Chain & Malicious App Extraction** (T1195 - Trojanized torrents).
-- Dynamic threat rating based on current user inputs with key defensive controls.
+### Surface 4: Application, Browser & Supply Chain Hygiene (Apps)
+19. **Browsers & Software Updated Automatically** *(Weight: 7, MITRE T1190)*
+20. **Software Strictly Installed from Official Sources** *(Weight: 8, MITRE T1195.002)*
+21. **Routine Review of Application Permissions** *(Weight: 5, MITRE T1548)*
+22. **Browser Extension Audit (Pruned Dormant Addons)** *(Weight: 6, MITRE T1176)*
+23. **Developer Mode / Sideloading Disabled** *(Weight: 8, MITRE T1204.002)*
+24. **Office Document Macro Execution Blocked** *(Weight: 7, MITRE T1204.002)*
 
-### 5. 📑 Audit & Compliance Report
-- Official Executive Cyber Risk Audit Certificate with digital seal and timestamp.
-- Evaluated layer breakdown table and active risk list.
-- One-click **Copy Executive Summary** (formatted markdown clipboard export).
-- One-click **Export JSON Telemetry** file download.
-- Printable certificate layout (`window.print()`).
+---
+
+## 5 Specialized SOC Command Pages
+
+1. **Executive Overview**: High-resolution composite risk gauge (0–100), animated SVG spider chart, 4-layer progress telemetry, and target persona presets (*Critical Target, Typical Remote, Hardened Fortress*).
+2. **Risk Controls (24 Vectors)**: Detailed audit accordions with binary switches, weight badges, and MITRE IDs.
+3. **What-If Simulator (Core Demo)**:
+   - Quick Remediation Bundles: *Max Impact (Top 3)*, *Zero-Cost Quick Wins (< 5 mins)*, *Total Perimeter Hardening*.
+   - Actionable execution playbooks with time-to-fix estimates, user friction levels, and MITRE mitigations.
+   - Dual-contour live spider chart morphing with real-time score drops.
+4. **MITRE ATT&CK Matrix**: Cyber Kill Chain progression tracking, threat actor profiles (*Initial Access Brokers, Ransomware Syndicates, AiTM Eavesdroppers, Infostealers*), and live simulated global campaign feed.
+5. **Audit & Compliance**: Official attestation certificate, domain evaluation table, markdown clipboard copy, and JSON telemetry export.
 
 ---
 
 ## How to Run
 
-### Method 1: Instant In-Browser
-Open [`index.html`](file:///c:/Users/nikitha/luci/index.html) in your browser:
-```powershell
-Start-Process "c:\Users\nikitha\luci\index.html"
-```
-
-### Method 2: Python Local Server
-```powershell
-python server.py
-```
-Serves the application on `http://localhost:8000` with health telemetry API and auto-opens your browser.
-
----
-
-## Git Repository & Remote
-
-This repository is connected to:
-`https://github.com/NotLucifer18/hindustan.git`
-
-To push to GitHub:
 ```powershell
 cd c:\Users\nikitha\luci
-git push -u origin main
+python main.py
 ```
+Serves on `http://localhost:8000` with live telemetry API and auto-opens your browser.
