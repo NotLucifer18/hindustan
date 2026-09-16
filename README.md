@@ -53,7 +53,7 @@ A high-performance, engineering-grade Security Operations Center (SOC) dashboard
 
 ---
 
-## 6 Specialized SOC Command Pages
+## 5 Specialized SOC Command Pages
 
 1. **Executive Overview**: High-resolution composite risk gauge (0–100), animated SVG spider chart, 4-layer progress telemetry, and target persona presets (*Critical Target, Typical Remote, Hardened Fortress*).
 2. **Risk Controls (24 Vectors)**: Detailed audit accordions with binary switches, weight badges, and MITRE IDs.
@@ -63,25 +63,6 @@ A high-performance, engineering-grade Security Operations Center (SOC) dashboard
    - Dual-contour live spider chart morphing with real-time score drops.
 4. **MITRE ATT&CK Matrix**: Cyber Kill Chain progression tracking, threat actor profiles (*Initial Access Brokers, Ransomware Syndicates, AiTM Eavesdroppers, Infostealers*), and live simulated global campaign feed.
 5. **Audit & Compliance**: Official attestation certificate, domain evaluation table, markdown clipboard copy, and JSON telemetry export.
-6. **OSINT & Social Media Privacy Scanner**:
-   - **Dual-Mode Input**: Accepts public URLs/handles (GitHub, LinkedIn, X, Instagram) OR uploaded/drag-and-dropped profile/settings screenshots.
-   - **Computer Vision & OCR Simulation**: Extracts text bounding boxes for visible emails, unverified GPG keys, and insecure 2FA radio toggles (SMS).
-   - **ML Heuristic Feature Scoring**: Calculates PII Exposure, 2FA/Signature gaps, email scraping surface, and cross-platform handle correlation.
-   - **Digital Twin Direct Sync**: One-click sync that injects OSINT findings directly into the 24 telemetry vectors.
-
----
-
-## Complete Technology Stack & Architecture
-
-| Layer | Technology | Technical Purpose & Details |
-| :--- | :--- | :--- |
-| **Frontend Framework** | **Modern Vanilla ES6+ SPA** | Zero external JS framework dependencies; lightweight, instantaneous execution, 100% in-memory state preservation without latency. |
-| **Styling & Design System** | **Tailwind CSS + Custom Carbon Tokens** | SOC dark mode theme (`#06070a` canvas, `#141822` panels, `#ff2244` tactical crimson, `#10b981` emerald), glassmorphic backdrops, crisp 1px borders. |
-| **Visualization & Charts** | **Hardware-Accelerated Scalable Vector Graphics (SVG)** | Mathematical dynamic polygon geometry for 4-axis radar/spider risk models with cubic-bezier morphing transitions. |
-| **OSINT & Vision ML Pipeline** | **Client-Side Heuristic Classification & OCR Bounding Box Engine** | Passive multi-vector scoring (T1589, T1586, T1078), token entropy evaluation, regex birth-year deduction, and visual bounding box overlays. |
-| **Cybersecurity Knowledge Base** | **MITRE ATT&CK Enterprise Matrix (v14)** | Full mapping of 24 personal attack vectors to enterprise tactics: Initial Access, Execution, Persistence, Privilege Escalation, Credential Access, Lateral Movement, Exfiltration. |
-| **Server & Runtime** | **Python 3.12 Standard Library (`http.server`)** | High-reliability zero-dependency daemon (`main.py`) with native multi-threading, custom request routing, and `/api/health` heartbeat. |
-| **Data Synchronization** | **Client-Side In-Memory JSON State Store** | Real-time reactive updates propagating between OSINT findings, What-If simulator, and Executive Overview with zero remote data leakage. |
 
 ---
 
