@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Twin — Cybersecurity Threat & Risk Predictor | Morningstar Command</title>
-  <meta name="description" content="Enterprise-grade Digital Twin Cyber Risk Prediction and Attack Surface Modeling platform with 24 telemetry vectors, live animated spider chart, multi-tier What-If remediation bundles, and MITRE ATT&CK threat intelligence. Built by Morningstar (Rushil S & Nikitha H S).">
+  <title>Digital Twin — Cybersecurity Threat & Risk Predictor | Morningstar</title>
+  <meta name="description" content="Digital Twin Cyber Risk Prediction and Attack Surface Modeling platform with 24 telemetry vectors, live animated spider chart, multi-tier What-If remediation bundles, and interactive MITRE ATT&CK matrix. Built by Morningstar (Rushil S & Nikitha H S).">
 
   <!-- Fonts: Inter for UI & JetBrains Mono for Telemetry -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,10 +50,10 @@
   </script>
 
   <style>
-    /* Engineering-grade SOC command interface (Anti-AI-Slop Design System) */
+    /* Clean SOC Command Center Aesthetics */
     :root {
       --bg-canvas: #06070a;
-      --panel-surface: rgba(14, 17, 24, 0.88);
+      --panel-surface: rgba(14, 17, 24, 0.9);
       --panel-border: #1c2230;
       --panel-border-hover: #2e374d;
       --accent-red: #ff2244;
@@ -71,7 +71,6 @@
       min-height: 100vh;
     }
 
-    /* Crisp Precision Panels */
     .soc-panel {
       background: var(--panel-surface);
       border: 1px solid var(--panel-border);
@@ -83,18 +82,12 @@
     .soc-panel:hover {
       border-color: var(--panel-border-hover);
     }
-    .soc-panel-danger {
-      border-color: rgba(239, 68, 68, 0.4);
-      background: linear-gradient(180deg, rgba(30, 8, 12, 0.6) 0%, rgba(14, 17, 24, 0.9) 100%);
-    }
 
-    /* Sharp Navigation Tabs */
     .soc-tab {
       padding: 0.55rem 1rem;
       border-radius: 8px;
       font-size: 0.8125rem;
       font-weight: 600;
-      letter-spacing: 0.02em;
       color: #94a3b8;
       border: 1px solid transparent;
       transition: all 0.15s ease;
@@ -115,7 +108,7 @@
       box-shadow: 0 0 16px -4px rgba(220, 38, 38, 0.35);
     }
 
-    /* Radar Chart Smooth Morphing */
+    /* Radar Chart Smooth Transitions */
     .radar-polygon {
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -123,23 +116,23 @@
       transition: cx 0.4s cubic-bezier(0.16, 1, 0.3, 1), cy 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Minimalist Technical Scrollbar */
-    ::-webkit-scrollbar {
+    /* Custom technical scrollbar for What-If container */
+    .whatif-scroll::-webkit-scrollbar {
       width: 6px;
-      height: 6px;
     }
-    ::-webkit-scrollbar-track {
+    .whatif-scroll::-webkit-scrollbar-track {
       background: #090b10;
+      border-radius: 4px;
     }
-    ::-webkit-scrollbar-thumb {
+    .whatif-scroll::-webkit-scrollbar-thumb {
       background: #1e2536;
-      border-radius: 3px;
+      border-radius: 4px;
+      border: 1px solid #283044;
     }
-    ::-webkit-scrollbar-thumb:hover {
+    .whatif-scroll::-webkit-scrollbar-thumb:hover {
       background: #3b4660;
     }
 
-    /* Subtle Technical LED indicator */
     .led-pip {
       width: 7px;
       height: 7px;
@@ -150,14 +143,14 @@
 </head>
 <body class="antialiased min-h-screen flex flex-col font-sans selection:bg-crimson-900 selection:text-red-200">
 
-  <!-- ==================== ENTERPRISE SOC TOP HEADER ==================== -->
+  <!-- ==================== HEADER ==================== -->
   <header class="border-b border-carbon-700 bg-carbon-950/95 sticky top-0 z-50 backdrop-blur-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Primary Brand Bar -->
       <div class="h-16 flex items-center justify-between border-b border-carbon-800/80">
         
-        <!-- Left: Brand & Telemetry System Identifier -->
+        <!-- Brand & Attribution -->
         <div class="flex items-center space-x-3.5">
           <div class="h-9 w-9 rounded-lg bg-carbon-900 border border-crimson-600/60 flex items-center justify-center text-crimson-neon">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,14 +165,14 @@
               <span class="text-xs font-semibold text-white tracking-tight">CYBERSECURITY DEFENSE LABS</span>
             </div>
             <div class="text-[11px] text-slate-400 font-mono flex items-center gap-2 mt-0.5">
-              <span>Digital Twin Threat Predictor v2.4</span>
+              <span>Digital Twin — Cybersecurity Risk Predictor</span>
               <span class="text-slate-600">•</span>
-              <span>Researchers: <strong class="text-slate-300 font-medium">Rushil S &amp; Nikitha H S</strong></span>
+              <span>Rushil S &amp; Nikitha H S</span>
             </div>
           </div>
         </div>
 
-        <!-- Center/Right: Target Persona Selectors -->
+        <!-- Target Profile Presets -->
         <div class="hidden lg:flex items-center space-x-2 font-mono text-xs">
           <span class="text-slate-400 text-[11px] uppercase tracking-wider mr-1">Target Profile:</span>
           <button onclick="loadPersona('high_risk')" class="px-2.5 py-1 rounded bg-crimson-950 hover:bg-crimson-900/80 text-red-300 border border-crimson-800/80 transition flex items-center gap-1.5">
@@ -199,7 +192,7 @@
           </button>
         </div>
 
-        <!-- Right: Status Readout -->
+        <!-- Engine Status -->
         <div class="flex items-center space-x-2.5 font-mono text-xs">
           <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-carbon-900 border border-carbon-700 text-slate-300 text-[11px]">
             <span class="led-pip bg-emerald-400"></span>
@@ -208,7 +201,7 @@
         </div>
       </div>
 
-      <!-- Navigation Bar (5 Specialized SOC Views) -->
+      <!-- Navigation Tabs -->
       <nav class="flex items-center space-x-1.5 py-2 overflow-x-auto select-none">
         <button id="tab-btn-overview" onclick="switchPage('overview')" class="soc-tab soc-tab-active font-mono">
           <svg class="w-3.5 h-3.5 text-crimson-bright" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
@@ -248,7 +241,7 @@
   <!-- ==================== MAIN APPLICATION CONTAINER ==================== -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-1 w-full">
 
-    <!-- GLOBAL SIMULATION NOTIFICATION BAR -->
+    <!-- GLOBAL ACTIVE WHAT-IF BANNER -->
     <div id="global-sim-alert" class="hidden mb-6 p-4 rounded-xl bg-carbon-900 border border-emerald-500/60 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono">
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-400 font-bold">
@@ -281,7 +274,7 @@
       <!-- Top Metrics Row -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- Score & Status Card (5 Cols) -->
+        <!-- Score Card (5 Cols) -->
         <div class="lg:col-span-5 soc-panel p-6 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between pb-3 border-b border-carbon-800">
@@ -328,7 +321,7 @@
           </div>
         </div>
 
-        <!-- 4 Defensive Surfaces Matrix (7 Cols) -->
+        <!-- 4 Surfaces Matrix (7 Cols) -->
         <div class="lg:col-span-7 soc-panel p-6 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between pb-3 border-b border-carbon-800 mb-4">
@@ -341,10 +334,7 @@
               </button>
             </div>
 
-            <!-- 4 Grid Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              
-              <!-- Accounts -->
               <div class="p-3.5 rounded-lg bg-carbon-900 border border-carbon-800">
                 <div class="flex items-center justify-between mb-1.5 font-mono text-xs">
                   <span class="font-semibold text-slate-200">1. Identity &amp; Auth</span>
@@ -356,7 +346,6 @@
                 <p class="text-[11px] text-slate-400">Passwords, MFA, vault adoption, security questions.</p>
               </div>
 
-              <!-- Devices -->
               <div class="p-3.5 rounded-lg bg-carbon-900 border border-carbon-800">
                 <div class="flex items-center justify-between mb-1.5 font-mono text-xs">
                   <span class="font-semibold text-slate-200">2. Endpoint Integrity</span>
@@ -368,7 +357,6 @@
                 <p class="text-[11px] text-slate-400">OS patching, antivirus/EDR, BitLocker, 3-2-1 backup.</p>
               </div>
 
-              <!-- Networks -->
               <div class="p-3.5 rounded-lg bg-carbon-900 border border-carbon-800">
                 <div class="flex items-center justify-between mb-1.5 font-mono text-xs">
                   <span class="font-semibold text-slate-200">3. Network Perimeter</span>
@@ -380,7 +368,6 @@
                 <p class="text-[11px] text-slate-400">Public Wi-Fi, VPN, router admin, DNS-over-HTTPS, UPnP.</p>
               </div>
 
-              <!-- Apps -->
               <div class="p-3.5 rounded-lg bg-carbon-900 border border-carbon-800">
                 <div class="flex items-center justify-between mb-1.5 font-mono text-xs">
                   <span class="font-semibold text-slate-200">4. Application Hygiene</span>
@@ -391,7 +378,6 @@
                 </div>
                 <p class="text-[11px] text-slate-400">App updates, official sources, browser extensions, macros.</p>
               </div>
-
             </div>
           </div>
 
@@ -424,7 +410,7 @@
         </div>
 
         <div class="w-full flex justify-center items-center py-4">
-          <svg id="radar-svg-overview" viewBox="0 0 400 360" class="w-full max-w-[420px] h-auto overflow-visible select-none font-mono">
+          <svg id="radar-svg-overview" viewBox="0 0 460 400" class="w-full max-w-[460px] h-auto overflow-visible select-none font-mono">
             <defs>
               <radialGradient id="redRadarGradient" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="#ff2244" stop-opacity="0.45" />
@@ -467,7 +453,6 @@
         </div>
       </div>
 
-      <!-- Categories Container -->
       <div id="telemetry-categories-container" class="space-y-4">
         <!-- Injected via JavaScript -->
       </div>
@@ -477,95 +462,81 @@
     <!-- ==================== PAGE 3: WHAT-IF CYBER REMEDIATION SIMULATOR ==================== -->
     <section id="page-whatif" class="hidden space-y-6">
       
-      <!-- Top Simulation Control Header -->
-      <div class="soc-panel p-6 border-crimson-800/80">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-carbon-800">
+      <!-- Top Control Bar -->
+      <div class="soc-panel p-5 border-crimson-800/80">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-carbon-800">
           <div>
-            <div class="flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-crimson-950 text-crimson-bright border border-crimson-800">
-                CORE DEMO WORKSPACE
-              </span>
-              <h2 class="text-base font-mono font-bold text-white uppercase tracking-wide">
-                What-If Attack Surface Remediation Simulator
-              </h2>
-            </div>
-            <p class="text-xs text-slate-400 mt-1 max-w-2xl leading-relaxed">
-              Model defensive countermeasures before operational execution. Watch the animated spider chart contract live and evaluate projected risk reductions.
+            <h2 class="text-sm font-mono font-bold text-white uppercase tracking-wide flex items-center gap-2">
+              <span class="text-crimson-bright">⚡</span>
+              <span>What-If Attack Surface Remediation Simulator</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Simulate defensive countermeasures. Watch the enlarged spider chart contract live alongside prioritized playbooks.
             </p>
           </div>
 
           <div class="flex items-center gap-2 font-mono text-xs">
-            <button id="whatif-btn-commit" onclick="commitSimulatedFixes()" class="hidden px-3.5 py-2 rounded-lg font-bold bg-emerald-600 hover:bg-emerald-500 text-carbon-950 transition">
-              Apply Fixes to Profile
+            <button id="whatif-btn-commit" onclick="commitSimulatedFixes()" class="hidden px-3.5 py-1.5 rounded-lg font-bold bg-emerald-600 hover:bg-emerald-500 text-carbon-950 transition">
+              Commit Fixes to Profile
             </button>
-            <button onclick="resetWhatIfSimulation()" class="px-3 py-2 rounded-lg bg-carbon-800 hover:bg-carbon-700 text-slate-300 border border-carbon-600 transition">
+            <button onclick="resetWhatIfSimulation()" class="px-3 py-1.5 rounded-lg bg-carbon-800 hover:bg-carbon-700 text-slate-300 border border-carbon-600 transition">
               Reset Simulation
             </button>
           </div>
         </div>
 
-        <!-- Multi-Level Quick Remediation Bundles -->
-        <div class="mt-4 pt-2">
-          <span class="text-[11px] font-mono uppercase font-bold text-slate-400 tracking-wider">Quick Remediation Bundles:</span>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2 font-mono text-xs">
-            
-            <button onclick="applySimulationBundle('max_impact')" class="p-3 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-crimson-700 text-left transition flex flex-col justify-between">
-              <div class="flex items-center justify-between w-full mb-1">
-                <span class="font-bold text-slate-200">⚡ Max Impact Bundle</span>
-                <span class="text-[10px] text-crimson-bright font-bold">Top 3 Risks</span>
+        <!-- Remediation Bundles -->
+        <div class="mt-3">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 font-mono text-xs">
+            <button onclick="applySimulationBundle('max_impact')" class="p-2.5 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-crimson-700 text-left transition flex items-center justify-between">
+              <div>
+                <div class="font-bold text-slate-200">⚡ Max Impact Bundle</div>
+                <div class="text-[11px] text-slate-400 font-sans">Mitigate top 3 highest weighted threats</div>
               </div>
-              <span class="text-[11px] text-slate-400 font-sans">Mitigates the 3 highest weighted threats for immediate risk reduction.</span>
+              <span class="text-[10px] text-crimson-bright font-bold px-1.5 py-0.5 rounded bg-crimson-950 border border-crimson-900">Top 3</span>
             </button>
 
-            <button onclick="applySimulationBundle('quick_wins')" class="p-3 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-amber-700 text-left transition flex flex-col justify-between">
-              <div class="flex items-center justify-between w-full mb-1">
-                <span class="font-bold text-slate-200">⏱️ Zero-Cost Quick Wins</span>
-                <span class="text-[10px] text-amber-400 font-bold">&lt; 5 Minutes</span>
+            <button onclick="applySimulationBundle('quick_wins')" class="p-2.5 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-amber-700 text-left transition flex items-center justify-between">
+              <div>
+                <div class="font-bold text-slate-200">⏱️ Quick Wins Bundle</div>
+                <div class="text-[11px] text-slate-400 font-sans">Fix low-friction settings (UPnP, screen lock)</div>
               </div>
-              <span class="text-[11px] text-slate-400 font-sans">Fixes low-friction settings (UPnP, screen timeout, guest Wi-Fi, email alias).</span>
+              <span class="text-[10px] text-amber-400 font-bold px-1.5 py-0.5 rounded bg-amber-950 border border-amber-900">&lt; 5 mins</span>
             </button>
 
-            <button onclick="applySimulationBundle('full_harden')" class="p-3 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-emerald-700 text-left transition flex flex-col justify-between">
-              <div class="flex items-center justify-between w-full mb-1">
-                <span class="font-bold text-slate-200">🛡️ Total Perimeter Hardening</span>
-                <span class="text-[10px] text-emerald-400 font-bold">All Vulnerabilities</span>
+            <button onclick="applySimulationBundle('full_harden')" class="p-2.5 rounded-lg bg-carbon-900 hover:bg-carbon-850 border border-carbon-800 hover:border-emerald-700 text-left transition flex items-center justify-between">
+              <div>
+                <div class="font-bold text-slate-200">🛡️ Total Perimeter Hardening</div>
+                <div class="text-[11px] text-slate-400 font-sans">Mitigate all active vulnerabilities</div>
               </div>
-              <span class="text-[11px] text-slate-400 font-sans">Simulates complete mitigation across all 24 security controls.</span>
+              <span class="text-[10px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-900">All 24</span>
             </button>
-
           </div>
         </div>
-
-        <!-- Comparative Metrics Bar -->
-        <div class="mt-4 grid grid-cols-3 gap-3 pt-3 border-t border-carbon-800 text-center font-mono">
-          <div class="p-3 rounded bg-carbon-900/90 border border-carbon-800">
-            <div class="text-[10px] text-slate-400 uppercase font-semibold">Current Baseline</div>
-            <div id="sim-base-score-readout" class="text-xl font-bold text-white mt-1">0/100</div>
-          </div>
-          <div class="p-3 rounded bg-carbon-900/90 border border-carbon-800">
-            <div class="text-[10px] text-slate-400 uppercase font-semibold">Simulated Posture</div>
-            <div id="sim-projected-score-readout" class="text-xl font-bold text-emerald-400 mt-1">0/100</div>
-          </div>
-          <div class="p-3 rounded bg-carbon-900/90 border border-carbon-800">
-            <div class="text-[10px] text-slate-400 uppercase font-semibold">Projected Reduction</div>
-            <div id="sim-points-saved-readout" class="text-xl font-bold text-cyan-400 mt-1">0 pts (0%)</div>
-          </div>
-        </div>
-
       </div>
 
-      <!-- Main Simulation Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Main Layout: Fixed Height Scrollable Playbooks (Left 7 Cols) + Prominent Large Sticky Radar (Right 5 Cols) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <!-- Left: Vulnerability Playbooks List (7 Cols) -->
+        <!-- Left: Remediation Playbooks with Internal Scroll (7 Cols) -->
         <div class="lg:col-span-7 space-y-3">
-          <div class="flex items-center justify-between text-xs font-mono text-slate-400 pb-1">
-            <span class="font-bold text-slate-300 uppercase">Prioritized Remediation Playbooks</span>
-            <span id="whatif-vuln-count-text" class="text-crimson-bright font-semibold">0 Active Threats</span>
+          
+          <div class="flex items-center justify-between text-xs font-mono text-slate-400 pb-1 border-b border-carbon-800">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-slate-300 uppercase">Prioritized Remediation Playbooks</span>
+              <span id="whatif-vuln-count-text" class="text-crimson-bright font-semibold">0 Active Threats</span>
+            </div>
+            
+            <!-- Quick Filter Pills -->
+            <div class="flex items-center gap-1.5 text-[11px]">
+              <button onclick="filterWhatIfPlaybooks('all')" id="filter-btn-all" class="px-2 py-0.5 rounded bg-carbon-800 text-white font-bold">All</button>
+              <button onclick="filterWhatIfPlaybooks('critical')" id="filter-btn-critical" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">Critical (≥8)</button>
+              <button onclick="filterWhatIfPlaybooks('quick')" id="filter-btn-quick" class="px-2 py-0.5 rounded text-slate-400 hover:text-white">Quick (&lt;5m)</button>
+            </div>
           </div>
 
-          <!-- Injected Playbooks List -->
-          <div id="whatif-playbooks-list" class="space-y-3">
+          <!-- Internal Scrollable Playbooks Container -->
+          <div id="whatif-playbooks-list" class="whatif-scroll max-h-[580px] overflow-y-auto pr-2 space-y-2.5">
             <!-- Dynamically populated -->
           </div>
 
@@ -575,81 +546,178 @@
           </div>
         </div>
 
-        <!-- Right: Live Dual-Contour Radar Display (5 Cols) -->
-        <div class="lg:col-span-5 soc-panel p-6 flex flex-col justify-between">
-          <div class="text-center font-mono">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Live Dual-Contour Radar</h4>
-            <p class="text-[11px] text-slate-500 mt-0.5">Dashed red = Baseline • Solid green = Simulated</p>
+        <!-- Right: Prominent Sticky Radar Chart & Score Comparison (5 Cols) -->
+        <div class="lg:col-span-5 lg:sticky lg:top-20 space-y-4">
+          
+          <!-- Large Radar Card -->
+          <div class="soc-panel p-5 flex flex-col items-center">
+            
+            <div class="w-full flex items-center justify-between pb-2 border-b border-carbon-800 font-mono text-xs">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded bg-crimson-neon"></span>
+                <span class="font-bold uppercase tracking-wider text-slate-300">Live Surface Contour</span>
+              </div>
+              <div class="flex items-center gap-3 text-[11px]">
+                <span class="text-crimson-bright">■ Baseline</span>
+                <span class="text-emerald-400">■ Simulated</span>
+              </div>
+            </div>
+
+            <!-- Large SVG Spider Chart Canvas (viewBox 460x420) -->
+            <div class="w-full flex justify-center py-2">
+              <svg id="radar-svg-sim" viewBox="0 0 460 420" class="w-full max-w-[420px] h-auto overflow-visible select-none font-mono">
+                <g id="radar-grid-sim"></g>
+                <g id="radar-axes-sim"></g>
+                <polygon id="radar-ghost-sim" class="radar-polygon" fill="none" stroke="#ff2244" stroke-dasharray="4 3" stroke-width="2" stroke-opacity="0.85" />
+                <polygon id="radar-poly-sim" class="radar-polygon" fill="url(#greenRadarGradient)" stroke="#10b981" stroke-width="2.6" />
+                <g id="radar-points-sim"></g>
+                <g id="radar-labels-sim"></g>
+              </svg>
+            </div>
+
+            <!-- Score Comparison Metrics Strip directly below the radar -->
+            <div class="w-full grid grid-cols-3 gap-2 pt-3 border-t border-carbon-800 text-center font-mono">
+              <div class="p-2.5 rounded bg-carbon-900 border border-carbon-800">
+                <div class="text-[9px] text-slate-400 uppercase font-semibold">Baseline</div>
+                <div id="sim-base-score-readout" class="text-lg font-bold text-white mt-0.5">0/100</div>
+              </div>
+              <div class="p-2.5 rounded bg-carbon-900 border border-carbon-800">
+                <div class="text-[9px] text-slate-400 uppercase font-semibold">Simulated</div>
+                <div id="sim-projected-score-readout" class="text-lg font-bold text-emerald-400 mt-0.5">0/100</div>
+              </div>
+              <div class="p-2.5 rounded bg-carbon-900 border border-carbon-800">
+                <div class="text-[9px] text-slate-400 uppercase font-semibold">Projected Reduction</div>
+                <div id="sim-points-saved-readout" class="text-lg font-bold text-cyan-400 mt-0.5">0 pts</div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="w-full flex justify-center py-4">
-            <svg id="radar-svg-sim" viewBox="0 0 400 360" class="w-full max-w-[340px] h-auto overflow-visible select-none font-mono">
-              <g id="radar-grid-sim"></g>
-              <g id="radar-axes-sim"></g>
-              <polygon id="radar-ghost-sim" class="radar-polygon" fill="none" stroke="#ff2244" stroke-dasharray="4 3" stroke-width="1.8" stroke-opacity="0.85" />
-              <polygon id="radar-poly-sim" class="radar-polygon" fill="url(#greenRadarGradient)" stroke="#10b981" stroke-width="2.4" />
-              <g id="radar-points-sim"></g>
-              <g id="radar-labels-sim"></g>
-            </svg>
-          </div>
-
-          <div class="p-2.5 rounded bg-carbon-900 border border-carbon-800 text-center text-xs font-mono text-emerald-400">
-            Contracting polygon reflects risk surface elimination
-          </div>
         </div>
 
       </div>
 
     </section>
 
-    <!-- ==================== PAGE 4: MITRE ATT&CK THREAT INTELLIGENCE MATRIX ==================== -->
+    <!-- ==================== PAGE 4: INTERACTIVE MITRE ATT&CK THREAT MATRIX ==================== -->
     <section id="page-threats" class="hidden space-y-6">
       
-      <div class="pb-3 border-b border-carbon-800">
-        <h2 class="text-sm font-mono font-bold uppercase tracking-wider text-white">
-          MITRE ATT&amp;CK Adversary Intelligence Matrix
-        </h2>
-        <p class="text-xs text-slate-400">Correlates active digital twin misconfigurations with real-world adversary tactics and techniques</p>
-      </div>
-
-      <!-- Cyber Kill Chain Progression Strip -->
-      <div class="soc-panel p-5">
-        <div class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-3">
-          Cyber Kill Chain Exposure Pathway
+      <div class="pb-3 border-b border-carbon-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-sm font-mono font-bold uppercase tracking-wider text-white flex items-center gap-2">
+            <span class="text-crimson-bright">🎯</span>
+            <span>MITRE ATT&amp;CK Enterprise Matrix &amp; Intelligence Explorer</span>
+          </h2>
+          <p class="text-xs text-slate-400">Directly maps digital twin telemetry to real-world adversary tactics and techniques. Click any technique to inspect intelligence.</p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 font-mono text-xs">
-          
-          <div id="killchain-step-1" class="p-3 rounded bg-carbon-900 border border-carbon-800 transition">
-            <div class="text-[10px] text-slate-400 font-bold uppercase">Phase 1</div>
-            <div class="font-bold text-white mt-0.5">Initial Access</div>
-            <div id="killchain-step-1-status" class="text-[11px] text-crimson-bright mt-1">EVALUATING</div>
-          </div>
-
-          <div id="killchain-step-2" class="p-3 rounded bg-carbon-900 border border-carbon-800 transition">
-            <div class="text-[10px] text-slate-400 font-bold uppercase">Phase 2</div>
-            <div class="font-bold text-white mt-0.5">Execution &amp; Evasion</div>
-            <div id="killchain-step-2-status" class="text-[11px] text-crimson-bright mt-1">EVALUATING</div>
-          </div>
-
-          <div id="killchain-step-3" class="p-3 rounded bg-carbon-900 border border-carbon-800 transition">
-            <div class="text-[10px] text-slate-400 font-bold uppercase">Phase 3</div>
-            <div class="font-bold text-white mt-0.5">Credential Dumping</div>
-            <div id="killchain-step-3-status" class="text-[11px] text-crimson-bright mt-1">EVALUATING</div>
-          </div>
-
-          <div id="killchain-step-4" class="p-3 rounded bg-carbon-900 border border-carbon-800 transition">
-            <div class="text-[10px] text-slate-400 font-bold uppercase">Phase 4</div>
-            <div class="font-bold text-white mt-0.5">Exfiltration / Impact</div>
-            <div id="killchain-step-4-status" class="text-[11px] text-crimson-bright mt-1">EVALUATING</div>
-          </div>
-
+        <div class="flex items-center gap-3 text-xs font-mono">
+          <span class="flex items-center gap-1.5 text-crimson-bright">
+            <span class="led-pip bg-crimson-bright animate-pulse"></span> Active Threat Exposure
+          </span>
+          <span class="flex items-center gap-1.5 text-emerald-400">
+            <span class="led-pip bg-emerald-400"></span> Hardened / Mitigated
+          </span>
         </div>
       </div>
 
-      <!-- Adversary Profile Cards Grid -->
+      <!-- Cyber Kill Chain Pipeline -->
+      <div class="soc-panel p-4">
+        <div class="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-400 mb-2.5">
+          Adversary Cyber Kill Chain Exposure Pipeline
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 font-mono text-xs">
+          <div id="killchain-step-1" class="p-2.5 rounded bg-carbon-900 border border-carbon-800 transition">
+            <div class="text-[9px] text-slate-500 uppercase font-bold">Phase 1</div>
+            <div class="font-bold text-white text-xs">Initial Access</div>
+            <div id="killchain-step-1-status" class="text-[11px] text-crimson-bright mt-0.5 font-bold">EVALUATING</div>
+          </div>
+          <div id="killchain-step-2" class="p-2.5 rounded bg-carbon-900 border border-carbon-800 transition">
+            <div class="text-[9px] text-slate-500 uppercase font-bold">Phase 2</div>
+            <div class="font-bold text-white text-xs">Execution &amp; Evasion</div>
+            <div id="killchain-step-2-status" class="text-[11px] text-crimson-bright mt-0.5 font-bold">EVALUATING</div>
+          </div>
+          <div id="killchain-step-3" class="p-2.5 rounded bg-carbon-900 border border-carbon-800 transition">
+            <div class="text-[9px] text-slate-500 uppercase font-bold">Phase 3</div>
+            <div class="font-bold text-white text-xs">Credential Access</div>
+            <div id="killchain-step-3-status" class="text-[11px] text-crimson-bright mt-0.5 font-bold">EVALUATING</div>
+          </div>
+          <div id="killchain-step-4" class="p-2.5 rounded bg-carbon-900 border border-carbon-800 transition">
+            <div class="text-[9px] text-slate-500 uppercase font-bold">Phase 4</div>
+            <div class="font-bold text-white text-xs">Exfiltration &amp; Impact</div>
+            <div id="killchain-step-4-status" class="text-[11px] text-crimson-bright mt-0.5 font-bold">EVALUATING</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MITRE ATT&CK Matrix Grid Explorer & Interactive Dossier Inspector -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Matrix Columns (8 Cols) -->
+        <div class="lg:col-span-8 space-y-3">
+          <div class="flex items-center justify-between font-mono text-xs text-slate-400">
+            <span class="font-bold uppercase tracking-wider text-slate-300">Enterprise Attack Matrix Tactics</span>
+            <span class="text-[11px]">Select technique to inspect threat dossier</span>
+          </div>
+
+          <!-- Tactics Grid Container -->
+          <div id="mitre-matrix-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-mono text-xs">
+            <!-- Dynamically populated matrix columns & techniques -->
+          </div>
+        </div>
+
+        <!-- Right: Interactive Technique Intelligence Dossier (4 Cols Sticky) -->
+        <div class="lg:col-span-4 lg:sticky lg:top-20 space-y-3">
+          <div class="soc-panel p-5 border-carbon-700" id="mitre-dossier-panel">
+            <div class="flex items-center justify-between pb-3 border-b border-carbon-800 font-mono">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Technique Intelligence Dossier</span>
+              <span id="dossier-id-badge" class="px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800 text-[10px] font-bold">T1110.004</span>
+            </div>
+
+            <div class="mt-4 space-y-3 font-mono text-xs">
+              <div>
+                <div class="text-[10px] text-slate-500 uppercase">Technique Name</div>
+                <div id="dossier-name" class="font-bold text-white text-sm mt-0.5">Credential Stuffing</div>
+              </div>
+
+              <div>
+                <div class="text-[10px] text-slate-500 uppercase">Tactic Phase</div>
+                <div id="dossier-tactic" class="text-slate-300 mt-0.5 font-semibold">Initial Access &amp; Credential Access</div>
+              </div>
+
+              <div>
+                <div class="text-[10px] text-slate-500 uppercase">Your Exposure Status</div>
+                <div id="dossier-exposure" class="mt-0.5 font-bold text-crimson-bright">EXPOSED — Action Required</div>
+              </div>
+
+              <div>
+                <div class="text-[10px] text-slate-500 uppercase">Associated Threat Actors</div>
+                <div id="dossier-actors" class="text-slate-300 mt-0.5 font-sans leading-relaxed">
+                  FIN7, Wizard Spider, Initial Access Brokers, LockBit 3.0 Affiliate Networks
+                </div>
+              </div>
+
+              <div>
+                <div class="text-[10px] text-slate-500 uppercase">Attack Mechanism</div>
+                <p id="dossier-mechanism" class="text-slate-400 mt-0.5 font-sans text-xs leading-relaxed">
+                  Adversaries automate password spraying bots cycling credentials extracted from public breach databases across consumer and enterprise authentication gateways.
+                </p>
+              </div>
+
+              <div class="pt-2 border-t border-carbon-800">
+                <div class="text-[10px] text-slate-500 uppercase">MITRE Mitigation Blueprint</div>
+                <div id="dossier-mitigation" class="text-emerald-400 font-sans mt-0.5 text-xs leading-relaxed">
+                  M1027: Password Policies — Enforce unique 16+ char passwords stored in encrypted vaults and mandate multi-factor authentication (M1032).
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Adversary Profile Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         
-        <!-- Actor 1: Initial Access Brokers -->
         <div id="actor-card-iab" class="soc-panel p-5 border-carbon-800">
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2 font-mono">
@@ -666,7 +734,6 @@
           </div>
         </div>
 
-        <!-- Actor 2: Ransomware Operators -->
         <div id="actor-card-ransomware" class="soc-panel p-5 border-carbon-800">
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2 font-mono">
@@ -683,7 +750,6 @@
           </div>
         </div>
 
-        <!-- Actor 3: Eavesdropping & Rogue AP Actors -->
         <div id="actor-card-mitm" class="soc-panel p-5 border-carbon-800">
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2 font-mono">
@@ -700,7 +766,6 @@
           </div>
         </div>
 
-        <!-- Actor 4: Infostealer & Supply Chain Malvertising -->
         <div id="actor-card-infostealer" class="soc-panel p-5 border-carbon-800">
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2 font-mono">
@@ -719,17 +784,6 @@
 
       </div>
 
-      <!-- Live Simulated Threat Intelligence Feed -->
-      <div class="soc-panel p-5">
-        <div class="flex items-center justify-between pb-3 border-b border-carbon-800 mb-3">
-          <span class="text-xs font-mono font-bold uppercase text-slate-400 tracking-wider">Simulated Global Threat Telemetry Feed</span>
-          <span class="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5"><span class="led-pip bg-emerald-400"></span> REAL-TIME SYNDICATION</span>
-        </div>
-        <div id="intel-feed-container" class="space-y-2 text-xs font-mono">
-          <!-- Injected dynamically based on active vulnerabilities -->
-        </div>
-      </div>
-
     </section>
 
     <!-- ==================== PAGE 5: AUDIT & COMPLIANCE REPORT ==================== -->
@@ -741,12 +795,12 @@
           <div>
             <div class="flex items-center gap-2">
               <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800">
-                OFFICIAL AUDIT CERTIFICATE
+                OFFICIAL AUDIT ATTESTATION
               </span>
-              <span class="text-[11px] font-mono text-slate-500">ISO/IEC 27001 &amp; NIST CSF MAPPED</span>
+              <span class="text-[11px] font-mono text-slate-500">DIGITAL TWIN TELEMETRY</span>
             </div>
             <h2 class="text-xl font-bold font-mono text-white mt-1 uppercase">
-              Digital Twin Security Posture Attestation
+              Security Posture Attestation Certificate
             </h2>
             <p class="text-xs text-slate-400 font-mono">
               Evaluated by: <span class="text-slate-200 font-bold">Morningstar Defense Labs</span> • Authors: <span class="text-slate-200">Rushil S &amp; Nikitha H S</span>
@@ -818,28 +872,26 @@
 
   </main>
 
-  <!-- ==================== MINIMALIST SOC FOOTER ==================== -->
+  <!-- ==================== FOOTER ==================== -->
   <footer class="border-t border-carbon-800 bg-carbon-950/90 py-4 text-xs font-mono text-slate-500 mt-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div>
         <span class="text-slate-300 font-bold">MORNINGSTAR CYBERSECURITY DEFENSE LABS</span> • Rushil S &amp; Nikitha H S
       </div>
       <div class="flex items-center space-x-3">
-        <span>Engine v2.4</span>
-        <span>•</span>
-        <span class="text-emerald-400">100% Client-Side In-Memory Evaluation</span>
+        <span class="text-emerald-400">Client-Side In-Memory Evaluation Engine</span>
       </div>
     </div>
   </footer>
 
-  <!-- ==================== JAVASCRIPT STATE & CALCULATION ENGINE ==================== -->
+  <!-- ==================== JAVASCRIPT STATE & LOGIC ==================== -->
   <script>
     /**
      * MORNINGSTAR CYBERSECURITY DIGITAL TWIN ENGINE (24-VECTOR ENTERPRISE SPEC)
      * Authors: Rushil S & Nikitha H S
      */
 
-    // 1. EXPANDED SECURITY CONTROLS SPECIFICATION (24 VECTORS)
+    // 1. 24 SECURITY CONTROLS WITH MITRE MAPPINGS & EXECUTION PLAYBOOKS
     const SECURITY_CONTROLS = {
       accounts: {
         id: 'accounts',
@@ -855,6 +907,7 @@
             weight: 8,
             mitre: 'T1110.004',
             mitreMitigation: 'M1027',
+            tactic: 'Credential Access',
             timeToFix: '15 mins',
             friction: 'Low',
             recommendation: 'Use a password vault to generate unique 16+ character passwords for every service to neutralize credential stuffing.',
@@ -868,6 +921,7 @@
             weight: 9,
             mitre: 'T1078',
             mitreMitigation: 'M1032',
+            tactic: 'Initial Access',
             timeToFix: '5 mins',
             friction: 'Low',
             recommendation: 'Enable TOTP authenticator apps or FIDO2 hardware keys on primary logins to eliminate ~99.9% of automated account takeovers.',
@@ -881,6 +935,7 @@
             weight: 10,
             mitre: 'T1110.003',
             mitreMitigation: 'M1027',
+            tactic: 'Credential Access',
             timeToFix: '5 mins',
             friction: 'Medium',
             recommendation: 'Immediately rotate all credentials flagged in public breach dumps; threat actors continuously run these in automated dictionary bots.',
@@ -894,6 +949,7 @@
             weight: 5,
             mitre: 'T1589.002',
             mitreMitigation: 'M1016',
+            tactic: 'Reconnaissance',
             timeToFix: '3 mins',
             friction: 'Low',
             recommendation: 'Use masked email aliases (SimpleLogin, DuckDuckGo, iCloud Hide My Email) to decouple your identity from public newsletter exposure.',
@@ -907,6 +963,7 @@
             weight: 7,
             mitre: 'T1555.003',
             mitreMitigation: 'M1027',
+            tactic: 'Credential Access',
             timeToFix: '10 mins',
             friction: 'Low',
             recommendation: 'Store secrets in an audited zero-knowledge vault; browser credential caches are routinely harvested by infostealer malware (RedLine, Lumma).',
@@ -920,6 +977,7 @@
             weight: 4,
             mitre: 'T1586.002',
             mitreMitigation: 'M1027',
+            tactic: 'Credential Access',
             timeToFix: '5 mins',
             friction: 'Low',
             recommendation: 'Treat security questions as secondary passwords by generating random alphanumeric strings and storing them in your password vault.',
@@ -941,6 +999,7 @@
             weight: 8,
             mitre: 'T1068',
             mitreMitigation: 'M1051',
+            tactic: 'Execution / Privilege Escalation',
             timeToFix: '5 mins',
             friction: 'Low',
             recommendation: 'Enable automatic OS updates to patch known exploited zero-day kernel vulnerabilities before widespread automated exploitation.',
@@ -952,8 +1011,9 @@
             question: 'Is real-time cloud-delivered threat protection (e.g. Windows Defender, Malwarebytes) active with daily definitions?',
             riskyAnswer: false,
             weight: 6,
-            mitre: 'T1204.002',
+            mitre: 'T1562.001',
             mitreMitigation: 'M1049',
+            tactic: 'Defense Evasion',
             timeToFix: '2 mins',
             friction: 'Low',
             recommendation: 'Keep real-time antivirus and cloud protection active to intercept dropped payloads and malicious PowerShell execution chains.',
@@ -967,6 +1027,7 @@
             weight: 7,
             mitre: 'T1005',
             mitreMitigation: 'M1041',
+            tactic: 'Collection',
             timeToFix: '5 mins',
             friction: 'Low',
             recommendation: 'Enable BitLocker or FileVault to ensure stored confidential files cannot be extracted offline if the device is lost or stolen.',
@@ -980,6 +1041,7 @@
             weight: 7,
             mitre: 'T1200',
             mitreMitigation: 'M1028',
+            tactic: 'Initial Access',
             timeToFix: '1 min',
             friction: 'Low',
             recommendation: 'Set screen lock timeout to under 3 minutes with biometric or strong PIN verification to prevent unauthorized local tampering.',
@@ -991,8 +1053,9 @@
             question: 'Do you maintain automated backups following the 3-2-1 rule (3 copies, 2 media, 1 offsite/cloud with encryption)?',
             riskyAnswer: false,
             weight: 8,
-            mitre: 'T1486',
+            mitre: 'T1490',
             mitreMitigation: 'M1053',
+            tactic: 'Impact',
             timeToFix: '15 mins',
             friction: 'Medium',
             recommendation: 'Maintain immutable or offline backups; it is the single definitive defense against complete data loss from ransomware encryption.',
@@ -1000,12 +1063,13 @@
           },
           {
             id: 'remote_wipe',
-            title: 'Remote Wipe & Find My Device Enabled',
+            title: 'Remote Wipe & Device Localization Enabled',
             question: 'Is remote location tracking and cryptographic remote wipe capability enabled for this device?',
             riskyAnswer: false,
             weight: 5,
             mitre: 'T1082',
             mitreMitigation: 'M1041',
+            tactic: 'Discovery',
             timeToFix: '2 mins',
             friction: 'Low',
             recommendation: 'Enable Find My Device to allow immediate cryptographic wiping of stored user partitions in the event of theft.',
@@ -1027,6 +1091,7 @@
             weight: 6,
             mitre: 'T1557.002',
             mitreMitigation: 'M1030',
+            tactic: 'Lateral Movement / MITM',
             timeToFix: '1 min',
             friction: 'Low',
             recommendation: 'Avoid conducting sensitive authentication or financial operations over untrusted public Wi-Fi networks prone to ARP spoofing.',
@@ -1040,6 +1105,7 @@
             weight: 8,
             mitre: 'T1040',
             mitreMitigation: 'M1030',
+            tactic: 'Credential Access / Sniffing',
             timeToFix: '2 mins',
             friction: 'Low',
             recommendation: 'Always route untrusted network traffic through an encrypted WireGuard or OpenVPN tunnel to thwart local packet sniffing and sidejacking.',
@@ -1053,6 +1119,7 @@
             weight: 9,
             mitre: 'T1078.001',
             mitreMitigation: 'M1027',
+            tactic: 'Persistence',
             timeToFix: '5 mins',
             friction: 'Low',
             recommendation: 'Change factory router admin credentials from default ("admin/admin") to prevent remote attackers from modifying DNS and routing tables.',
@@ -1066,6 +1133,7 @@
             weight: 6,
             mitre: 'T1584.008',
             mitreMitigation: 'M1037',
+            tactic: 'Reconnaissance',
             timeToFix: '3 mins',
             friction: 'Low',
             recommendation: 'Enable DNS-over-HTTPS in your browser or OS to prevent local network observers from logging domain requests and hijacking queries.',
@@ -1079,6 +1147,7 @@
             weight: 7,
             mitre: 'T1046',
             mitreMitigation: 'M1030',
+            tactic: 'Discovery',
             timeToFix: '8 mins',
             friction: 'Low',
             recommendation: 'Isolate IoT devices on a dedicated guest Wi-Fi network to prevent compromised smart devices from laterally attacking PCs.',
@@ -1092,6 +1161,7 @@
             weight: 7,
             mitre: 'T1599',
             mitreMitigation: 'M1030',
+            tactic: 'Defense Evasion / Boundary Bridging',
             timeToFix: '3 mins',
             friction: 'Low',
             recommendation: 'Disable UPnP on your router; malware on local devices can abuse UPnP to automatically punch port-forwarding holes through your firewall.',
@@ -1113,6 +1183,7 @@
             weight: 7,
             mitre: 'T1190',
             mitreMitigation: 'M1051',
+            tactic: 'Initial Access',
             timeToFix: '3 mins',
             friction: 'Low',
             recommendation: 'Enable auto-updates across browsers and desktop apps to patch browser sandbox escapes and remote code execution vulnerabilities.',
@@ -1126,6 +1197,7 @@
             weight: 8,
             mitre: 'T1195.002',
             mitreMitigation: 'M1045',
+            tactic: 'Initial Access / Supply Chain',
             timeToFix: '1 min',
             friction: 'Low',
             recommendation: 'Avoid cracked or pirated software; torrented repackaged executables are the primary vehicle for persistent infostealers and rootkits.',
@@ -1139,6 +1211,7 @@
             weight: 5,
             mitre: 'T1548',
             mitreMitigation: 'M1026',
+            tactic: 'Privilege Escalation',
             timeToFix: '5 mins',
             friction: 'Low',
             recommendation: 'Audit app permissions regularly and revoke microphone, location, and accessibility privileges from non-essential utilities.',
@@ -1152,6 +1225,7 @@
             weight: 6,
             mitre: 'T1176',
             mitreMitigation: 'M1021',
+            tactic: 'Persistence',
             timeToFix: '4 mins',
             friction: 'Low',
             recommendation: 'Prune unused browser extensions; dormant extensions are often sold to malicious operators who push updates containing cookie-stealers.',
@@ -1165,6 +1239,7 @@
             weight: 8,
             mitre: 'T1204.002',
             mitreMitigation: 'M1045',
+            tactic: 'Execution',
             timeToFix: '2 mins',
             friction: 'Low',
             recommendation: 'Keep developer debugging and unknown APK sideloading disabled to prevent unverified apps from bypassing OS sandbox security checks.',
@@ -1178,6 +1253,7 @@
             weight: 7,
             mitre: 'T1204.002',
             mitreMitigation: 'M1042',
+            tactic: 'Execution',
             timeToFix: '2 mins',
             friction: 'Low',
             recommendation: 'Block VBA macros in downloaded office documents; malicious macro attachments remain a primary vector for initial corporate intrusion.',
@@ -1187,46 +1263,25 @@
       }
     };
 
-    // 2. UNIFIED REACTIVE STATE STORE
+    // 2. STATE STORE
     let userProfile = {
-      // Accounts (6)
-      password_reuse: false,
-      two_factor: true,
-      breached_password: false,
-      email_reused: false,
-      pwd_manager: true,
-      sec_questions: false,
-      // Devices (6)
-      os_updates: true,
-      antivirus: true,
-      disk_encryption: true,
-      screen_lock: true,
-      backup_321: true,
-      remote_wipe: true,
-      // Networks (6)
-      public_wifi: false,
-      vpn_on_public: true,
-      router_default_pw: true,
-      secure_dns: true,
-      guest_iot_wifi: true,
-      upnp_disabled: true,
-      // Apps (6)
-      apps_updated: true,
-      official_stores: true,
-      app_permissions: true,
-      browser_extensions: true,
-      no_sideloading: true,
-      macro_disabled: true
+      password_reuse: false, two_factor: true, breached_password: false, email_reused: false, pwd_manager: true, sec_questions: false,
+      os_updates: true, antivirus: true, disk_encryption: true, screen_lock: true, backup_321: true, remote_wipe: true,
+      public_wifi: false, vpn_on_public: true, router_default_pw: true, secure_dns: true, guest_iot_wifi: true, upnp_disabled: true,
+      apps_updated: true, official_stores: true, app_permissions: true, browser_extensions: true, no_sideloading: true, macro_disabled: true
     };
 
     let whatIfFixes = {};
     let openAccordions = { accounts: true, devices: true, networks: true, apps: true };
+    let whatIfFilter = 'all';
+    let selectedMitreTechnique = 'T1110.004';
     let activePage = 'overview';
 
-    // Radar Geometry Settings
-    const RADAR_CX = 200;
-    const RADAR_CY = 180;
-    const RADAR_RADIUS = 115;
+    // Radar Dimensions
+    const RADAR_CX = 230;
+    const RADAR_CY = 210;
+    const RADAR_RADIUS_OVERVIEW = 140;
+    const RADAR_RADIUS_SIM = 145; // Prominent, generous radius
     const CATEGORY_KEYS = ['accounts', 'devices', 'networks', 'apps'];
     const CATEGORY_NAMES = {
       accounts: 'Identity & Auth',
@@ -1239,7 +1294,7 @@
     let displayedScore = 0;
     let scoreAnimTimer = null;
 
-    // 3. SCORING ALGORITHM
+    // 3. SCORING ENGINE
     function calculateCategoryScore(catId, profileToUse = userProfile, appliedFixes = {}) {
       const cat = SECURITY_CONTROLS[catId];
       if (!cat) return 0;
@@ -1313,7 +1368,7 @@
       return activeList;
     }
 
-    // 4. NAVIGATION TAB SWITCHER
+    // 4. NAVIGATION
     function switchPage(pageId) {
       activePage = pageId;
       const pages = ['overview', 'telemetry', 'whatif', 'threats', 'audit'];
@@ -1331,7 +1386,7 @@
       updateAllViews();
     }
 
-    // 5. WHAT-IF REMEDIATION SIMULATION CONTROLS
+    // 5. WHAT-IF SIMULATOR
     function toggleWhatIfFix(controlId) {
       if (whatIfFixes[controlId]) {
         delete whatIfFixes[controlId];
@@ -1381,6 +1436,33 @@
       updateAllViews();
     }
 
+    function filterWhatIfPlaybooks(filterType) {
+      whatIfFilter = filterType;
+      const btns = ['all', 'critical', 'quick'];
+      btns.forEach(b => {
+        const btn = document.getElementById(`filter-btn-${b}`);
+        if (btn) {
+          btn.className = (b === filterType) ? 'px-2 py-0.5 rounded bg-carbon-800 text-white font-bold' : 'px-2 py-0.5 rounded text-slate-400 hover:text-white';
+        }
+      });
+      updateAllViews();
+    }
+
+    function togglePlaybookDetails(id) {
+      const el = document.getElementById(`playbook-details-${id}`);
+      const btn = document.getElementById(`playbook-btn-toggle-${id}`);
+      if (el) {
+        const isHidden = el.classList.contains('hidden');
+        if (isHidden) {
+          el.classList.remove('hidden');
+          if (btn) btn.innerText = 'Hide Execution Steps ▴';
+        } else {
+          el.classList.add('hidden');
+          if (btn) btn.innerText = 'View Execution Steps ▾';
+        }
+      }
+    }
+
     function setAnswer(controlId, value) {
       userProfile[controlId] = value;
       delete whatIfFixes[controlId];
@@ -1397,16 +1479,16 @@
       renderTelemetryPage();
     }
 
-    // 6. HIGH-PERFORMANCE RADAR SPIDER GENERATOR
-    function getCoordinates(value, angle) {
-      const distance = 10 + (value / 100) * (RADAR_RADIUS - 10);
+    // 6. PROMINENT RADAR SPIDER GENERATOR
+    function getCoordinates(value, angle, radius) {
+      const distance = 10 + (value / 100) * (radius - 10);
       return {
         x: RADAR_CX + distance * Math.cos(angle),
         y: RADAR_CY + distance * Math.sin(angle)
       };
     }
 
-    function setupRadarGrid(svgPrefix) {
+    function setupRadarGrid(svgPrefix, radius) {
       const gridG = document.getElementById(`radar-grid-${svgPrefix}`);
       const axesG = document.getElementById(`radar-axes-${svgPrefix}`);
       const labelsG = document.getElementById(`radar-labels-${svgPrefix}`);
@@ -1416,17 +1498,16 @@
       axesG.innerHTML = '';
       labelsG.innerHTML = '';
 
-      // Concentric rings (25, 50, 75, 100%)
       const rings = [0.25, 0.50, 0.75, 1.0];
       rings.forEach((pct, idx) => {
         const points = ANGLES.map(angle => {
-          const r = pct * RADAR_RADIUS;
+          const r = pct * radius;
           return `${(RADAR_CX + r * Math.cos(angle)).toFixed(1)},${(RADAR_CY + r * Math.sin(angle)).toFixed(1)}`;
         }).join(' ');
 
         const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
         polygon.setAttribute('points', points);
-        polygon.setAttribute('fill', idx === rings.length - 1 ? 'rgba(255,255,255,0.012)' : 'none');
+        polygon.setAttribute('fill', idx === rings.length - 1 ? 'rgba(255,255,255,0.015)' : 'none');
         polygon.setAttribute('stroke', 'rgba(255, 255, 255, 0.08)');
         polygon.setAttribute('stroke-width', '1');
         polygon.setAttribute('stroke-dasharray', idx === rings.length - 1 ? 'none' : '2 2');
@@ -1434,18 +1515,17 @@
 
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.setAttribute('x', (RADAR_CX + 6).toString());
-        text.setAttribute('y', (RADAR_CY - (pct * RADAR_RADIUS) + 4).toString());
-        text.setAttribute('fill', 'rgba(148, 163, 184, 0.35)');
-        text.setAttribute('font-size', '8');
+        text.setAttribute('y', (RADAR_CY - (pct * radius) + 4).toString());
+        text.setAttribute('fill', 'rgba(148, 163, 184, 0.4)');
+        text.setAttribute('font-size', '8.5');
         text.textContent = `${Math.round(pct * 100)}%`;
         gridG.appendChild(text);
       });
 
-      // Axis spokes & Category Labels
       CATEGORY_KEYS.forEach((catId, idx) => {
         const angle = ANGLES[idx];
-        const endX = RADAR_CX + RADAR_RADIUS * Math.cos(angle);
-        const endY = RADAR_CY + RADAR_RADIUS * Math.sin(angle);
+        const endX = RADAR_CX + radius * Math.cos(angle);
+        const endY = RADAR_CY + radius * Math.sin(angle);
 
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1', RADAR_CX.toString());
@@ -1456,7 +1536,7 @@
         line.setAttribute('stroke-width', '1');
         axesG.appendChild(line);
 
-        const labelDist = RADAR_RADIUS + 24;
+        const labelDist = radius + 25;
         const lx = RADAR_CX + labelDist * Math.cos(angle);
         const ly = RADAR_CY + labelDist * Math.sin(angle);
 
@@ -1465,7 +1545,7 @@
         text.setAttribute('x', lx.toString());
         text.setAttribute('y', ly.toString());
         text.setAttribute('fill', '#94a3b8');
-        text.setAttribute('font-size', '10.5');
+        text.setAttribute('font-size', '11');
         text.setAttribute('font-weight', '600');
         text.setAttribute('text-anchor', angle === 0 ? 'start' : (angle === Math.PI ? 'end' : 'middle'));
         text.setAttribute('dominant-baseline', angle === -Math.PI / 2 ? 'auto' : (angle === Math.PI / 2 ? 'hanging' : 'middle'));
@@ -1474,7 +1554,7 @@
       });
     }
 
-    function renderRadarCanvas(svgPrefix, isSimulating) {
+    function renderRadarCanvas(svgPrefix, isSimulating, radius) {
       const activePoly = document.getElementById(`radar-poly-${svgPrefix}`);
       const ghostPoly = document.getElementById(`radar-ghost-${svgPrefix}`);
       const pointsG = document.getElementById(`radar-points-${svgPrefix}`);
@@ -1484,17 +1564,17 @@
       const baseScores = CATEGORY_KEYS.map(id => calculateCategoryScore(id, userProfile, {}));
       const activeScores = CATEGORY_KEYS.map(id => calculateCategoryScore(id, userProfile, whatIfFixes));
 
-      const activeCoords = activeScores.map((s, i) => getCoordinates(s, ANGLES[i]));
+      const activeCoords = activeScores.map((s, i) => getCoordinates(s, ANGLES[i], radius));
       activePoly.setAttribute('points', activeCoords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' '));
 
       if (isSimulating) {
         activePoly.setAttribute('fill', 'url(#greenRadarGradient)');
         activePoly.setAttribute('stroke', '#10b981');
-        activePoly.setAttribute('stroke-width', '2.5');
+        activePoly.setAttribute('stroke-width', '2.6');
 
         if (ghostPoly) {
           ghostPoly.classList.remove('hidden');
-          const baseCoords = baseScores.map((s, i) => getCoordinates(s, ANGLES[i]));
+          const baseCoords = baseScores.map((s, i) => getCoordinates(s, ANGLES[i], radius));
           ghostPoly.setAttribute('points', baseCoords.map(c => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' '));
         }
       } else {
@@ -1513,7 +1593,7 @@
         circle.setAttribute('class', 'radar-point');
         circle.setAttribute('cx', coord.x.toFixed(1));
         circle.setAttribute('cy', coord.y.toFixed(1));
-        circle.setAttribute('r', '4');
+        circle.setAttribute('r', '4.5');
         circle.setAttribute('fill', isSimulating ? '#10b981' : '#ff2244');
         circle.setAttribute('stroke', '#06070a');
         circle.setAttribute('stroke-width', '2');
@@ -1527,7 +1607,7 @@
       });
     }
 
-    // 7. COMPONENT RENDERERS
+    // 7. COMPONENT UPDATERS
     function animateScoreDisplay(elemId, targetScore) {
       const el = document.getElementById(elemId);
       if (!el) return;
@@ -1634,12 +1714,23 @@
       const pct = baseScore > 0 ? Math.round((drop / baseScore) * 100) : 0;
       document.getElementById('sim-points-saved-readout').innerText = `▼ ${drop} pts (${pct}%)`;
 
-      const activeVulns = getActiveVulnerabilities(userProfile);
+      let activeVulns = getActiveVulnerabilities(userProfile);
+      
+      if (whatIfFilter === 'critical') {
+        activeVulns = activeVulns.filter(v => v.weight >= 8);
+      } else if (whatIfFilter === 'quick') {
+        const quickWinIds = ['upnp_disabled', 'screen_lock', 'email_reused', 'guest_iot_wifi', 'sec_questions', 'secure_dns'];
+        activeVulns = activeVulns.filter(v => quickWinIds.includes(v.id));
+      }
+
       if (activeVulns.length === 0) {
-        playbooksList.innerHTML = '';
-        zeroState.classList.remove('hidden');
-        countText.innerText = '0 Active Threats';
-        btnCommit.classList.add('hidden');
+        playbooksList.innerHTML = '<div class="p-6 text-center text-xs font-mono text-slate-400">No vulnerabilities match the selected filter.</div>';
+        if (getActiveVulnerabilities(userProfile).length === 0) {
+          playbooksList.innerHTML = '';
+          zeroState.classList.remove('hidden');
+        }
+        countText.innerText = `${getActiveVulnerabilities(userProfile).length} Total Threats`;
+        if (isSimulating) btnCommit.classList.remove('hidden'); else btnCommit.classList.add('hidden');
         return;
       }
 
@@ -1650,22 +1741,19 @@
       playbooksList.innerHTML = activeVulns.map((vuln, idx) => {
         const isSim = !!whatIfFixes[vuln.id];
         return `
-          <div class="soc-panel p-4 border transition-all ${isSim ? 'border-emerald-500/70 bg-emerald-950/20' : 'border-carbon-800 bg-carbon-900/80'}">
+          <div class="soc-panel p-3.5 border transition-all ${isSim ? 'border-emerald-500/70 bg-emerald-950/20' : 'border-carbon-800 bg-carbon-900/80'}">
             <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
               <div class="flex-1">
-                <div class="flex flex-wrap items-center gap-2 mb-1.5 font-mono">
+                <div class="flex flex-wrap items-center gap-2 mb-1 font-mono">
                   <span class="w-4 h-4 rounded bg-carbon-800 text-slate-300 text-[10px] flex items-center justify-center font-bold">#${idx + 1}</span>
                   <span class="text-[10px] font-bold px-2 py-0.2 rounded bg-crimson-950 text-crimson-bright border border-crimson-800">
                     Impact: ${vuln.weight}/10
                   </span>
                   <span class="text-[10px] px-2 py-0.2 rounded bg-carbon-800 text-slate-300 border border-carbon-700">
-                    MITRE ${vuln.mitre} (${vuln.mitreMitigation})
+                    MITRE ${vuln.mitre}
                   </span>
                   <span class="text-[10px] px-2 py-0.2 rounded bg-carbon-800 text-slate-400">
                     ⏱️ ${vuln.timeToFix}
-                  </span>
-                  <span class="text-[10px] px-2 py-0.2 rounded bg-carbon-800 text-slate-400">
-                    Friction: ${vuln.friction}
                   </span>
                   ${isSim ? '<span class="text-[10px] font-bold px-2 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-600 animate-pulse">SIMULATED</span>' : ''}
                 </div>
@@ -1673,17 +1761,22 @@
                 <h4 class="text-xs font-bold text-white mb-1 font-mono">${vuln.title}</h4>
                 <p class="text-xs text-slate-300 leading-relaxed font-sans">${vuln.recommendation}</p>
 
-                <!-- Implementation Guide Steps -->
-                <div class="mt-2 p-2.5 rounded bg-carbon-950/80 border border-carbon-800 font-mono text-[11px] text-slate-400">
-                  <div class="text-slate-300 font-bold mb-1">Execution Steps:</div>
-                  <ol class="list-decimal list-inside space-y-0.5">
-                    ${vuln.playbook.map(step => `<li>${step}</li>`).join('')}
-                  </ol>
+                <!-- Collapsible Details Toggle -->
+                <div class="mt-2">
+                  <button type="button" id="playbook-btn-toggle-${vuln.id}" onclick="togglePlaybookDetails('${vuln.id}')" class="text-[11px] font-mono text-crimson-bright hover:underline">
+                    View Execution Steps ▾
+                  </button>
+                  <div id="playbook-details-${vuln.id}" class="hidden mt-1.5 p-2 rounded bg-carbon-950/90 border border-carbon-800 font-mono text-[11px] text-slate-400">
+                    <div class="text-slate-300 font-bold mb-1">Execution Steps:</div>
+                    <ol class="list-decimal list-inside space-y-0.5">
+                      ${vuln.playbook.map(step => `<li>${step}</li>`).join('')}
+                    </ol>
+                  </div>
                 </div>
               </div>
 
               <div class="sm:self-center shrink-0">
-                <button type="button" onclick="toggleWhatIfFix('${vuln.id}')" class="px-3 py-2 rounded font-mono text-xs font-bold transition flex items-center gap-1.5 ${isSim ? 'bg-emerald-500 text-carbon-950 hover:bg-emerald-400' : 'bg-carbon-800 hover:bg-carbon-700 text-slate-200 border border-carbon-600'}">
+                <button type="button" onclick="toggleWhatIfFix('${vuln.id}')" class="px-3 py-1.5 rounded font-mono text-xs font-bold transition flex items-center gap-1.5 ${isSim ? 'bg-emerald-500 text-carbon-950 hover:bg-emerald-400' : 'bg-carbon-800 hover:bg-carbon-700 text-slate-200 border border-carbon-600'}">
                   <span>${isSim ? '✓ Mitigated' : '⚡ Simulate'}</span>
                 </button>
               </div>
@@ -1693,47 +1786,208 @@
       }).join('');
     }
 
-    function renderThreatMatrix() {
-      // Phase 1: Initial Access
+    // 8. INTERACTIVE MITRE ATT&CK MATRIX EXPLORER
+    const MITRE_MATRIX_DATA = [
+      {
+        tactic: 'Initial Access',
+        techniques: [
+          { id: 'T1110.004', name: 'Credential Stuffing', controlId: 'password_reuse', actors: 'FIN7, Wizard Spider, LockBit Affiliates' },
+          { id: 'T1078', name: 'Valid Accounts (No 2FA)', controlId: 'two_factor', actors: 'Lapsus$, APT29 Cozy Bear, Volt Typhoon' },
+          { id: 'T1190', name: 'Exploit Public App', controlId: 'apps_updated', actors: 'APT28 Fancy Bear, Clop Ransomware' },
+          { id: 'T1195.002', name: 'Supply Chain Software', controlId: 'official_stores', actors: 'Lazarus Group, Nobelium' }
+        ]
+      },
+      {
+        tactic: 'Execution',
+        techniques: [
+          { id: 'T1068', name: 'Kernel Privilege Escalation', controlId: 'os_updates', actors: 'BlackCat/ALPHV, LockBit 3.0' },
+          { id: 'T1204.002', name: 'Malicious File / Macros', controlId: 'macro_disabled', actors: 'Emotet, Qakbot, TA505' },
+          { id: 'T1204.002b', name: 'User Execution Sideload', controlId: 'no_sideloading', actors: 'Anubis, Roaming Mantis' }
+        ]
+      },
+      {
+        tactic: 'Persistence',
+        techniques: [
+          { id: 'T1078.001', name: 'Default Router Credentials', controlId: 'router_default_pw', actors: 'Mirai, Mozi Botnet' },
+          { id: 'T1176', name: 'Browser Extensions', controlId: 'browser_extensions', actors: 'Kimsuky, RedLine Stealer' },
+          { id: 'T1548', name: 'Abuse Elevation Control', controlId: 'app_permissions', actors: 'Turla, Sandworm' }
+        ]
+      },
+      {
+        tactic: 'Defense Evasion',
+        techniques: [
+          { id: 'T1562.001', name: 'Impair Real-Time AV / EDR', controlId: 'antivirus', actors: 'Black Basta, LockBit' },
+          { id: 'T1599', name: 'UPnP Gateway Traversal', controlId: 'upnp_disabled', actors: 'Chameleon, Eternal Silence' }
+        ]
+      },
+      {
+        tactic: 'Credential Access',
+        techniques: [
+          { id: 'T1110.003', name: 'Breached Password Spray', controlId: 'breached_password', actors: 'Midnight Blizzard, Scattered Spider' },
+          { id: 'T1555.003', name: 'Unencrypted Browser Store', controlId: 'pwd_manager', actors: 'Lumma Stealer, Vidar, RedLine' },
+          { id: 'T1586.002', name: 'Predictable Recovery QA', controlId: 'sec_questions', actors: 'Social Engineering Campaigns' }
+        ]
+      },
+      {
+        tactic: 'Discovery',
+        techniques: [
+          { id: 'T1046', name: 'Network Service Scanning', controlId: 'guest_iot_wifi', actors: 'Dragonfly, APT33' },
+          { id: 'T1082', name: 'System Info / Localization', controlId: 'remote_wipe', actors: 'Carbanak, FIN8' },
+          { id: 'T1584.008', name: 'DNS Resolution Poisoning', controlId: 'secure_dns', actors: 'Sea Turtle, DNSpionage' }
+        ]
+      },
+      {
+        tactic: 'Lateral / MITM',
+        techniques: [
+          { id: 'T1557.002', name: 'ARP Spoofing Public Wi-Fi', controlId: 'public_wifi', actors: 'Darkhotel, APT28' },
+          { id: 'T1040', name: 'Network Traffic Sniffing', controlId: 'vpn_on_public', actors: 'Equation Group, Evil Twin' }
+        ]
+      },
+      {
+        tactic: 'Impact',
+        techniques: [
+          { id: 'T1490', name: 'Inhibit System Recovery', controlId: 'backup_321', actors: 'LockBit, Hive, DarkSide' },
+          { id: 'T1005', name: 'Unencrypted Physical Exfil', controlId: 'disk_encryption', actors: 'Physical Theft & Forensics Extraction' },
+          { id: 'T1200', name: 'Physical Tampering Timeout', controlId: 'screen_lock', actors: 'Insider Threat, Physical Intrusion' }
+        ]
+      }
+    ];
+
+    function renderMitreMatrix() {
+      const grid = document.getElementById('mitre-matrix-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      MITRE_MATRIX_DATA.forEach(col => {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'space-y-2';
+
+        const header = document.createElement('div');
+        header.className = 'text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 pb-1 border-b border-carbon-800';
+        header.innerText = col.tactic;
+        colDiv.appendChild(header);
+
+        col.techniques.forEach(tech => {
+          const control = findControl(tech.controlId);
+          const isRisky = control ? (userProfile[control.id] === control.riskyAnswer) : false;
+          const isSelected = (selectedMitreTechnique === tech.id);
+
+          const btn = document.createElement('div');
+          btn.className = `p-2 rounded border cursor-pointer select-none transition-all ${
+            isSelected ? 'border-white bg-carbon-800 shadow-md' : (
+              isRisky 
+                ? 'border-crimson-800 bg-crimson-950/40 hover:border-crimson-600' 
+                : 'border-carbon-800 bg-carbon-900/60 hover:border-carbon-700'
+            )
+          }`;
+
+          btn.onclick = () => selectMitreTechnique(tech.id);
+
+          btn.innerHTML = `
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] font-bold ${isRisky ? 'text-crimson-bright' : 'text-slate-400'}">${tech.id.split('.')[0]}</span>
+              <span class="led-pip ${isRisky ? 'bg-crimson-bright animate-pulse' : 'bg-emerald-400'}"></span>
+            </div>
+            <div class="text-[11px] font-semibold text-slate-200 line-clamp-2 leading-tight">${tech.name}</div>
+          `;
+          colDiv.appendChild(btn);
+        });
+
+        grid.appendChild(colDiv);
+      });
+
+      // Update technique dossier
+      updateTechniqueDossier(selectedMitreTechnique);
+
+      // Update kill chain status
+      updateKillChainStatus();
+    }
+
+    function findControl(controlId) {
+      for (const cat of Object.values(SECURITY_CONTROLS)) {
+        const found = cat.items.find(i => i.id === controlId);
+        if (found) return found;
+      }
+      return null;
+    }
+
+    function selectMitreTechnique(techId) {
+      selectedMitreTechnique = techId;
+      renderMitreMatrix();
+    }
+
+    function updateTechniqueDossier(techId) {
+      let targetTech = null;
+      let targetTactic = '';
+
+      for (const col of MITRE_MATRIX_DATA) {
+        const t = col.techniques.find(item => item.id === techId);
+        if (t) {
+          targetTech = t;
+          targetTactic = col.tactic;
+          break;
+        }
+      }
+
+      if (!targetTech) return;
+      const control = findControl(targetTech.controlId);
+      const isRisky = control ? (userProfile[control.id] === control.riskyAnswer) : false;
+
+      document.getElementById('dossier-id-badge').innerText = targetTech.id;
+      document.getElementById('dossier-name').innerText = targetTech.name;
+      document.getElementById('dossier-tactic').innerText = targetTactic;
+      document.getElementById('dossier-actors').innerText = targetTech.actors;
+
+      const expEl = document.getElementById('dossier-exposure');
+      if (expEl) {
+        if (isRisky) {
+          expEl.innerText = 'EXPOSED — Active Security Risk';
+          expEl.className = 'mt-0.5 font-bold text-crimson-bright';
+        } else {
+          expEl.innerText = 'HARDENED — Defense Verified';
+          expEl.className = 'mt-0.5 font-bold text-emerald-400';
+        }
+      }
+
+      if (control) {
+        document.getElementById('dossier-mechanism').innerText = control.recommendation;
+        document.getElementById('dossier-mitigation').innerText = `${control.mitreMitigation}: ${control.playbook.join(' ')}`;
+      }
+    }
+
+    function updateKillChainStatus() {
       const p1Risky = userProfile.password_reuse || !userProfile.two_factor || userProfile.breached_password || userProfile.public_wifi;
       const step1El = document.getElementById('killchain-step-1-status');
       if (step1El) {
         step1El.innerText = p1Risky ? 'EXPOSED' : 'HARDENED';
-        step1El.className = p1Risky ? 'text-[11px] text-crimson-bright font-bold mt-1' : 'text-[11px] text-emerald-400 font-bold mt-1';
+        step1El.className = p1Risky ? 'text-[11px] text-crimson-bright font-bold mt-0.5' : 'text-[11px] text-emerald-400 font-bold mt-0.5';
       }
 
-      // Phase 2: Execution
       const p2Risky = !userProfile.os_updates || !userProfile.official_stores || !userProfile.macro_disabled;
       const step2El = document.getElementById('killchain-step-2-status');
       if (step2El) {
         step2El.innerText = p2Risky ? 'EXPOSED' : 'HARDENED';
-        step2El.className = p2Risky ? 'text-[11px] text-crimson-bright font-bold mt-1' : 'text-[11px] text-emerald-400 font-bold mt-1';
+        step2El.className = p2Risky ? 'text-[11px] text-crimson-bright font-bold mt-0.5' : 'text-[11px] text-emerald-400 font-bold mt-0.5';
       }
 
-      // Phase 3: Credential Dumping
       const p3Risky = !userProfile.pwd_manager || userProfile.email_reused || !userProfile.two_factor;
       const step3El = document.getElementById('killchain-step-3-status');
       if (step3El) {
         step3El.innerText = p3Risky ? 'EXPOSED' : 'HARDENED';
-        step3El.className = p3Risky ? 'text-[11px] text-crimson-bright font-bold mt-1' : 'text-[11px] text-emerald-400 font-bold mt-1';
+        step3El.className = p3Risky ? 'text-[11px] text-crimson-bright font-bold mt-0.5' : 'text-[11px] text-emerald-400 font-bold mt-0.5';
       }
 
-      // Phase 4: Impact / Exfiltration
       const p4Risky = !userProfile.backup_321 || !userProfile.disk_encryption || !userProfile.antivirus;
       const step4El = document.getElementById('killchain-step-4-status');
       if (step4El) {
         step4El.innerText = p4Risky ? 'HIGH IMPACT' : 'CONTAINED';
-        step4El.className = p4Risky ? 'text-[11px] text-crimson-bright font-bold mt-1' : 'text-[11px] text-emerald-400 font-bold mt-1';
+        step4El.className = p4Risky ? 'text-[11px] text-crimson-bright font-bold mt-0.5' : 'text-[11px] text-emerald-400 font-bold mt-0.5';
       }
 
-      // Actor cards
       updateActorBadge('iab', userProfile.password_reuse || !userProfile.two_factor || !userProfile.upnp_disabled);
       updateActorBadge('ransomware', !userProfile.os_updates || !userProfile.backup_321 || !userProfile.macro_disabled);
       updateActorBadge('mitm', (userProfile.public_wifi && !userProfile.vpn_on_public) || !userProfile.router_default_pw);
       updateActorBadge('infostealer', !userProfile.official_stores || !userProfile.browser_extensions || !userProfile.no_sideloading);
-
-      // Threat Feed
-      renderThreatFeed();
     }
 
     function updateActorBadge(actorId, isExposed) {
@@ -1744,28 +1998,6 @@
         badge.className = `px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border ${isExposed ? 'bg-crimson-950 text-crimson-bright border-crimson-800' : 'bg-emerald-950 text-emerald-400 border-emerald-800'}`;
         card.className = `soc-panel p-5 border ${isExposed ? 'border-crimson-900/80' : 'border-carbon-800'}`;
       }
-    }
-
-    function renderThreatFeed() {
-      const feed = document.getElementById('intel-feed-container');
-      if (!feed) return;
-      const active = getActiveVulnerabilities(userProfile);
-      if (active.length === 0) {
-        feed.innerHTML = '<div class="p-2 text-slate-500">Zero active threat campaigns correlated against current profile posture.</div>';
-        return;
-      }
-      feed.innerHTML = active.slice(0, 4).map(v => `
-        <div class="p-2.5 rounded bg-carbon-900 border border-carbon-800 flex items-start justify-between gap-3">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="text-crimson-bright font-bold">[ALERT-${v.mitre}]</span>
-              <span class="text-slate-300 font-semibold">${v.title}</span>
-            </div>
-            <p class="text-[11px] text-slate-400 mt-0.5 font-sans">Adversaries weaponizing this technique against unhardened consumer and enterprise digital twins.</p>
-          </div>
-          <span class="px-2 py-0.5 rounded bg-crimson-950 text-crimson-bright border border-crimson-800 text-[10px] font-bold shrink-0">ACTIVE VECTOR</span>
-        </div>
-      `).join('');
     }
 
     function renderAuditPage(baseScore) {
@@ -1803,7 +2035,7 @@
       const baseOverall = calculateOverallScore(userProfile, {});
       const simOverall = calculateOverallScore(userProfile, whatIfFixes);
 
-      // Global Notification Alert
+      // Notification Bar
       const globalSimAlert = document.getElementById('global-sim-alert');
       const navSimBadge = document.getElementById('nav-sim-badge');
       const globalDelta = document.getElementById('global-sim-delta-badge');
@@ -1821,7 +2053,7 @@
         overviewLegend.classList.add('hidden');
       }
 
-      // Executive Overview Page
+      // Executive Overview
       animateScoreDisplay('overview-score-number', simOverall);
       const band = getRiskBand(simOverall);
       const overviewBadge = document.getElementById('overview-risk-badge');
@@ -1841,7 +2073,7 @@
         overviewDeltaPill.classList.add('hidden');
       }
 
-      // Category Progress Bars
+      // Surface Progress Bars
       CATEGORY_KEYS.forEach(catId => {
         const s = calculateCategoryScore(catId, userProfile, whatIfFixes);
         const b = document.getElementById(`badge-cat-${catId}`);
@@ -1857,18 +2089,18 @@
       const countBadge = document.getElementById('overview-active-vuln-count');
       if (countBadge) countBadge.innerText = `${activeVulns.length} Active Risks`;
 
-      // Render Radars
-      renderRadarCanvas('overview', isSimulating);
-      renderRadarCanvas('sim', isSimulating);
+      // Render Large Radars
+      renderRadarCanvas('overview', isSimulating, RADAR_RADIUS_OVERVIEW);
+      renderRadarCanvas('sim', isSimulating, RADAR_RADIUS_SIM);
 
       // Render Specialized Views
       renderTelemetryPage();
       renderWhatIfPage(baseOverall, simOverall, isSimulating);
-      renderThreatMatrix();
+      renderMitreMatrix();
       renderAuditPage(baseOverall);
     }
 
-    // 8. TARGET PERSONA PRESETS (24 CONTROLS)
+    // 9. PERSONA PRESETS
     function loadPersona(type) {
       whatIfFixes = {};
       if (type === 'high_risk') {
@@ -1900,7 +2132,7 @@
       loadPersona('typical');
     }
 
-    // 9. EXPORT & ATTESTATION
+    // 10. EXPORT DATA
     function copyAssessmentReport() {
       const baseOverall = calculateOverallScore(userProfile, {});
       const band = getRiskBand(baseOverall);
@@ -1922,7 +2154,6 @@
         text += `${i + 1}. [Weight ${v.weight}/10] [${v.mitre}] ${v.title}\n`;
         text += `   Remediation: ${v.recommendation}\n`;
       });
-      text += `\nAttestation generated by Morningstar Cyber Threat Predictor v2.4\n`;
 
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.getElementById('audit-copy-btn-text');
@@ -1939,8 +2170,6 @@
           app: "Digital Twin — Cybersecurity Threat & Risk Predictor",
           authors: "Rushil S & Nikitha H S",
           organization: "Morningstar Cyber Labs",
-          version: "2.4.0",
-          spec: "24-Vector Enterprise Cyber Threat Matrix",
           timestamp: new Date().toISOString()
         },
         scores: {
@@ -1965,10 +2194,10 @@
       URL.revokeObjectURL(url);
     }
 
-    // 10. LIFECYCLE INITIALIZATION
+    // 11. INITIALIZATION
     window.addEventListener('DOMContentLoaded', () => {
-      setupRadarGrid('overview');
-      setupRadarGrid('sim');
+      setupRadarGrid('overview', RADAR_RADIUS_OVERVIEW);
+      setupRadarGrid('sim', RADAR_RADIUS_SIM);
       loadPersona('typical');
     });
   </script>

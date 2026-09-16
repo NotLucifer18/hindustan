@@ -13,7 +13,7 @@ A high-performance, engineering-grade Security Operations Center (SOC) dashboard
 ## Authors & Organization
 - **Organization**: Morningstar Cybersecurity Defense Labs
 - **Researchers**: Rushil S & Nikitha H S
-- **System**: Digital Twin — Cybersecurity Threat & Risk Predictor v2.4
+- **System**: Digital Twin — Cybersecurity Threat & Risk Predictor
 
 ---
 

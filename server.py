@@ -25,8 +25,7 @@ class CyberRiskServer(SimpleHTTPRequestHandler):
                 "status": "online",
                 "app": "Digital Twin — Cybersecurity Risk Predictor",
                 "team": "Morningstar",
-                "authors": ["Rushil S", "Nikitha H S"],
-                "engine_version": "2.4.0"
+                "authors": ["Rushil S", "Nikitha H S"]
             }
             self.wfile.write(json.dumps(payload).encode('utf-8'))
             return

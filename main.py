@@ -42,9 +42,7 @@ class MorningstarHandler(SimpleHTTPRequestHandler):
                 "system": "Digital Twin — Cybersecurity Risk Predictor",
                 "team": "Morningstar Cyber Labs",
                 "researchers": ["Rushil S", "Nikitha H S"],
-                "version": "2.4.0",
-                "architecture": "5-Page Zero-Backend Client-Side Command Center",
-                "theme": "Black & Red High-Contrast Cyber Warfare"
+                "architecture": "Client-Side Zero-Backend Command Center"
             }
             self.wfile.write(json.dumps(payload, indent=2).encode('utf-8'))
             return
@@ -66,7 +64,7 @@ def find_open_port(preferred_port=8000):
 
 def print_banner(url):
     print("=" * 66)
-    print("       MORNINGSTAR CYBERSECURITY COMMAND CENTER -- v2.4.0")
+    print("            MORNINGSTAR CYBERSECURITY DEFENSE LABS")
     print("          Digital Twin Threat Predictor & Simulator")
     print("=" * 66)
     print(f" Research Team:  Rushil S & Nikitha H S")
