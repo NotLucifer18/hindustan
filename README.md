@@ -1,122 +1,87 @@
 # Digital Twin — Cybersecurity Risk Predictor
+### Morningstar Cyber Command Center
 
-[![Team](https://img.shields.io/badge/Team-Morningstar-06b6d4.svg)](#)
+[![Theme](https://img.shields.io/badge/Theme-Black%20%26%20Red%20Cyber%20Command-ff1a40.svg)](#)
+[![Team](https://img.shields.io/badge/Team-Morningstar-dc2626.svg)](#)
 [![Researchers](https://img.shields.io/badge/Researchers-Rushil%20S%20%26%20Nikitha%20H%20S-10b981.svg)](#)
-[![Client--Side](https://img.shields.io/badge/Architecture-Zero--Backend%20%7C%20100%25%20Client--Side-8b5cf6.svg)](#)
-[![License](https://img.shields.io/badge/License-MIT-amber.svg)](#)
+[![Architecture](https://img.shields.io/badge/Architecture-5--Page%20Zero--Backend%20SPA-101420.svg)](#)
 
-A modern, high-performance, single-page web application that models an individual's digital cyber risk profile ("Digital Twin") across four primary attack surfaces. Featuring an interactive, hardware-accelerated **animated spider/radar chart** and a real-time **What-If Remediation Simulator**.
+An aggressive, high-contrast **Black & Red** cyber-warfare dashboard that models an individual's digital risk profile ("Digital Twin") across four defensive surfaces. Built with hardware-accelerated **animated SVG spider charts**, interactive weighted risk telemetry, and a real-time **What-If Cyber Remediation Simulator**.
 
 ---
 
 ## Authors & Branding
-- **Team**: Morningstar
+- **Organization**: Morningstar Cyber Labs
 - **Researchers**: Rushil S & Nikitha H S
 - **App Title**: Digital Twin — Cybersecurity Risk Predictor
 
 ---
 
-## Key Features
+## 5 Specialized Cyber Command Pages
 
-### 1. Risk Profile Form (Collapsible Telemetry)
-Four security surfaces covering 14 critical cybersecurity vectors:
-- **Accounts**:
-  - Password reuse across services *(Weight: 8, Risky: Yes)*
-  - Two-Factor Authentication (2FA) enabled *(Weight: 9, Risky: No)*
-  - Uses breached passwords *(Weight: 10, Risky: Yes)*
-  - Email handle reused across sensitive/public sites *(Weight: 5, Risky: Yes)*
-- **Devices**:
-  - OS auto-updates active *(Weight: 8, Risky: No)*
-  - Antivirus / EDR protection active *(Weight: 6, Risky: No)*
-  - Full-disk BitLocker/FileVault encryption *(Weight: 7, Risky: No)*
-  - Screen auto-lock with PIN/biometrics *(Weight: 7, Risky: No)*
-- **Networks**:
-  - Frequent public Wi-Fi usage *(Weight: 6, Risky: Yes)*
-  - VPN used on public Wi-Fi *(Weight: 8, Risky: No)*
-  - Router default admin password changed *(Weight: 9, Risky: No)*
-- **Apps**:
-  - Apps and browsers updated regularly *(Weight: 7, Risky: No)*
-  - Software downloaded strictly from official sources *(Weight: 8, Risky: No)*
-  - Periodic review of app permissions *(Weight: 5, Risky: No)*
+### 1. 📊 Executive Overview
+- Giant Blood-Red Digital Score Gauge (0–100) with dynamic rolling counter and threat level indicator.
+- Interactive High-Contrast SVG Spider/Radar Chart with crimson glowing contours.
+- Category summary cards (Accounts, Devices, Networks, Apps) with mini progress bars.
+- Quick persona presets (🚨 High Risk Target, ⚠️ Typical User, 🛡️ Cyber Fortress, 🔄 Reset).
 
-### 2. Weighted Scoring Engine
-- **Category Risk Score**:
-  $$\text{Category Score} = \left( \frac{\sum \text{Active Risk Weights in Category}}{\sum \text{Total Category Weights}} \right) \times 100$$
-- **Overall Risk Score**:
-  $$\text{Overall Score} = \left( \frac{\sum_{\text{all}} \text{Active Risk Weights}}{\sum_{\text{all}} \text{Total Possible Weights}} \right) \times 100$$
-- **Risk Bands**:
-  - `0 - 30`: **Low Risk** (Emerald Green, Hardened posture)
-  - `31 - 60`: **Medium Risk** (Amber Yellow, Moderate exposure)
-  - `61 - 100`: **High Risk** (Rose Red, Critical threat surface)
+### 2. ⚙️ Risk Profile Telemetry (14 Controls)
+- Detailed breakdown across 4 defensive surfaces with collapsible accordions:
+  - **Accounts**: Password reuse (w:8), 2FA enabled (w:9), breached passwords (w:10), email reused (w:5).
+  - **Devices**: OS updates (w:8), antivirus installed (w:6), disk encryption (w:7), screen lock (w:7).
+  - **Networks**: Public Wi-Fi usage (w:6), VPN on public Wi-Fi (w:8), router default password changed (w:9).
+  - **Apps**: Regular app updates (w:7), official app stores only (w:8), app permissions review (w:5).
+- High-visibility red/green binary toggle switches with threat weights (1-10) and live category risk badges.
 
-### 3. Animated Spider / Radar Chart
-- Visualizes the 4 distinct attack surface vectors in 360-degree space.
-- Concentric coordinate rings at 25%, 50%, 75%, and 100%.
-- Interactive coordinate vertices with dynamic color feedback based on risk severity.
-- **Dual Contours during Simulation**: Shows both baseline contour (ghost red dashed line) and the simulated improved contour (glowing emerald polygon) shrinking toward center.
+### 3. ⚡ "What-If" Cyber Remediation Simulator (The Core Demo Moment)
+- Dedicated simulation workstation:
+  - Side-by-side comparative posture view: **Current Baseline Risk vs. Hardened Posture**.
+  - Top 3 highest-weighted vulnerabilities with live **"⚡ Simulate Fix"** toggles.
+  - Global **"⚡ Simulate All Fixes"** action button.
+  - Live animated SVG radar chart displaying dual contours (baseline red dashed ghost contour vs. morphing green simulated contour).
+  - Dynamic score reduction readout (e.g. `▼ -38 pts (-45%)`).
+  - **"Apply Fixes to Profile"** button to commit changes permanently.
 
-### 4. Top Vulnerabilities Panel
-- Automatically highlights the **top 3 highest-weighted active risks** configured by the user.
-- Shows actionable 1-line remediation advice (e.g. enabling 2FA, changing breached credentials).
+### 4. 🎯 Threat Intelligence Matrix
+- Deep technical breakdown of 4 real-world adversary attack vectors:
+  1. **Credential Stuffing & Takeover** (T1110 - Breach dump botnets).
+  2. **Ransomware & Zero-Day Endpoint Exploits** (T1204 - Privilege escalation).
+  3. **Man-In-The-Middle (MITM) & Wi-Fi Eavesdropping** (T1557 - Evil Twin, DNS poisoning).
+  4. **Supply Chain & Malicious App Extraction** (T1195 - Trojanized torrents).
+- Dynamic threat rating based on current user inputs with key defensive controls.
 
-### 5. "What-If" Simulator (Core Demo Feature)
-- Beside each vulnerability in the Top Vulnerabilities list, a **"⚡ Simulate Fix"** toggle lets the user test what happens when that fix is implemented.
-- The radar chart smoothly morphs inward and the overall score counter rolls down in real time.
-- Clicking **"Apply Fixes"** saves the simulated posture directly to the live form.
-
-### 6. Persona Quick Presets
-- **🚨 High Risk Target**: Simulates a user with breached passwords, disabled 2FA, and open public Wi-Fi habits.
-- **⚠️ Typical Remote Worker**: Common modern habits with moderate risk.
-- **🛡️ Cyber Fortress**: Hardened security posture across all categories.
-- **🔄 Reset**: Returns to base baseline.
+### 5. 📑 Audit & Compliance Report
+- Official Executive Cyber Risk Audit Certificate with digital seal and timestamp.
+- Evaluated layer breakdown table and active risk list.
+- One-click **Copy Executive Summary** (formatted markdown clipboard export).
+- One-click **Export JSON Telemetry** file download.
+- Printable certificate layout (`window.print()`).
 
 ---
 
 ## How to Run
 
-### Method 1: Instant In-Browser (No dependencies required)
-Simply double-click [`index.html`](file:///c:/Users/nikitha/luci/index.html) or open it directly in Google Chrome, Microsoft Edge, or Firefox.
-
+### Method 1: Instant In-Browser
+Open [`index.html`](file:///c:/Users/nikitha/luci/index.html) in your browser:
 ```powershell
-Start-Process chrome.exe "c:\Users\nikitha\luci\index.html"
+Start-Process "c:\Users\nikitha\luci\index.html"
 ```
 
 ### Method 2: Python Local Server
-If Python is installed:
 ```powershell
 python server.py
 ```
-This serves the application on `http://localhost:8000` with live API telemetry and automatically launches your default browser.
+Serves the application on `http://localhost:8000` with health telemetry API and auto-opens your browser.
 
 ---
 
-## Connecting to Git & GitHub
+## Git Repository & Remote
 
-To initialize or push this repository to GitHub:
+This repository is connected to:
+`https://github.com/NotLucifer18/hindustan.git`
 
+To push to GitHub:
 ```powershell
-# 1. Initialize Git repository
-git init
-
-# 2. Stage and commit all files
-git add .
-git commit -m "Initial commit: Digital Twin Cybersecurity Risk Predictor by Morningstar"
-
-# 3. Connect to your GitHub repository (replace with your repo URL)
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-
-# 4. Push to remote
+cd c:\Users\nikitha\luci
 git push -u origin main
-```
-
----
-
-## Project Structure
-```
-c:\Users\nikitha\luci\
-├── index.html       # Complete Single-Page Application (HTML + Tailwind + SVG Radar Engine)
-├── server.py        # Python local server & health API
-├── .gitignore       # Git ignore rules
-└── README.md        # Documentation and presentation guide
 ```
